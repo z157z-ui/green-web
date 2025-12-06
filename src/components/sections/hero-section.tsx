@@ -20,7 +20,7 @@ const HeroSection = () => {
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-pure-white">
         <div className="container px-5 text-center md:px-10">
           <h1 className="font-display text-[4.5rem] font-light leading-none md:text-[6rem] md:leading-[0.9]">
-            GreenBuild - Design that transforms spaces
+            GreenBuilders - Design that transforms spaces
           </h1>
           <p className="mx-auto mt-6 max-w-3xl font-body text-xl font-normal leading-relaxed">
             A leading provider of interior design and plumbing solutions
