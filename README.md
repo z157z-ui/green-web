@@ -69,3 +69,5 @@ Service images: External Supabase URLs
 News images: External Supabase URLs
 Recommendation: Download all media assets and organize them in public/ folders as shown above, then update the component URLs to use local paths instead of external URLs for better performance and reliability.
 
+###ERROR LOGIN PAGE
+crashes server
