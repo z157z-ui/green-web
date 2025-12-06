@@ -1,9 +1,8 @@
 import React from 'react';
 
 const AboutOverview = () => {
-  // Adapted text based on instructions to fit "GreenBuild"
   const description =
-    "With decades of combined experience, GreenBuild is a leader in bespoke interior design and expert plumbing services. We are a dynamic collective of creative professionals dedicated to delivering exceptional quality and innovative solutions for a wide range of projects and industries.";
+    "Green Builders and Interiors brings 8+ years of expertise in crafting modern, innovative designs. We specialize in sleek lines, minimalist elegance, and contemporary charm, transforming residential and commercial spaces with design, functionality, and comfort. At Green Builders and Interiors, we are dedicated to putting our clients first by understanding their needs and delivering exceptional service. Our commitment goes beyond just design—it is reflected in every detail we handle with care, professionalism and attention.";
 
   return (
     <section className="bg-[#e8e4df] text-text-primary py-10 md:py-[60px] lg:py-20">

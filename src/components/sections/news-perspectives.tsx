@@ -82,9 +82,8 @@ const NewsPerspectives = () => {
                   <Image
                     src={item.imageUrl}
                     alt={item.headline}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-500 ease-in-out group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                   />
                 </div>
                 <div className="p-8 flex flex-col flex-grow">

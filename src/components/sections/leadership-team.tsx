@@ -6,34 +6,32 @@ import { User } from 'lucide-react';
 interface TeamMember {
   name: string;
   title: string;
-  location: string;
-  image: string; // Placeholder for now
+  education: string[];
+  experience: string;
+  expertise: string;
 }
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Ian Carr',
-    title: 'Partner & Co-CEO',
-    location: 'HBA | Singapore',
-    image: '/placeholder-team-1.jpg',
+    name: 'Sanal Das KV',
+    title: 'Founder & CEO',
+    education: ['BSc Interior Design', 'Diploma in Building & Construction'],
+    experience: '9 years interior design experience, 4 years construction & project management',
+    expertise: 'Execution, HVAC integration',
   },
   {
-    name: 'Chris Godfrey',
-    title: 'Partner & Co-CEO',
-    location: 'HBA | Singapore',
-    image: '/placeholder-team-2.jpg',
+    name: 'Praveen Kumar R',
+    title: 'Co-Founder & CTO',
+    education: ['BE Electrical & Electronics'],
+    experience: 'Operations Manager at Awfis Space Solutions, 10 years in space management and facility operations',
+    expertise: 'HVAC for commercial spaces',
   },
   {
-    name: 'Meghann Day',
-    title: 'Partner & President The Americas',
-    location: 'HBA | San Francisco',
-    image: '/placeholder-team-3.jpg',
-  },
-  {
-    name: 'Andrew Moore',
-    title: 'Partner & President Middle East & KSA',
-    location: 'HBA | Dubai',
-    image: '/placeholder-team-4.jpg',
+    name: 'Bluvin Ravindran',
+    title: 'Co-Founder & COO',
+    education: ['Mechanical Engineering'],
+    experience: 'Managing Director at C-Zero, Co-Founder of Super Biochar (New York), Associate Director at Suarcsh Filters Pvt Ltd, 10+ years in business development',
+    expertise: 'Business development and operations',
   },
 ];
 
@@ -42,17 +40,45 @@ const TeamMemberCard = ({ member }: { member: TeamMember }) => {
     <div className="group bg-card border border-border rounded-sm overflow-hidden transform transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg">
       <div className="relative aspect-[4/5] bg-secondary flex items-center justify-center grayscale">
         <User className="h-20 w-20 text-muted" />
-        {/* Placeholder for an actual image */}
-        {/* <Image src={member.image} alt={`Portrait of ${member.name}`} layout="fill" objectFit="cover" className="grayscale" /> */}
       </div>
       <div className="p-6 text-left">
         <h3 className="font-body font-semibold text-lg text-text-primary leading-tight">
           {member.name}
         </h3>
-        <p className="font-body text-sm text-text-secondary mt-1 mb-0">
+        <p className="font-body text-sm text-text-secondary mt-1 mb-4">
           {member.title}
         </p>
-        <p className="text-metadata mt-4 mb-0">{member.location}</p>
+
+        <div className="space-y-3 text-sm">
+          <div>
+            <p className="font-body font-medium text-text-tertiary text-xs uppercase tracking-wider mb-1">
+              Education
+            </p>
+            {member.education.map((edu, i) => (
+              <p key={i} className="font-body text-xs text-text-secondary">
+                {edu}
+              </p>
+            ))}
+          </div>
+
+          <div>
+            <p className="font-body font-medium text-text-tertiary text-xs uppercase tracking-wider mb-1">
+              Experience
+            </p>
+            <p className="font-body text-xs text-text-secondary">
+              {member.experience}
+            </p>
+          </div>
+
+          <div>
+            <p className="font-body font-medium text-text-tertiary text-xs uppercase tracking-wider mb-1">
+              Expertise
+            </p>
+            <p className="font-body text-xs text-text-secondary">
+              {member.expertise}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -67,6 +93,9 @@ const LeadershipTeam = () => {
             <h2 className="font-display text-[42px] leading-tight text-text-primary">
               Leadership team
             </h2>
+            <p className="font-body text-body-regular text-text-secondary mt-4">
+              Our leadership team brings together decades of expertise in design, construction, and business operations.
+            </p>
           </div>
           <div className="lg:col-span-8 xl:col-span-9">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

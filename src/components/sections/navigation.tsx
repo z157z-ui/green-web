@@ -24,18 +24,24 @@ interface Service {
 const navLinks: NavLink[] = [
   { href: '#services', label: 'Services', isMegaMenu: true },
   { href: '#projects', label: 'Projects' },
-  { href: '#about', label: 'About' },
-  { href: '#team', label: 'Team' },
+  { href: '/about', label: 'About' },
+  { href: '/team', label: 'Team' },
   { href: '#contact', label: 'Contact' },
 ];
 
 const services: Service[] = [
-  { title: "Interior Design", description: "Bespoke interior solutions that blend aesthetics with functionality.", href:"#" },
-  { title: "Renovation & Remodeling", description: "Transforming existing spaces into modern, sustainable environments.", href:"#" },
-  { title: "Custom Plumbing Solutions", description: "Expert design and installation of high-efficiency plumbing systems.", href:"#" },
-  { title: "Sustainable Building", description: "Eco-friendly materials and green construction practices.", href:"#" },
-  { title: "Kitchen & Bath Design", description: "Crafting luxurious and practical kitchens and bathrooms.", href:"#" },
-  { title: "Project Management", description: "Seamless oversight from concept to completion for your project.", href:"#" },
+  { title: "Villa Design", description: "Complete villa design including architecture, landscape, electrical, plumbing, and civil engineering.", href:"#" },
+  { title: "Apartment Design", description: "Modern apartment interiors tailored to maximize space and functionality.", href:"#" },
+  { title: "Penthouse Interior Design", description: "Luxury penthouse interiors with sophisticated design and premium finishes.", href:"#" },
+  { title: "Curtains", description: "Custom curtains and soft furnishings to complete your interior design.", href:"#" },
+  { title: "Office Designing", description: "Professional office spaces that enhance productivity and reflect your brand.", href:"#" },
+  { title: "Restaurant Design", description: "Captivating restaurant interiors that create memorable dining experiences.", href:"#" },
+  { title: "Landscape Design", description: "Beautiful outdoor spaces that complement your architecture.", href:"#" },
+  { title: "Villa Renovation", description: "Transform your existing villa with modern updates and enhanced functionality.", href:"#" },
+  { title: "Barber Shop Design", description: "Stylish and functional barber shop interiors that attract customers.", href:"#" },
+  { title: "Apartment Renovation", description: "Modernize your apartment with expert renovation and interior upgrades.", href:"#" },
+  { title: "Office Renovation", description: "Refresh your workspace with contemporary design and improved layouts.", href:"#" },
+  { title: "Villa Construction", description: "Complete villa construction services from foundation to finishing.", href:"#" },
 ];
 
 const Navigation = () => {
@@ -65,12 +71,16 @@ const Navigation = () => {
     }, [isMobileMenuOpen]);
 
     const renderMegaMenu = () => (
-        <div className="absolute top-full left-0 w-full bg-pure-white text-foreground shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300">
-            <div className="container py-12">
+        <div className="absolute top-full left-0 w-full invisible group-hover:visible transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
+            {/* Backdrop with opacity and solid fallback */}
+            <div className="absolute inset-0 bg-[#f5f3f0]/98 backdrop-blur-md shadow-xl border-t border-black/10"></div>
+
+            {/* Content */}
+            <div className="relative container py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
                     {services.map((service) => (
-                        <Link href={service.href} key={service.title} className="group/service">
-                            <h4 className="font-display font-normal text-xl mb-2 group-hover/service:text-text-secondary transition-colors duration-300">{service.title}</h4>
+                        <Link href={service.href} key={service.title} className="group/service block">
+                            <h4 className="font-display font-normal text-xl mb-2 text-text-primary group-hover/service:text-text-secondary transition-colors duration-300">{service.title}</h4>
                             <p className="text-body-small text-text-secondary">{service.description}</p>
                         </Link>
                     ))}
@@ -81,12 +91,12 @@ const Navigation = () => {
 
     return (
         <header className={cn(
-            "fixed top-0 left-0 right-0 z-50 transition-colors duration-300",
-            scrolled ? 'bg-background shadow-[0_2px_8px_rgba(0,0,0,0.1)]' : (isMobileMenuOpen ? 'bg-background' : 'bg-transparent')
+            "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+            scrolled ? 'bg-background/98 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.1)]' : (isMobileMenuOpen ? 'bg-background/98 backdrop-blur-sm' : 'bg-transparent')
         )}>
             <div className="container flex items-center justify-between h-[60px] md:h-[80px]">
                 <Link href="/" className="z-20">
-                    <span className="font-display text-2xl md:text-3xl font-medium text-foreground">GreenBuild</span>
+                    <span className="font-display text-2xl md:text-3xl font-medium text-foreground">Green Builders and Interiors</span>
                 </Link>
 
                 <nav className="hidden md:flex items-center h-full">

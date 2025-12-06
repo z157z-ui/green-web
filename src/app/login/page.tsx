@@ -68,7 +68,7 @@ export default function LoginPage() {
         <div>
           <Link href="/">
             <h2 className="text-center text-3xl font-display font-medium text-foreground">
-              GreenBuild
+              Green Builders and Interiors
             </h2>
           </Link>
           <h3 className="mt-6 text-center text-2xl font-display text-foreground">

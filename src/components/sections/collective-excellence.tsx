@@ -12,7 +12,7 @@ const CollectiveExcellence = () => {
           </div>
           <div className="md:col-span-7">
             <p className="font-body text-lg md:text-xl leading-relaxed text-primary mb-10">
-              We are a collective of talented individuals with proven pedigree. Building on our expertise in hospitality and interiors, we now offer a broad range of services with the diversity of experience, skill and style to meet any design challenge.
+              Founded in 2017 by Sanal Das KV, Green Builders and Interiors has grown into a trusted name in interior design and construction. From humble beginnings, we've expanded our team with specialists in HVAC, project management, and facility operations. Today, we deliver exceptional residential, commercial, and institutional projects across India with professionalism, experience, and a customer-focused approach.
             </p>
             <Link
               href="/people"

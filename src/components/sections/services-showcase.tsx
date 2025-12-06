@@ -5,23 +5,23 @@ import Image from 'next/image';
 
 const servicesData = [
   {
-    name: "Interior Design",
-    description: "Creating refined living and commercial spaces that merge timeless aesthetics with modern functionality.",
+    name: "Villa Design",
+    description: "Comprehensive villa design services including architecture, landscape, electrical, plumbing, furniture design, renovation, and civil engineering.",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/6eace6e6-a7a2-4765-a9bd-4fcc11fb14c0-hba-com/assets/images/Fairmont_Breakers_HBA_Americas_OA1627_N35-scaled-6.jpg",
   },
   {
-    name: "Plumbing Solutions",
-    description: "Expertly engineered plumbing systems delivering efficiency and reliability for every project scale.",
+    name: "Apartment Design",
+    description: "Modern apartment interiors designed to maximize space, functionality, and style for contemporary living.",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/6eace6e6-a7a2-4765-a9bd-4fcc11fb14c0-hba-com/assets/images/InterContinental-Harbour-City-Shanghai-14-1152x153-23.jpg",
   },
   {
-    name: "Architecture Consulting",
-    description: "A global architecture practice delivering transformative design solutions of lasting quality and vision.",
+    name: "Office Designing",
+    description: "Professional workspace design creating productive environments that reflect your brand and enhance employee satisfaction.",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/6eace6e6-a7a2-4765-a9bd-4fcc11fb14c0-hba-com/assets/images/Hotel-Indigo-Grand-Canal-Suzhou_HBA-art-1265x1536-17.jpg",
   },
   {
-    name: "Project Management",
-    description: "Ensuring seamless execution from concept to completion with meticulous planning and oversight.",
+    name: "Renovation & Construction",
+    description: "Complete renovation and construction services for villas, apartments, and offices with expert project management from start to finish.",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/6eace6e6-a7a2-4765-a9bd-4fcc11fb14c0-hba-com/assets/images/Fairmont_Breakers_HBA_Americas_OA1627_N35-scaled-6.jpg",
   },
 ];
