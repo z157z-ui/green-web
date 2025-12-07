@@ -13,7 +13,11 @@
       "Bash(netstat:*)",
       "Bash(findstr:*)",
       "Bash(taskkill:*)",
-      "Bash(npx -y rimraf .next)"
+      "Bash(npx -y rimraf .next)",
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

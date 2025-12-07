@@ -5,7 +5,12 @@ import Navigation from "@/components/sections/navigation";
 import Footer from "@/components/sections/footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   title: "Green Builders and Interiors - Create and Customize Your Dream Interior",
@@ -19,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         <Navigation />
         {children}
         <Footer />

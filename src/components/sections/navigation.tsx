@@ -73,16 +73,16 @@ const Navigation = () => {
 
     const renderMegaMenu = () => (
         <div className="absolute top-full left-0 w-full invisible group-hover:visible transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
-            {/* Backdrop with opacity and solid fallback */}
-            <div className="absolute inset-0 bg-[#f5f3f0]/98 backdrop-blur-md shadow-xl border-t border-black/10"></div>
+            {/* Backdrop - Pure White */}
+            <div className="absolute inset-0 bg-white border-t border-[rgb(var(--color-divider))]"></div>
 
             {/* Content */}
-            <div className="relative container py-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+            <div className="relative luxury-container py-16 md:py-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12">
                     {services.map((service) => (
                         <Link href={service.href} key={service.title} className="group/service block">
-                            <h4 className="font-display font-normal text-xl mb-2 text-text-primary group-hover/service:text-text-secondary transition-colors duration-300">{service.title}</h4>
-                            <p className="text-body-small text-text-secondary">{service.description}</p>
+                            <h4 className="luxury-label text-black mb-3 group-hover/service:text-[rgb(var(--color-text-secondary))] transition-colors duration-300">{service.title}</h4>
+                            <p className="text-sm text-[rgb(var(--color-text-secondary))] leading-relaxed">{service.description}</p>
                         </Link>
                     ))}
                 </div>
@@ -92,10 +92,10 @@ const Navigation = () => {
 
     return (
         <header className={cn(
-            "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-            scrolled ? 'bg-background/98 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.1)]' : (isMobileMenuOpen ? 'bg-background/98 backdrop-blur-sm' : 'bg-transparent')
+            "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+            scrolled ? 'bg-white/95 backdrop-blur-md border-b border-[rgb(var(--color-divider))]' : (isMobileMenuOpen ? 'bg-white/95 backdrop-blur-md' : 'bg-transparent')
         )}>
-            <div className="container flex items-center h-[60px] md:h-[80px]">
+            <div className="luxury-container flex items-center h-[70px] md:h-[90px]">
                 <Link href="/" className="z-20 flex items-center">
                     {/* Replace with your logo: Place image.png in the public/ folder */}
                     {/* Uncomment the Image component below and remove the span when logo is ready */}
@@ -107,19 +107,19 @@ const Navigation = () => {
                         priority
                         className="h-10 md:h-12 w-auto"
                     /> */}
-                    <span className="font-display text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
-                        Green Builders and Interiors
+                    <span className="luxury-label text-sm md:text-base text-black">
+                        GREEN BUILDERS
                     </span>
                 </Link>
 
                 <nav className="hidden md:flex items-center h-full ml-auto mr-0">
-                    <ul className="flex items-center gap-6 lg:gap-8 h-full">
+                    <ul className="flex items-center gap-8 lg:gap-12 h-full">
                         {navLinks.map((link) => (
                             <li key={link.label} className={cn("h-full flex items-center", link.isMegaMenu && 'group')}>
-                                <Link href={link.href} className="flex items-center gap-1 text-button text-foreground hover:text-text-secondary transition-colors relative group/link">
+                                <Link href={link.href} className="flex items-center gap-1.5 luxury-label text-black hover:text-[rgb(var(--color-text-secondary))] transition-colors relative group/link">
                                     {link.label}
-                                    {link.isMegaMenu && <ChevronDown size={16} className="mt-0.5 transition-transform duration-300 group-hover:rotate-180" />}
-                                    <span className="absolute bottom-[-4px] left-0 h-px bg-foreground w-0 group-hover/link:w-full transition-all duration-300"></span>
+                                    {link.isMegaMenu && <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />}
+                                    <span className="absolute bottom-[-2px] left-0 h-px bg-black w-0 group-hover/link:w-full transition-all duration-300"></span>
                                 </Link>
                                 {link.isMegaMenu && renderMegaMenu()}
                             </li>
@@ -127,7 +127,7 @@ const Navigation = () => {
                     </ul>
                 </nav>
 
-                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Toggle menu" className="md:hidden z-20 text-foreground ml-auto">
+                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Toggle menu" className="md:hidden z-20 text-black ml-auto">
                     {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
 

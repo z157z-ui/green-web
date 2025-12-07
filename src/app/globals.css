@@ -1,1 +1,100 @@
 @import "tailwindcss";
+
+/* ============================================
+   LUXURY ARCHITECTURAL DESIGN SYSTEM
+   Monochrome Palette | Premium Typography
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Monochrome Color Palette */
+    --color-background: 255 255 255; /* #FFFFFF */
+    --color-foreground: 0 0 0; /* #000000 - Headings */
+    --color-text-primary: 0 0 0; /* #000000 */
+    --color-text-secondary: 51 51 51; /* #333333 - Body */
+    --color-text-tertiary: 115 115 115; /* #737373 - Muted */
+    --color-divider: 229 229 229; /* #E5E5E5 */
+
+    /* Spacing Scale - Massive Whitespace */
+    --spacing-section-sm: 5rem; /* 80px */
+    --spacing-section-md: 8rem; /* 128px */
+    --spacing-section-lg: 12rem; /* 192px */
+    --spacing-container: 3rem; /* 48px */
+
+    /* Typography - Premium Geometric Sans */
+    --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Letter Spacing for Luxury Feel */
+    --tracking-ultra-wide: 0.15em;
+    --tracking-wide: 0.08em;
+    --tracking-normal: 0.02em;
+  }
+
+  * {
+    border-color: rgb(var(--color-divider));
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white text-[rgb(var(--color-text-secondary))];
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-[rgb(var(--color-text-primary))];
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: var(--tracking-normal);
+  }
+}
+
+@layer utilities {
+  /* Luxury Label Style - Uppercase + Wide Tracking */
+  .luxury-label {
+    @apply uppercase text-xs;
+    letter-spacing: var(--tracking-ultra-wide);
+    font-weight: 500;
+  }
+
+  /* Massive Padding Utilities */
+  .section-padding-sm {
+    padding-top: var(--spacing-section-sm);
+    padding-bottom: var(--spacing-section-sm);
+  }
+
+  .section-padding-md {
+    padding-top: var(--spacing-section-md);
+    padding-bottom: var(--spacing-section-md);
+  }
+
+  .section-padding-lg {
+    padding-top: var(--spacing-section-lg);
+    padding-bottom: var(--spacing-section-lg);
+  }
+
+  /* Scroll-triggered Animation Base */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Container with Luxury Spacing */
+  .luxury-container {
+    @apply max-w-[1600px] mx-auto;
+    padding-left: var(--spacing-container);
+    padding-right: var(--spacing-container);
+  }
+}
