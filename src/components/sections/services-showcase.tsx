@@ -30,7 +30,7 @@ export default function ServicesShowcase() {
   const [activeService, setActiveService] = useState(0);
 
   return (
-    <section className="bg-background text-text-primary py-20 lg:py-32">
+    <section id="services" className="bg-background text-text-primary py-20 lg:py-32">
       <div className="container">
         <div className="flex flex-col lg:flex-row lg:gap-x-24">
           

@@ -1,39 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { projects } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// GET all projects
+export async function GET() {
   try {
-    const { id } = await params;
-    
-    if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
-      return NextResponse.json(
-        { error: 'Valid ID is required', code: 'INVALID_ID' },
-        { status: 400 }
-      );
-    }
-
-    const project = await db
-      .select()
-      .from(projects)
-      .where(eq(projects.id, parseInt(id)))
-      .limit(1);
-
-    if (project.length === 0) {
-      return NextResponse.json(
-        { error: 'Project not found', code: 'PROJECT_NOT_FOUND' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(project[0], { status: 200 });
+    const allProjects = await db.select().from(projects);
+    return NextResponse.json(allProjects, { status: 200 });
   } catch (error) {
-    console.error('GET error:', error);
+    console.error('GET all projects error:', error);
     return NextResponse.json(
       { error: 'Internal server error: ' + (error as Error).message },
       { status: 500 }
@@ -41,13 +17,11 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// POST - Create new project
+export async function POST(request: NextRequest) {
   try {
     const session = await auth.api.getSession({ headers: request.headers });
-    
+
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required', code: 'UNAUTHORIZED' },
@@ -55,194 +29,99 @@ export async function PUT(
       );
     }
 
-    const { id } = await params;
-    
-    if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
+    const body = await request.json();
+
+    // Validate required fields
+    if (!body.title || !body.title.trim()) {
       return NextResponse.json(
-        { error: 'Valid ID is required', code: 'INVALID_ID' },
+        { error: 'Title is required', code: 'MISSING_TITLE' },
         { status: 400 }
       );
     }
 
-    const existingProject = await db
-      .select()
-      .from(projects)
-      .where(eq(projects.id, parseInt(id)))
-      .limit(1);
-
-    if (existingProject.length === 0) {
+    if (!body.description || !body.description.trim()) {
       return NextResponse.json(
-        { error: 'Project not found', code: 'PROJECT_NOT_FOUND' },
-        { status: 404 }
+        { error: 'Description is required', code: 'MISSING_DESCRIPTION' },
+        { status: 400 }
       );
     }
 
-    const body = await request.json();
-    const updates: Partial<typeof projects.$inferInsert> = {};
-
-    if (body.title !== undefined) {
-      const title = body.title.trim();
-      if (!title) {
-        return NextResponse.json(
-          { error: 'Title cannot be empty', code: 'INVALID_TITLE' },
-          { status: 400 }
-        );
-      }
-      updates.title = title;
+    if (!body.category || !body.category.trim()) {
+      return NextResponse.json(
+        { error: 'Category is required', code: 'MISSING_CATEGORY' },
+        { status: 400 }
+      );
     }
 
-    if (body.description !== undefined) {
-      const description = body.description.trim();
-      if (!description) {
-        return NextResponse.json(
-          { error: 'Description cannot be empty', code: 'INVALID_DESCRIPTION' },
-          { status: 400 }
-        );
-      }
-      updates.description = description;
+    if (!body.location || !body.location.trim()) {
+      return NextResponse.json(
+        { error: 'Location is required', code: 'MISSING_LOCATION' },
+        { status: 400 }
+      );
     }
 
-    if (body.category !== undefined) {
-      const category = body.category.trim();
-      if (!category) {
-        return NextResponse.json(
-          { error: 'Category cannot be empty', code: 'INVALID_CATEGORY' },
-          { status: 400 }
-        );
-      }
-      updates.category = category;
+    if (!body.year) {
+      return NextResponse.json(
+        { error: 'Year is required', code: 'MISSING_YEAR' },
+        { status: 400 }
+      );
     }
 
-    if (body.location !== undefined) {
-      const location = body.location.trim();
-      if (!location) {
-        return NextResponse.json(
-          { error: 'Location cannot be empty', code: 'INVALID_LOCATION' },
-          { status: 400 }
-        );
-      }
-      updates.location = location;
+    const year = parseInt(body.year);
+    const currentYear = new Date().getFullYear();
+    if (isNaN(year) || year < 1900 || year > currentYear + 5) {
+      return NextResponse.json(
+        {
+          error: `Year must be between 1900 and ${currentYear + 5}`,
+          code: 'INVALID_YEAR',
+        },
+        { status: 400 }
+      );
     }
 
-    if (body.year !== undefined) {
-      const year = parseInt(body.year);
-      const currentYear = new Date().getFullYear();
-      if (isNaN(year) || year < 1900 || year > currentYear + 5) {
-        return NextResponse.json(
-          {
-            error: `Year must be between 1900 and ${currentYear + 5}`,
-            code: 'INVALID_YEAR',
-          },
-          { status: 400 }
-        );
-      }
-      updates.year = year;
+    if (!body.featuredImage || !body.featuredImage.trim()) {
+      return NextResponse.json(
+        { error: 'Featured image is required', code: 'MISSING_FEATURED_IMAGE' },
+        { status: 400 }
+      );
     }
 
-    if (body.featuredImage !== undefined) {
-      const featuredImage = body.featuredImage.trim();
-      if (!featuredImage) {
-        return NextResponse.json(
-          { error: 'Featured image cannot be empty', code: 'INVALID_FEATURED_IMAGE' },
-          { status: 400 }
-        );
-      }
-      updates.featuredImage = featuredImage;
-    }
-
-    if (body.galleryImages !== undefined) {
+    // Sanitize gallery images
+    let galleryImages: string[] = [];
+    if (body.galleryImages) {
       if (!Array.isArray(body.galleryImages)) {
         return NextResponse.json(
           { error: 'Gallery images must be an array', code: 'INVALID_GALLERY_IMAGES' },
           { status: 400 }
         );
       }
-      const sanitizedGallery = body.galleryImages
+      galleryImages = body.galleryImages
         .filter((img: unknown) => typeof img === 'string')
         .map((img: string) => img.trim())
         .filter((img: string) => img.length > 0);
-      updates.galleryImages = sanitizedGallery as any;
     }
 
-    if (body.status !== undefined) {
-      const status = body.status.trim();
-      if (status !== 'published' && status !== 'draft') {
-        return NextResponse.json(
-          { error: 'Status must be "published" or "draft"', code: 'INVALID_STATUS' },
-          { status: 400 }
-        );
-      }
-      updates.status = status;
-    }
+    const status = body.status === 'draft' ? 'draft' : 'published';
 
-    updates.updatedAt = new Date().toISOString();
-
-    const updatedProject = await db
-      .update(projects)
-      .set(updates)
-      .where(eq(projects.id, parseInt(id)))
+    const newProject = await db
+      .insert(projects)
+      .values({
+        title: body.title.trim(),
+        description: body.description.trim(),
+        category: body.category.trim(),
+        location: body.location.trim(),
+        year,
+        featuredImage: body.featuredImage.trim(),
+        galleryImages: galleryImages as any,
+        status,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
       .returning();
 
-    return NextResponse.json(updatedProject[0], { status: 200 });
+    return NextResponse.json(newProject[0], { status: 201 });
   } catch (error) {
-    console.error('PUT error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await auth.api.getSession({ headers: request.headers });
-    
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Authentication required', code: 'UNAUTHORIZED' },
-        { status: 401 }
-      );
-    }
-
-    const { id } = await params;
-    
-    if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
-      return NextResponse.json(
-        { error: 'Valid ID is required', code: 'INVALID_ID' },
-        { status: 400 }
-      );
-    }
-
-    const existingProject = await db
-      .select()
-      .from(projects)
-      .where(eq(projects.id, parseInt(id)))
-      .limit(1);
-
-    if (existingProject.length === 0) {
-      return NextResponse.json(
-        { error: 'Project not found', code: 'PROJECT_NOT_FOUND' },
-        { status: 404 }
-      );
-    }
-
-    const deletedProject = await db
-      .delete(projects)
-      .where(eq(projects.id, parseInt(id)))
-      .returning();
-
-    return NextResponse.json(
-      {
-        message: 'Project deleted successfully',
-        project: deletedProject[0],
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error('DELETE error:', error);
+    console.error('POST error:', error);
     return NextResponse.json(
       { error: 'Internal server error: ' + (error as Error).message },
       { status: 500 }

@@ -4,18 +4,18 @@ import Link from 'next/link';
 import { Instagram, Linkedin, Twitter, Facebook, ArrowRight } from 'lucide-react';
 
 const servicesLinks = [
-  "Villa Design",
-  "Apartment Design",
-  "Penthouse Interior Design",
-  "Curtains",
-  "Office Designing",
-  "Restaurant Design",
-  "Landscape Design",
-  "Villa Renovation",
-  "Barber Shop Design",
-  "Apartment Renovation",
-  "Office Renovation",
-  "Villa Construction",
+  { name: "Villa Design", href: "/services#villa-design" },
+  { name: "Apartment Design", href: "/services#apartment-design" },
+  { name: "Penthouse Interior Design", href: "/services#penthouse-design" },
+  { name: "Curtains", href: "/services#curtains" },
+  { name: "Office Designing", href: "/services#office-design" },
+  { name: "Restaurant Design", href: "/services#restaurant-design" },
+  { name: "Landscape Design", href: "/services#landscape-design" },
+  { name: "Villa Renovation", href: "/services#villa-renovation" },
+  { name: "Barber Shop Design", href: "/services#barber-shop-design" },
+  { name: "Apartment Renovation", href: "/services#apartment-renovation" },
+  { name: "Office Renovation", href: "/services#office-renovation" },
+  { name: "Villa Construction", href: "/services#villa-construction" },
 ];
 
 const companyLinks = [
@@ -34,7 +34,7 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#2a2a2a] text-gray-300 font-body">
+    <footer id="contact" className="bg-[#2a2a2a] text-gray-300 font-body">
       <div className="container mx-auto px-5 md:px-10 py-20 lg:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr] gap-x-8 gap-y-12">
           
@@ -53,9 +53,9 @@ const Footer = () => {
             <h3 className="text-button text-white mb-6">Services</h3>
             <ul className="space-y-4">
               {servicesLinks.map((link) => (
-                <li key={link}>
-                  <Link href="#" className="text-body-small text-gray-400 hover:text-white transition-colors duration-300">
-                    {link}
+                <li key={link.name}>
+                  <Link href={link.href} className="text-body-small text-gray-400 hover:text-white transition-colors duration-300">
+                    {link.name}
                   </Link>
                 </li>
               ))}

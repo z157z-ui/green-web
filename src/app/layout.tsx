@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/sections/navigation";
 import Footer from "@/components/sections/footer";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Navigation />
         {children}
         <Footer />
+        <WhatsAppWidget />
       </body>
     </html>
   );

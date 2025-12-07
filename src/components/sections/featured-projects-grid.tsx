@@ -114,7 +114,7 @@ const FeaturedProjectsGrid = () => {
   const displayProjects = [...projectsData, ...projectsData.slice(0, 2)]; 
 
   return (
-    <section className="bg-background text-foreground py-24 md:py-32">
+    <section id="projects" className="bg-background text-foreground py-24 md:py-32">
       <div className="max-w-[1600px] mx-auto px-5 md:px-10">
         <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6">
           {displayProjects.map((project, index) => (

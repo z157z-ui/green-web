@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 // Utility for combining Tailwind classes
@@ -22,26 +23,26 @@ interface Service {
 }
 
 const navLinks: NavLink[] = [
-  { href: '#services', label: 'Services', isMegaMenu: true },
+  { href: '/services', label: 'Services', isMegaMenu: true },
   { href: '#projects', label: 'Projects' },
   { href: '/about', label: 'About' },
   { href: '/team', label: 'Team' },
-  { href: '#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const services: Service[] = [
-  { title: "Villa Design", description: "Complete villa design including architecture, landscape, electrical, plumbing, and civil engineering.", href:"#" },
-  { title: "Apartment Design", description: "Modern apartment interiors tailored to maximize space and functionality.", href:"#" },
-  { title: "Penthouse Interior Design", description: "Luxury penthouse interiors with sophisticated design and premium finishes.", href:"#" },
-  { title: "Curtains", description: "Custom curtains and soft furnishings to complete your interior design.", href:"#" },
-  { title: "Office Designing", description: "Professional office spaces that enhance productivity and reflect your brand.", href:"#" },
-  { title: "Restaurant Design", description: "Captivating restaurant interiors that create memorable dining experiences.", href:"#" },
-  { title: "Landscape Design", description: "Beautiful outdoor spaces that complement your architecture.", href:"#" },
-  { title: "Villa Renovation", description: "Transform your existing villa with modern updates and enhanced functionality.", href:"#" },
-  { title: "Barber Shop Design", description: "Stylish and functional barber shop interiors that attract customers.", href:"#" },
-  { title: "Apartment Renovation", description: "Modernize your apartment with expert renovation and interior upgrades.", href:"#" },
-  { title: "Office Renovation", description: "Refresh your workspace with contemporary design and improved layouts.", href:"#" },
-  { title: "Villa Construction", description: "Complete villa construction services from foundation to finishing.", href:"#" },
+  { title: "Villa Design", description: "Complete villa design including architecture, landscape, electrical, plumbing, and civil engineering.", href:"/services#villa-design" },
+  { title: "Apartment Design", description: "Modern apartment interiors tailored to maximize space and functionality.", href:"/services#apartment-design" },
+  { title: "Penthouse Interior Design", description: "Luxury penthouse interiors with sophisticated design and premium finishes.", href:"/services#penthouse-design" },
+  { title: "Curtains & Soft Furnishings", description: "Custom curtains and soft furnishings to complete your interior design.", href:"/services#curtains" },
+  { title: "Office Designing", description: "Professional office spaces that enhance productivity and reflect your brand.", href:"/services#office-design" },
+  { title: "Restaurant Design", description: "Captivating restaurant interiors that create memorable dining experiences.", href:"/services#restaurant-design" },
+  { title: "Landscape Design", description: "Beautiful outdoor spaces that complement your architecture.", href:"/services#landscape-design" },
+  { title: "Villa Renovation", description: "Transform your existing villa with modern updates and enhanced functionality.", href:"/services#villa-renovation" },
+  { title: "Barber Shop Design", description: "Stylish and functional barber shop interiors that attract customers.", href:"/services#barber-shop-design" },
+  { title: "Apartment Renovation", description: "Modernize your apartment with expert renovation and interior upgrades.", href:"/services#apartment-renovation" },
+  { title: "Office Renovation", description: "Refresh your workspace with contemporary design and improved layouts.", href:"/services#office-renovation" },
+  { title: "Villa Construction", description: "Complete villa construction services from foundation to finishing.", href:"/services#villa-construction" },
 ];
 
 const Navigation = () => {
@@ -94,13 +95,25 @@ const Navigation = () => {
             "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
             scrolled ? 'bg-background/98 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.1)]' : (isMobileMenuOpen ? 'bg-background/98 backdrop-blur-sm' : 'bg-transparent')
         )}>
-            <div className="container flex items-center justify-between h-[60px] md:h-[80px]">
-                <Link href="/" className="z-20">
-                    <span className="font-display text-2xl md:text-3xl font-medium text-foreground">Green Builders and Interiors</span>
+            <div className="container flex items-center h-[60px] md:h-[80px]">
+                <Link href="/" className="z-20 flex items-center">
+                    {/* Replace with your logo: Place image.png in the public/ folder */}
+                    {/* Uncomment the Image component below and remove the span when logo is ready */}
+                    {/* <Image
+                        src="/image.png"
+                        alt="Green Builders and Interiors"
+                        width={200}
+                        height={60}
+                        priority
+                        className="h-10 md:h-12 w-auto"
+                    /> */}
+                    <span className="font-display text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
+                        Green Builders and Interiors
+                    </span>
                 </Link>
 
-                <nav className="hidden md:flex items-center h-full">
-                    <ul className="flex items-center gap-8 h-full">
+                <nav className="hidden md:flex items-center h-full ml-auto mr-0">
+                    <ul className="flex items-center gap-6 lg:gap-8 h-full">
                         {navLinks.map((link) => (
                             <li key={link.label} className={cn("h-full flex items-center", link.isMegaMenu && 'group')}>
                                 <Link href={link.href} className="flex items-center gap-1 text-button text-foreground hover:text-text-secondary transition-colors relative group/link">
@@ -114,7 +127,7 @@ const Navigation = () => {
                     </ul>
                 </nav>
 
-                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Toggle menu" className="md:hidden z-20 text-foreground">
+                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Toggle menu" className="md:hidden z-20 text-foreground ml-auto">
                     {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
 
