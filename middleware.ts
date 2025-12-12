@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -78,23 +76,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Protected routes - require authentication
-  if (request.nextUrl.pathname.startsWith("/admin")) {
-    const session = await auth.api.getSession({ headers: await headers() });
-    
-    if (!session?.user) {
-      const loginUrl = new URL("/login", request.url);
-      loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
-
   return response;
 }
 
 export const config = {
   matcher: [
-    "/admin/:path*",
     "/api/:path*",
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
