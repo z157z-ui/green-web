@@ -243,46 +243,8 @@ Minimalist Beige Bathroom
 
 Zen Inspired Living Space
 
-8. BLOG ARTICLES (3 Fully Scraped)
-Blog 1: Why Modular Kitchen Designers Are a Game-Changer
-
-What is modular kitchen
-
-Benefits of hiring pros
-
-Popular layouts (L-shape, U-shape, Galley, Island)
-
-Blog 2: Why Hiring an Interior Designing Company Can Transform Your Space
-
-Beyond décor
-
-Why pros help
-
-Design journey
-
-Blog 3: Top 10 Tips for Kitchen Design
-
-Smart layout
-
-Quality materials
-
-Storage
-
-Neutral base
-
-Lighting
-
-Island
-
-Appliances
-
-Ventilation
-
-Ergonomics
-
-Personalization
-
-9. OUR PROCESS PAGE (Detailed)
+ABOUT
+1. OUR PROCESS PAGE (Detailed)
 
 6-Step Workflow:
 
@@ -298,7 +260,7 @@ Execution & Installation
 
 Final Handover & Walkthrough
 
-10. OUR STUDIO PAGE
+2. OUR STUDIO PAGE
 Tagline:
 
 "Where Ideas Come to Life"
@@ -327,9 +289,6 @@ Track Record:
 • Twitter
 • Telegram
 
-12. NAVIGATION MENU
-
-HOME, ABOUT US, OUR SERVICES, PORTFOLIO, BLOGS, CONTACTS.
 
 13. FOOTER DATA
 

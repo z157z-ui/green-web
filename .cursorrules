@@ -1,0 +1,67 @@
+You are an expert in React, TypeScript, Next.js, Tailwind CSS, and Framer Motion.
+
+Tech Stack:
+- React 18+ with TypeScript
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Next.js 14+ App Router (if applicable)
+- shadcn/ui components
+
+Code Style:
+- Functional components with hooks
+- TypeScript strict mode
+- Tailwind utility classes (no inline styles)
+- Named exports for components
+- Interface definitions for all props
+
+File Structure:
+- Components in /components
+- Hooks in /hooks
+- Types in /types
+- Utils in /lib or /utils
+
+Component Guidelines:
+- Max 200 lines per component
+- Extract logic to custom hooks
+- Use TypeScript interfaces for props
+- Semantic HTML5 elements
+- ARIA labels for accessibility
+
+Styling Rules:
+- Mobile-first responsive design
+- Use Tailwind's responsive prefixes (sm: md: lg:)
+- Consistent spacing scale (4, 8, 12, 16, 24, 32px)
+- Design tokens from tailwind.config
+- Dark mode support with class strategy
+
+Animation Rules:
+- Framer Motion for complex animations
+- CSS transitions for hover effects
+- Target 60fps performance
+- Respect prefers-reduced-motion
+- Stagger children animations
+
+Security:
+- Validate all inputs with Zod
+- Sanitize user content
+- Use environment variables for secrets
+- HTTPS only for production
+- Implement rate limiting
+
+Performance:
+- Lazy load images with next/image
+- Code split with dynamic imports
+- Optimize bundle size
+- Use React.memo for expensive renders
+
+Error Handling:
+- Try-catch for async operations
+- Error boundaries for components
+- User-friendly error messages
+- Log errors to console in dev
+
+Always:
+- Write clean, readable code
+- Add comments for complex logic
+- Follow DRY principles
+- Test edge cases

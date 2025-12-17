@@ -1,29 +1,52 @@
-import StickyProjectScroller from "@/components/sections/sticky-project-scroller";
-import AboutOverview from "@/components/sections/about-overview";
-import Statistics from "@/components/sections/statistics";
-import CompanyHistory from "@/components/sections/company-history";
-import ServicesShowcase from "@/components/sections/services-showcase";
-import FeaturedProjectsGrid from "@/components/sections/featured-projects-grid";
-import LeadershipTeam from "@/components/sections/leadership-team";
-import NewsPerspectives from "@/components/sections/news-perspectives";
+"use client";
+
+import {
+  LuxuryHero,
+  LuxuryStats,
+  BentoProjects,
+  HorizontalServices,
+  TestimonialsCarousel,
+  WhyChooseUs,
+} from "@/components/luxury";
+import { OfficeMap } from "@/components/contact";
 
 export default function Home() {
   return (
-    <main className="bg-white">
-      {/* Luxury Architectural Hero - Sticky Project Scroller */}
-      <StickyProjectScroller />
-
-      {/* Existing Sections - Will inherit new global luxury styles */}
-      <AboutOverview />
-      <Statistics />
-
-      {/* Enhanced Legacy Timeline */}
-      <CompanyHistory />
-
-      <ServicesShowcase />
-      <FeaturedProjectsGrid />
-      <LeadershipTeam />
-      <NewsPerspectives />
+    <main className="min-h-screen bg-background">
+      <LuxuryHero />
+      <LuxuryStats />
+      
+      <section className="py-20 md:py-24">
+        <BentoProjects />
+      </section>
+      
+      <HorizontalServices />
+      
+      <section className="py-20 md:py-24 bg-background">
+        <WhyChooseUs />
+      </section>
+      
+      <section className="py-20 md:py-24 bg-primary-dark">
+        <TestimonialsCarousel />
+      </section>
+      
+      {/* Office Locations Map */}
+      <section className="py-20 md:py-24 bg-background">
+        <div className="luxury-container">
+          <div className="text-center mb-12">
+            <span className="luxury-label text-gold">Find Us</span>
+            <h2 className="mt-4 font-serif text-4xl md:text-5xl font-light text-white">
+              Our Offices
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-text-grey">
+              Serving clients across South India with offices in 5 major cities
+            </p>
+          </div>
+          <div className="h-[600px] lg:h-[700px]">
+            <OfficeMap />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

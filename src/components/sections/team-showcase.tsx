@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { User } from 'lucide-react';
 
 interface LeaderMember {
@@ -9,6 +10,7 @@ interface LeaderMember {
   education: string[];
   experience: string;
   expertise: string;
+  image?: string;
 }
 
 interface CoreMember {
@@ -22,21 +24,24 @@ const leadership: LeaderMember[] = [
     role: "Founder & CEO",
     education: ["BSc Interior Design", "Diploma in Building & Construction"],
     experience: "9 years interior design experience, 4 years construction & project management",
-    expertise: "Execution, HVAC integration"
+    expertise: "Execution, HVAC integration",
+    image: "/images/team/Sanal Das KV.png"
   },
   {
     name: "Praveen Kumar R",
     role: "Co-Founder & CTO",
     education: ["BE Electrical & Electronics"],
     experience: "Operations Manager at Awfis Space Solutions, 10 years in space management and facility operations",
-    expertise: "HVAC for commercial spaces"
+    expertise: "HVAC for commercial spaces",
+    image: "/images/team/Praveen Kumar R.png"
   },
   {
     name: "Bluvin Ravindran",
     role: "Co-Founder & COO",
     education: ["Mechanical Engineering"],
     experience: "Managing Director at C-Zero, Co-Founder of Super Biochar (New York), Associate Director at Suarcsh Filters Pvt Ltd, 10+ years in business development",
-    expertise: "Business development and operations"
+    expertise: "Business development and operations",
+    image: "/images/team/Bluvin Ravindran.png"
   }
 ];
 
@@ -60,8 +65,17 @@ const coreTeam: CoreMember[] = [
 const LeaderCard = ({ member }: { member: LeaderMember }) => {
   return (
     <div className="group bg-card border border-border rounded-sm overflow-hidden transform transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg">
-      <div className="relative aspect-[4/5] bg-secondary flex items-center justify-center grayscale">
-        <User className="h-20 w-20 text-muted" />
+      <div className="relative aspect-[4/5] bg-secondary flex items-center justify-center overflow-hidden">
+        {member.image ? (
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <User className="h-20 w-20 text-muted" />
+        )}
       </div>
       <div className="p-6 text-left">
         <h3 className="font-body font-semibold text-lg text-text-primary leading-tight">

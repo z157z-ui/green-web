@@ -17,7 +17,9 @@
       "Bash(git commit:*)",
       "Bash(node:*)",
       "Bash(ls:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(del \"C:\\Users\\arjun\\Documents\\wEBSITES\\green-web\\src\\components\\ContactMap.tsx\")",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

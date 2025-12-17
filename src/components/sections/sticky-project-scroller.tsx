@@ -113,7 +113,7 @@ const StickyProjectScroller = () => {
 
       {/* Scrolling Project Text Overlays */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="luxury-container h-full flex flex-col justify-center">
+        <div className="luxury-container h-full flex flex-col justify-center px-4 sm:px-6 md:px-8">
           <div className="space-y-[60vh]">
             {projects.map((project, index) => (
               <div
@@ -121,12 +121,12 @@ const StickyProjectScroller = () => {
                 ref={(el) => { projectRefs.current[index] = el; }}
                 className="min-h-[40vh] flex items-center"
               >
-                <div className="max-w-3xl">
-                  <div className="luxury-label text-white/90 mb-6">
+                <div className="max-w-3xl w-full">
+                  <div className="luxury-label text-white/90 mb-3 sm:mb-4 md:mb-6 text-xs sm:text-sm">
                     PROJECT {String(index + 1).padStart(2, '0')}
                   </div>
                   <h2
-                    className="text-6xl md:text-7xl lg:text-8xl font-light text-white mb-8 leading-[0.95]"
+                    className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white mb-4 sm:mb-6 md:mb-8 leading-[0.95]"
                     style={{
                       fontFamily: 'var(--font-display)',
                       letterSpacing: 'var(--tracking-normal)'
@@ -134,14 +134,14 @@ const StickyProjectScroller = () => {
                   >
                     {project.name}
                   </h2>
-                  <div className="flex gap-12 text-white/90">
+                  <div className="flex gap-6 sm:gap-8 md:gap-12 text-white/90">
                     <div>
-                      <div className="luxury-label text-white/70 mb-2">LOCATION</div>
-                      <div className="text-lg">{project.location}</div>
+                      <div className="luxury-label text-white/70 mb-1 sm:mb-2 text-xs">LOCATION</div>
+                      <div className="text-sm sm:text-base md:text-lg">{project.location}</div>
                     </div>
                     <div>
-                      <div className="luxury-label text-white/70 mb-2">YEAR</div>
-                      <div className="text-lg">{project.year}</div>
+                      <div className="luxury-label text-white/70 mb-1 sm:mb-2 text-xs">YEAR</div>
+                      <div className="text-sm sm:text-base md:text-lg">{project.year}</div>
                     </div>
                   </div>
                 </div>

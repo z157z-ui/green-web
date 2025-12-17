@@ -5,7 +5,7 @@ const AboutOverview = () => {
     "Green Builders and Interiors brings 8+ years of expertise in crafting modern, innovative designs. We specialize in sleek lines, minimalist elegance, and contemporary charm, transforming residential and commercial spaces with design, functionality, and comfort. At Green Builders and Interiors, we are dedicated to putting our clients first by understanding their needs and delivering exceptional service. Our commitment goes beyond just design—it is reflected in every detail we handle with care, professionalism and attention.";
 
   return (
-    <section className="bg-[#e8e4df] text-text-primary py-10 md:py-[60px] lg:py-20">
+    <section className="relative z-10 bg-[#e8e4df] text-text-primary py-10 md:py-[60px] lg:py-20">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-x-8">
           <div className="lg:col-span-4">
