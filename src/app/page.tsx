@@ -7,6 +7,7 @@ import {
   HorizontalServices,
   TestimonialsCarousel,
   WhyChooseUs,
+  ClientLogos,
 } from "@/components/luxury";
 import { OfficeMap } from "@/components/contact";
 
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <LuxuryHero />
+      <ClientLogos />
       <LuxuryStats />
       
       <section className="py-20 md:py-24">

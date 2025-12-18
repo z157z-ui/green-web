@@ -5,6 +5,7 @@ import {
   CompanyTimeline,
   ValuesSection,
   WhyChooseUs,
+  CertificationsSection,
 } from "@/components/luxury";
 
 export default function AboutPage() {
@@ -17,6 +18,8 @@ export default function AboutPage() {
       <section className="py-20 md:py-24 bg-primary-dark">
         <WhyChooseUs />
       </section>
+
+      <CertificationsSection />
     </main>
   );
 }

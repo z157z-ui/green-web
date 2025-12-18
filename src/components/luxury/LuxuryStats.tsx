@@ -11,24 +11,24 @@ interface Stat {
 
 const stats: Stat[] = [
   {
-    value: 8,
+    value: 50,
     suffix: "+",
-    label: "Years Experience",
+    label: "Projects Delivered",
   },
   {
-    value: 30,
-    suffix: "+",
-    label: "Residential Projects",
+    value: 98,
+    suffix: "%",
+    label: "On-Time Delivery",
   },
   {
-    value: 20,
-    suffix: "+",
-    label: "Commercial Projects",
-  },
-  {
-    value: 5,
+    value: 45,
     suffix: "",
-    label: "Offices",
+    label: "Day Avg Completion",
+  },
+  {
+    value: 8,
+    suffix: "",
+    label: "Sectors Served",
   },
 ];
 

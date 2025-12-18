@@ -37,20 +37,29 @@ export function LuxuryHero() {
           className="mb-6"
         >
           <span className="luxury-label text-accent">
-            8+ YEARS OF EXCELLENCE
+            ARCHITECTS · ENGINEERS · INTERIOR DESIGNERS
           </span>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1
-          className="mb-8 font-serif text-4xl font-medium leading-[1.1] text-white md:text-6xl lg:text-7xl max-w-5xl"
+          className="mb-6 font-serif text-4xl font-medium leading-[1.1] text-white md:text-6xl lg:text-7xl max-w-5xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          WE DON&apos;T JUST BUILD STRUCTURES{" "}
-          <span className="text-gold">WE BUILD DREAMS</span>
+          <span className="text-gold">INNOVATE</span> · DESIGN · <span className="text-gold">INSPIRE</span>
         </motion.h1>
+
+        {/* Tagline */}
+        <motion.p
+          className="mb-4 text-xl md:text-2xl text-white/90 font-light"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          We Don&apos;t Just Build Structures — We Build Dreams
+        </motion.p>
 
         {/* Subtitle */}
         <motion.p
@@ -59,7 +68,7 @@ export function LuxuryHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Complete interior design and construction solutions for homes, offices, and commercial projects
+          Integrated interior design & turnkey solutions across residential, commercial, and industrial sectors
         </motion.p>
 
         {/* CTA Buttons */}

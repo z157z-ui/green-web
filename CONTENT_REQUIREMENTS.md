@@ -4,254 +4,269 @@ This document lists all the content, images, and data that need to be collected 
 
 ---
 
-## 📸 IMAGES REQUIRED (STILL NEEDED)
+## ✅ COMPANY DATA (FROM PITCH DECK)
 
-### 1. Hero & Background Images
-| Location | Description | Recommended Size | Status |
-|----------|-------------|------------------|--------|
-| Homepage Hero | Stunning interior/construction shot | 1920x1080px | ❌ Needed |
-| About Page Hero | Team or office photo | 1920x1080px | ❌ Needed |
-| Contact Page | Office interior or meeting room | 1920x1080px | ❌ Needed |
-| Services Page | Design workspace or tools | 1920x1080px | ❌ Needed |
+### Company Overview
+- ✅ **Company Name**: Green Builders & Interiors
+- ✅ **Tagline**: "Innovate · Design · Inspire"
+- ✅ **Subtitle**: "Architects, Engineers & Interior Designers"
+- ✅ **About**: Bangalore-headquartered design-build firm specializing in integrated interior and turnkey solutions. Combines spatial design excellence with advanced HVAC engineering capabilities.
+- ✅ **GSTIN**: 29AVHPV0225A1ZT
 
-### 2. Company Logo
-| Asset | Description | Status |
-|-------|-------------|--------|
-| Primary Logo | Full color on dark background | ✅ LOGO.png |
-| White Logo | For dark backgrounds | ✅ LOGO-WHITE.png |
-| Icon/Favicon | Square icon version | ❌ Needed (SVG + ICO) |
-| OG Image | Social media preview (1200x630px) | ❌ Needed |
+### Key Statistics
+| Metric | Value | Status |
+|--------|-------|--------|
+| Years of Operation | 7+ years | ✅ |
+| Projects Delivered | 50+ | ✅ |
+| On-Time Delivery | 98% | ✅ |
+| Avg Completion Time | 45 days | ✅ |
+| Team Size | 35+ members | ✅ |
+| Sectors Served | 8 | ✅ |
+| Repeat/Referral Rate | 60% | ✅ |
+| Client Satisfaction | 95% | ✅ |
+| Offices | 5 cities | ✅ |
 
-### 3. Project Portfolio Images
-**Projects Found on Old Website (Need High-Res Images):**
-| # | Project Name | Status |
-|---|--------------|--------|
-| 1 | Bright Orange Modular Kitchen | ❌ Need images + details |
-| 2 | Modern Open Kitchen | ❌ Need images + details |
-| 3 | Modern Lounge with Wall Lighting | ❌ Need images + details |
-| 4 | Minimalist Living Room | ❌ Need images + details |
-| 5 | Matte Black Kitchen | ❌ Need images + details |
-| 6 | Futuristic Modular Kitchen | ❌ Need images + details |
-| 7 | Blue and White Modern Bathroom | ❌ Need images + details |
-| 8 | Wooden Vanity Bathroom | ❌ Need images + details |
-| 9 | Minimalist Beige Bathroom | ❌ Need images + details |
-| 10 | Zen Inspired Living Space | ❌ Need images + details |
-
-For each project collect: Featured image, 4-8 gallery images, location, year, size, challenge, solution
-
-### 4. Service Images (12 Services)
-❌ Need one representative image per service (1200x800px min)
-
-### 5. Team Photos
-| Person | Role | Status |
-|--------|------|--------|
-| Sanal Das KV | Founder & CEO | ✅ Added |
-| Praveen Kumar R | Co-Founder & CTO | ✅ Added |
-| Bluvin Ravindran | Co-Founder & COO | ✅ Added |
-| Core team members | Various | ❌ Photos needed |
-
-### 6. Office Location Photos
-❌ Need interior/exterior shots of each office
+### Competitive Advantages
+- ✅ 40% faster than industry average (45 days vs 75 days)
+- ✅ 15-20% cost advantage vs large players
+- ✅ In-house HVAC engineering (only ~2% of competitors offer this)
+- ✅ Unlimited design iterations
+- ✅ Direct OEM partnerships
+- ✅ Transparent, itemized quotations
 
 ---
 
-## ✅ TEXT CONTENT (ALREADY COLLECTED)
+## ✅ CLIENT PORTFOLIO (15 Companies)
 
-### Company Information
-- ✅ **Tagline**: "WE DON'T JUST BUILD STRUCTURES WE BUILD DREAMS"
-- ✅ **About Description**: "At Green Builders and Interiors, we create spaces that beautifully combine design, functionality, and comfort. Headquartered in Bangalore, we specialize in complete interior design and construction solutions for homes, offices, and commercial projects. With a focus on quality, precision, and timeless style, we transform every project into a space that truly reflects your vision and lifestyle."
-- ❌ **Mission Statement**: Not available - needs to be written
-- ❌ **Vision Statement**: Not available - needs to be written
-- ✅ **Founding Story**: Founded in 2017 by Sanal Das KV
+| # | Client Name | Status |
+|---|-------------|--------|
+| 1 | Smart Node | ✅ |
+| 2 | Alsina | ✅ |
+| 3 | Toyota | ✅ |
+| 4 | Bajaj Allianz | ✅ |
+| 5 | Mitsubishi Electric | ✅ |
+| 6 | Kargil Equipments | ✅ |
+| 7 | Fateh | ✅ |
+| 8 | SAPRO Global Talent Solutions | ✅ |
+| 9 | Thoughtworks | ✅ |
+| 10 | BluArmor | ✅ |
+| 11 | Awfis | ✅ |
+| 12 | Mibo – The Mind Expert | ✅ |
+| 13 | Aster Pharmacy | ✅ |
+| 14 | Credel Capital Financial Services LLP | ✅ |
+| 15 | Softtek | ✅ |
 
-### Statistics
-- ✅ Years in business: **8+ years**
-- ❌ Projects completed: Not specified
-- ❌ Residential projects: Not specified
-- ❌ Commercial projects: Not specified
-- ❌ Team members: Not specified
-- ✅ Cities served: **5**
-- ❌ Square feet designed: Not specified
+**Note**: Logo images needed - will use text placeholders until provided
 
-### Contact Information
-- ✅ **Primary Phone**: +91 9739992779
-- ✅ **Secondary Phone**: +91 9606894352
-- ✅ **Email (General)**: info@greenbuildersandinteriors.com
-- ❌ **Email (Careers)**: Not specified
-- ✅ **WhatsApp Number**: +91 9739992779
+---
 
-### Office Addresses (COMPLETE ✅)
-```
-1. BENGALURU (HQ)
-   Full Address: Reg Office, G F, NO 6/1, Madivala, Bengaluru, Karnataka, 560068
-   Phone: 9739992779, 9606894352
-   Email: banglore@greenbuildersandinteriors.com
-   
-2. HYDERABAD
-   Full Address: Ground Floor D' Desks, Road Number 12, Banjara Hills, Hyderabad, Telangana
-   Phone: 9739992779, 9606894352
-   Email: hyderabad@greenbuildersandinteriors.com
+## ✅ TEAM STRUCTURE (Complete)
 
-3. CHENNAI
-   Full Address: 1st Floor, 111 A, Rajiv Gandhi Road, OMR, Kottivakkam, Chennai, Tamil Nadu 600041
-   Phone: 9739992779, 9606894352
-   Email: chennai@greenbuildersandinteriors.com
+### Leadership Team
+| Name | Role | Qualification | Experience | Status |
+|------|------|---------------|------------|--------|
+| Sanal Das KV | Founder & CEO | BSc Interior Design, Diploma Building & Construction | 9+ years | ✅ |
+| Bluvin Ravindran | Co-Founder & COO | BE Mechanical, MD at C-Zero | 10+ years | ✅ |
+| Praveen Kumar R | Co-Founder & CTO | BE Electrical & Electronics | 10+ years | ✅ |
 
-4. KOCHI
-   Full Address: 3rd Floor AWFIS office, Mezhukkattil Matrix, Chittoor Road, Ernakulam, Kochi 682011
-   Phone: 9739992779, 9606894352
-   Email: kochi@greenbuildersandinteriors.com
+### Design & Architecture Team
+| Name | Role | Status |
+|------|------|--------|
+| Naresh Joseph | Principal Architect | ✅ |
+| Abhilash Nair | Senior Interior Designer | ✅ |
+| Hrithik | Interior Designer | ✅ |
 
-5. VISAKHAPATNAM
-   Full Address: Mastec QuadGen Wireless LLP, 2nd Floor, Synophic Tower, IT Tech Park, Madhurawada, Visakhapatnam, AP 530045
-   Phone: 9739992779, 9606894352
-   Email: Visakhapatnam@greenbuildersandinteriors.com
-```
+### Engineering & Technical Team
+| Name | Role | Status |
+|------|------|--------|
+| Bijoy | Lead Civil Engineer | ✅ |
+| Adarsh | Civil Engineer | ✅ |
+| Chandrashekhar | Structural Engineer | ✅ |
+| Deepesh | HVAC Engineer | ✅ |
+| Amal Vijayan | Electrical Engineer | ✅ |
 
-### Social Media Links (COMPLETE ✅)
-- ✅ Instagram: https://www.instagram.com/greenbuildersandinteriors?igsh=ZGdzdmoxYXplaWJv
+### Admin, Safety & Marketing
+| Name | Role | Status |
+|------|------|--------|
+| Arjun | Business Operations & Talent Support Manager | ✅ |
+| Akash S | Safety Officer | ✅ |
+| Aditya | Media Specialist | ✅ |
+| Amal | Media Coordinator | ✅ |
+
+**+ 19 Technical Team Members**
+
+---
+
+## ✅ SERVICES (6 Core Offerings)
+
+| # | Service | Description | Status |
+|---|---------|-------------|--------|
+| 1 | Contracting & Civil Works | Structural works, finishing, construction quality management | ✅ |
+| 2 | Interior Designing | Creative space planning, interior décor, complete design execution | ✅ |
+| 3 | HVAC Contracting | Climate control system design, installation, commissioning | ✅ |
+| 4 | Facility Management | Ongoing operations support, maintenance, facility optimization | ✅ |
+| 5 | Painting & Décor | Aesthetic finishing, branding elements, color consulting | ✅ |
+| 6 | Maintenance Services | Preventive maintenance, repairs, 24/7 emergency response | ✅ |
+
+---
+
+## ✅ COMPANY HISTORY
+
+| Year | Milestone | Status |
+|------|-----------|--------|
+| 2017 | Founded with integrated design-build model, ₹5L initial capital | ✅ |
+| 2018-2020 | Team expansion, secured first commercial projects | ✅ |
+| 2021 | Full turnkey capability, ₹45L annual revenue | ✅ |
+| 2022-2024 | 50+ projects across 8 sectors, 30+ repeat clients | ✅ |
+| 2025 | Systems optimized for scale, multi-city expansion | ✅ |
+
+---
+
+## ✅ PROJECT EXAMPLES (From Pitch Deck)
+
+### Residential Projects (30+)
+| Client | Project | Size | Year | Status |
+|--------|---------|------|------|--------|
+| Mrs. Uma | Luxury Villa, Chandapura | 3,500 sq ft | 2023 | ✅ |
+| Mr. Krishna Kumar | Duplex, Yelahanka | 2,200 sq ft | 2024 | ✅ |
+| Mrs. Nandini | Resort Home, Madikeri | 4,800 sq ft | 2023 | ✅ |
+| Mr. Cheriyan | 3BHK Renovation, Bel Road | 1,800 sq ft | 2024 | ✅ |
+
+### Commercial Projects (20+)
+- ✅ Enterprise & blue-chip corporate clients
+- ✅ 10 active AMC contracts
+- ✅ Average size: ~2,500 sq ft
+
+---
+
+## ✅ LEGAL & COMPLIANCE
+
+### GSTIN & Registration
+- ✅ **GSTIN**: 29AVHPV0225A1ZT
+- ✅ **Udyam Registration**: Certificate available
+
+### NIC Classification Codes (9 Categories)
+| NIC Code | Activity | Type |
+|----------|----------|------|
+| 25111 | Doors, windows, shutters, gates manufacturing | Manufacturing |
+| 31009 | Furniture manufacturing | Manufacturing |
+| 71100 | Architectural & engineering services | Services |
+| 80200 | Security systems services | Services |
+| 81300 | Landscape care & maintenance | Services |
+| 42909 | Civil engineering projects | Manufacturing |
+| 43211 | Electrical wiring installation | Manufacturing |
+| 43212 | Telecommunications wiring | Manufacturing |
+| 41001 | Building construction | Manufacturing |
+
+### License PDFs (To Upload)
+Location: `/public/documents/`
+- ❌ `gstin-certificate.pdf` - Needed
+- ❌ `udyam-registration.pdf` - Needed
+- ❌ `nic-classification.pdf` - Needed
+
+---
+
+## ✅ CONTACT INFORMATION
+
+### Primary Contact
+- ✅ **Phone**: 9739992779, 9606894352
+- ✅ **Email**: info@greenbuildersandinteriors.com
+
+### Leadership Contacts
+| Name | Phone | Email |
+|------|-------|-------|
+| Sanal Das KV | 9447744352 | sanal@greenbuildersandinteriors.com |
+| Praveen Kumar R | 9362778172 | praveen@greenbuildersandinteriors.com |
+| Bluvin R | 9605005224 | bluvin@greenbuildersandinteriors.com |
+
+### Office Addresses (5 Cities)
+1. **Bengaluru (HQ)**: G F, NO 6/1, Madivala, Bengaluru, Karnataka, 560068
+2. **Hyderabad**: Ground Floor D' Desks, Road Number 12, Banjara Hills
+3. **Chennai**: 1st Floor, 111 A Rajiv Gandhi Road, OMR, Kottivakkam, 600041
+4. **Kochi**: 3rd Floor AWFIS office, Mezhukkattil Matrix, Chittoor Road, 682011
+5. **Visakhapatnam**: 2nd Floor, Synophic Tower, IT Tech Park, Madhurawada, 530045
+
+### Social Media
+- ✅ Instagram: https://www.instagram.com/greenbuildersandinteriors
 - ✅ Facebook: https://www.facebook.com/share/1Abd1pKroq/
 - ✅ LinkedIn: https://www.linkedin.com/company/green-builders-interiors/
-- ❌ Pinterest: Not available
-- ❌ YouTube: Not available
 
 ---
 
-## 🏗️ PROJECT DETAILS NEEDED
+## 📸 IMAGES STILL NEEDED
 
-**Projects Found on Old Website (Need Full Details):**
+### Hero & Background Images
+| Location | Description | Size | Status |
+|----------|-------------|------|--------|
+| Homepage Hero | Construction/interior shot | 1920x1080px | ❌ Needed |
+| About Page Hero | Team or office photo | 1920x1080px | ❌ Needed |
+| Contact Page | Office interior | 1920x1080px | ❌ Needed |
+| Services Page | Design workspace | 1920x1080px | ❌ Needed |
 
-For each project, collect:
-```
-Project Name: _______________
-Location: _______________
-Category: [ ] Residential [ ] Commercial [ ] Renovation [ ] Hospitality
-Year Completed: ___
-Size (sq ft): ___
-Challenge (100 words): What was the client's problem?
-Solution (100 words): How did you solve it?
-Images: Featured + 4-8 gallery images
-```
+### Company Assets
+| Asset | Status |
+|-------|--------|
+| Primary Logo | ✅ LOGO.png |
+| White Logo | ✅ LOGO-WHITE.png |
+| Favicon | ❌ Needed |
+| OG Image | ❌ Needed |
 
-**Known Projects:**
-1. Bright Orange Modular Kitchen
-2. Modern Open Kitchen  
-3. Modern Lounge with Wall Lighting
-4. Minimalist Living Room
-5. Matte Black Kitchen
-6. Futuristic Modular Kitchen
-7. Blue and White Modern Bathroom
-8. Wooden Vanity Bathroom
-9. Minimalist Beige Bathroom
-10. Zen Inspired Living Space Interior
+### Team Photos
+| Person | Status |
+|--------|--------|
+| Sanal Das KV | ✅ Added |
+| Praveen Kumar R | ✅ Added |
+| Bluvin Ravindran | ✅ Added |
+| Other team members | ❌ Photos needed |
 
----
+### Project Portfolio Images
+❌ Need high-res images for 50+ completed projects
 
-## 👥 TEAM MEMBER DETAILS
-
-❌ **No team member details found on old website**
-
-Need to collect for each team member:
-- Full Name
-- Position/Title
-- Bio (50-100 words)
-- Photo (400x400px square)
-- LinkedIn URL (optional)
-
----
-
-## 💬 TESTIMONIALS
-
-❌ **No testimonials found on old website**
-
-Need 5-10 client testimonials with:
-- Client Name
-- Project Type
-- Location
-- Quote (50-100 words)
-- Permission to publish
-
----
-
-## 🎨 BRAND GUIDELINES
-
-### Colors (Set ✓)
-- Primary Dark: #2B3E3A ✓
-- Accent Green: #B7E7A1 ✓
-- Background: #0F1713 ✓
-- Gold: #C5A572 ✓
-
-### Fonts (Set ✓)
-- Headings: Playfair Display ✓
-- Body: Inter ✓
-
----
-
-## 📄 LEGAL CONTENT (NEEDED)
-
-- ❌ Privacy Policy text
-- ❌ Terms of Service text
-- ❌ GSTIN Number
-- ❌ Company Registration Number
-
----
-
-## ✅ PRIORITY CHECKLIST
-
-### HIGH PRIORITY (Needed Before Launch)
-| Item | Status |
-|------|--------|
-| Company Logo | ✅ Done |
-| Homepage Hero Image | ❌ Needed |
-| 10 Project Images | ❌ Needed |
-| Leadership Photos | ✅ Done (3 founders) |
-
-### MEDIUM PRIORITY
-| Item | Status |
-|------|--------|
-| Service Images (12) | ❌ |
-| Office Photos (5) | ❌ |
-| Team Photos | ❌ |
-| Mission/Vision Statements | ❌ |
-
-### ALREADY COMPLETE ✅
-| Item | Status |
-|------|--------|
-| Company Tagline | ✅ |
-| About Description | ✅ |
-| Contact Information | ✅ |
-| Office Addresses | ✅ |
-| Social Media Links | ✅ |
-| Founding Story | ✅ |
+### Client Logos (15)
+❌ Need logo images for all 15 clients listed above
 
 ---
 
 ## 📁 FILE ORGANIZATION
 
-When collecting content, organize in folders:
-
 ```
-/content-to-upload/
-├── /logos/
-│   ├── logo-full.svg
-│   └── favicon.ico
-├── /heroes/
-│   └── home-hero.jpg
-├── /projects/
-│   ├── /bright-orange-kitchen/
-│   │   ├── featured.jpg
-│   │   └── gallery-1.jpg, gallery-2.jpg...
-│   └── ...
-├── /team/
-│   └── sanal-das.jpg
-└── /offices/
-    └── bengaluru.jpg
+/public/
+├── /documents/
+│   ├── gstin-certificate.pdf
+│   ├── udyam-registration.pdf
+│   └── nic-classification.pdf
+├── /images/
+│   ├── /logos/
+│   │   ├── LOGO.png ✅
+│   │   └── LOGO-WHITE.png ✅
+│   ├── /team/ ✅
+│   ├── /clients/
+│   │   └── (15 client logos needed)
+│   ├── /projects/
+│   │   └── (project images needed)
+│   └── /heroes/
+│       └── (hero images needed)
 ```
 
 ---
 
-**Image Requirements:**
-- High resolution (min 1200px width)
-- Well-lit and professionally shot
-- Optimized for web (compress before upload)
+## ✅ PRIORITY CHECKLIST
 
+### HIGH PRIORITY (Complete ✅)
+- ✅ Company statistics and data
+- ✅ Team structure and bios
+- ✅ Services list
+- ✅ Client list
+- ✅ Contact information
+- ✅ GSTIN and legal info
+
+### MEDIUM PRIORITY (Images Needed)
+- ❌ Hero images for all pages
+- ❌ Client logo images
+- ❌ Project portfolio images
+- ❌ License PDF documents
+
+### LOW PRIORITY
+- ❌ Additional team member photos
+- ❌ Office location photos
+- ❌ Video content

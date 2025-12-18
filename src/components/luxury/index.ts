@@ -8,4 +8,6 @@ export { OfficeLocations } from "./OfficeLocations";
 export { AboutHero } from "./AboutHero";
 export { CompanyTimeline } from "./CompanyTimeline";
 export { ValuesSection } from "./ValuesSection";
+export { ClientLogos } from "./ClientLogos";
+export { CertificationsSection } from "./CertificationsSection";
 

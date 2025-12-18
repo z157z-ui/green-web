@@ -45,21 +45,49 @@ const leadership: LeaderMember[] = [
   }
 ];
 
-const coreTeam: CoreMember[] = [
-  { name: "Arjun", role: "Business Operations & Talent Support Manager" },
-  { name: "Abhilash Nair", role: "3D Visualizer" },
-  { name: "Naresh Joseph", role: "Principal Architect" },
-  { name: "Hrithik", role: "Interior Designer" },
-  { name: "Bijoy", role: "Lead Civil Engineer" },
-  { name: "Adarsh", role: "Civil Engineer" },
-  { name: "Chandrashekhar", role: "Structural Engineer" },
-  { name: "Deepesh", role: "HVAC Engineer" },
-  { name: "Amal Vijayan", role: "Electrical Engineer" },
-  { name: "Akash S", role: "Safety Officer" },
-  { name: "Akshay", role: "Media Team Lead" },
-  { name: "Adithya", role: "Media Specialist" },
-  { name: "Amal", role: "Media Coordinator" },
-  { name: "Arathi Krishna", role: "Lead Generation Specialist" }
+interface TeamDepartment {
+  name: string;
+  description: string;
+  members: CoreMember[];
+}
+
+const teamDepartments: TeamDepartment[] = [
+  {
+    name: "Design & Architecture",
+    description: "Creative minds shaping spaces with vision and precision",
+    members: [
+      { name: "Naresh Joseph", role: "Principal Architect" },
+      { name: "Abhilash Nair", role: "Senior Interior Designer" },
+      { name: "Hrithik", role: "Interior Designer" },
+    ]
+  },
+  {
+    name: "Engineering & Technical",
+    description: "Expert engineers ensuring structural excellence",
+    members: [
+      { name: "Bijoy", role: "Lead Civil Engineer" },
+      { name: "Adarsh", role: "Civil Engineer" },
+      { name: "Chandrashekhar", role: "Structural Engineer" },
+      { name: "Deepesh", role: "HVAC Engineer" },
+      { name: "Amal Vijayan", role: "Electrical Engineer" },
+    ]
+  },
+  {
+    name: "Admin & Operations",
+    description: "Managing seamless project delivery and business operations",
+    members: [
+      { name: "Arjun", role: "Business Operations & Talent Support Manager" },
+      { name: "Akash S", role: "Safety Officer" },
+    ]
+  },
+  {
+    name: "Marketing & Business Development",
+    description: "Building relationships and growing our presence",
+    members: [
+      { name: "Aditya", role: "Media Specialist" },
+      { name: "Amal", role: "Media Coordinator" },
+    ]
+  }
 ];
 
 const LeaderCard = ({ member }: { member: LeaderMember }) => {
@@ -164,26 +192,45 @@ const TeamShowcase = () => {
         </div>
       </section>
 
-      {/* Core Team Section */}
-      <section className="bg-background text-foreground py-24 sm:py-32 border-t border-border">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-8 lg:gap-x-16">
-            <div className="lg:col-span-4 xl:col-span-3">
-              <h2 className="font-display text-[42px] leading-tight text-text-primary">
-                Core team
-              </h2>
-              <p className="font-body text-body-regular text-text-secondary mt-4">
-                Our talented team of specialists ensures every project is executed with precision and excellence.
-              </p>
-            </div>
-            <div className="lg:col-span-8 xl:col-span-9">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {coreTeam.map((member, index) => (
-                  <CoreTeamCard key={index} member={member} />
-                ))}
+      {/* Department Sections */}
+      {teamDepartments.map((dept, deptIndex) => (
+        <section 
+          key={dept.name}
+          className="bg-background text-foreground py-24 sm:py-32 border-t border-border"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-8 lg:gap-x-16">
+              <div className="lg:col-span-4 xl:col-span-3">
+                <h2 className="font-display text-[42px] leading-tight text-text-primary">
+                  {dept.name}
+                </h2>
+                <p className="font-body text-body-regular text-text-secondary mt-4">
+                  {dept.description}
+                </p>
+              </div>
+              <div className="lg:col-span-8 xl:col-span-9">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {dept.members.map((member, index) => (
+                    <CoreTeamCard key={index} member={member} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+        </section>
+      ))}
+
+      {/* Technical Team Count */}
+      <section className="bg-primary-dark text-foreground py-16 sm:py-20">
+        <div className="container text-center">
+          <p className="text-gold font-serif text-6xl font-light mb-4">+19</p>
+          <h3 className="font-display text-2xl text-text-primary mb-2">
+            Technical Team Members
+          </h3>
+          <p className="font-body text-text-secondary max-w-lg mx-auto">
+            Our extended technical team includes skilled craftsmen, site supervisors, 
+            and specialists who bring every project to life.
+          </p>
         </div>
       </section>
     </>
