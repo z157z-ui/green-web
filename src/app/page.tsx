@@ -15,8 +15,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <LuxuryHero />
-      <ClientLogos />
       <LuxuryStats />
+      <ClientLogos />
       
       <section className="py-20 md:py-24">
         <BentoProjects />
