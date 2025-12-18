@@ -500,6 +500,10 @@
   animation: marquee 60s linear infinite;
 }
 
+.animate-marquee-slow {
+  animation: marquee 80s linear infinite;
+}
+
 /* === REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
   *,
