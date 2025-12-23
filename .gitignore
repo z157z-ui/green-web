@@ -91,3 +91,7 @@ Thumbs.db
 
 # Turborepo cache
 .turbo
+
+# Large video files
+content-to-upload/**/*.mp4
+content-to-upload/**/*.MP4

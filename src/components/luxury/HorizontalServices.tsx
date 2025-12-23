@@ -137,3 +137,4 @@ function ServiceCard({ service, index }: ServiceCardProps) {
     </motion.div>
   );
 }
+

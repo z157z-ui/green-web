@@ -5,15 +5,18 @@ A modern, full-stack web application built with Next.js 15 for Green Builders an
 ## Features
 
 ### Public Website
-- **Home Page**: Hero section with call-to-action, featured projects grid, and services showcase
+- **Home Page**: Hero section with video background, call-to-action, featured projects grid, and services showcase
 - **Services Page**: Comprehensive 12-service catalog including villa design, apartment design, office design, renovations, and construction
-- **About Page**: Company overview with 8+ years of experience and company history timeline
+- **About Page**: Company overview with 7+ years of experience, 50+ projects delivered, and company history timeline
 - **Team Page**: Team member profiles and leadership information
 - **Contact Page**: Multi-location contact information with contact form and 5 office locations (Bangalore, Visakhapatnam, Hyderabad, Kochi, Chennai)
 - **Projects Gallery**: Portfolio showcase with filtering capabilities
+- **Client Logos**: Scrolling marquee showcasing trusted partners (Smart Node, Alsina, Bajaj Allianz, Mitsubishi Electric, Thoughtworks, BluArmor, Awfis, Credel Capital)
+- **Client Testimonials**: Aesthetic testimonial section with names and comments
 - **WhatsApp Integration**: Floating chat widget for instant customer communication
-- **Smooth Navigation**: Anchor-based smooth scrolling and mega menu for services
+- **Smooth Navigation**: Anchor-based smooth scrolling, fade effects on scroll, and mega menu for services
 - **Responsive Design**: Mobile-first approach with modern UI components
+- **Video Background**: Cinematic hero section with autoplay video background
 
 ### Admin Dashboard
 - Content Management System (CMS) for:
@@ -200,8 +203,11 @@ public/
 │   ├── team/         # Team member photos
 │   ├── news/         # News article images
 │   └── hero/         # Hero section backgrounds
-├── videos/           # Video assets
-│   └── hero-bg.mp4   # Hero background video
+├── videos/                 # Video assets
+│   └── hero-background.mp4 # Hero background video
+├── images/
+│   └── logos/
+│       └── clients/        # Client company logos
 └── icons/            # Icons
 ```
 

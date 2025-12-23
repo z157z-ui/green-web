@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Instagram, Facebook, Linkedin, Phone, Mail, MessageCircle } from "lucide-react";
 
 interface NavLink {
   href: string;
@@ -103,7 +103,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                 <motion.div variants={itemVariants} className="mb-12">
                   <Link href="/" onClick={onClose}>
                     <Image
-                      src="/images/logos/LOGO-WHITE.png"
+                      src="/images/logos/LOGO.png"
                       alt="Green Builders & Interiors"
                       width={180}
                       height={50}
@@ -140,6 +140,75 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                     Start Your Project
                   </Link>
                 </motion.div>
+
+                {/* Contact Options - Bottom Middle */}
+                <motion.div variants={itemVariants} className="mt-12 pt-8 border-t border-white/10">
+                  <p className="text-center text-white/60 text-sm mb-6 uppercase tracking-wider">
+                    Connect With Us
+                  </p>
+                  
+                  {/* Social Media Links */}
+                  <div className="flex items-center justify-center gap-4 mb-6">
+                    <a
+                      href="https://www.instagram.com/greenbuildersandinteriors?igsh=ZGdzdmoxYXplaWJv"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 text-white/70 hover:bg-gradient-to-br hover:from-pink-500 hover:to-purple-600 hover:border-transparent hover:text-white transition-all duration-300"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    </a>
+                    
+                    <a
+                      href="https://www.facebook.com/share/1Abd1pKroq/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 text-white/70 hover:bg-blue-600 hover:border-transparent hover:text-white transition-all duration-300"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    </a>
+                    
+                    <a
+                      href="https://www.linkedin.com/company/green-builders-interiors/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/20 text-white/70 hover:bg-blue-500 hover:border-transparent hover:text-white transition-all duration-300"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </div>
+
+                  {/* Contact Methods */}
+                  <div className="flex flex-col gap-3">
+                    <a
+                      href="https://wa.me/919739992779"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-green-500/20 hover:border-green-500/50 hover:text-white transition-all duration-300"
+                    >
+                      <MessageCircle className="w-5 h-5 text-green-400 group-hover:scale-110 transition-transform" />
+                      <span className="text-sm font-medium">WhatsApp</span>
+                    </a>
+                    
+                    <a
+                      href="tel:+919739992779"
+                      className="group flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-accent/20 hover:border-accent/50 hover:text-white transition-all duration-300"
+                    >
+                      <Phone className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                      <span className="text-sm font-medium">+91 97399 92779</span>
+                    </a>
+                    
+                    <a
+                      href="mailto:info@greenbuildersandinteriors.com"
+                      className="group flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-gold/20 hover:border-gold/50 hover:text-white transition-all duration-300"
+                    >
+                      <Mail className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
+                      <span className="text-sm font-medium">Email Us</span>
+                    </a>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -148,3 +217,4 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
     </AnimatePresence>
   );
 }
+

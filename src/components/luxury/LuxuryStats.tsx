@@ -34,7 +34,7 @@ const stats: Stat[] = [
 
 export function LuxuryStats() {
   return (
-    <section className="relative -mt-24 z-20">
+    <section className="relative -mt-24 z-10">
       <div className="luxury-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

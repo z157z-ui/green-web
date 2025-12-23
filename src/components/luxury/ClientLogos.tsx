@@ -2,23 +2,22 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
-const clients = [
-  "Smart Node",
-  "Alsina",
-  "Toyota",
-  "Bajaj Allianz",
-  "Mitsubishi Electric",
-  "Kargil Equipments",
-  "Fateh",
-  "SAPRO Global",
-  "Thoughtworks",
-  "BluArmor",
-  "Awfis",
-  "Mibo",
-  "Aster Pharmacy",
-  "Credel Capital",
-  "Softtek",
+interface Client {
+  name: string;
+  logo: string;
+}
+
+const clients: Client[] = [
+  { name: "Smart Node", logo: "/images/logos/clients/smart-node.jpg" },
+  { name: "Alsina", logo: "/images/logos/clients/alsina.jpg" },
+  { name: "Bajaj Allianz", logo: "/images/logos/clients/bajaj.jpg" },
+  { name: "Mitsubishi Electric", logo: "/images/logos/clients/mistubishi.jpg" },
+  { name: "Thoughtworks", logo: "/images/logos/clients/thoughtworks.jpg" },
+  { name: "BluArmor", logo: "/images/logos/clients/blua.jpg" },
+  { name: "Awfis", logo: "/images/logos/clients/awfis.jpg" },
+  { name: "Credel Capital", logo: "/images/logos/clients/credal.jpg" },
 ];
 
 export function ClientLogos() {
@@ -63,7 +62,7 @@ export function ClientLogos() {
           }}
         >
           {duplicatedClients.map((client, index) => (
-            <ClientLogo key={`${client}-${index}`} name={client} />
+            <ClientLogo key={`${client.name}-${index}`} client={client} />
           ))}
         </div>
       </div>
@@ -72,19 +71,24 @@ export function ClientLogos() {
 }
 
 interface ClientLogoProps {
-  name: string;
+  client: Client;
 }
 
-function ClientLogo({ name }: ClientLogoProps) {
+function ClientLogo({ client }: ClientLogoProps) {
   return (
     <div className="flex-shrink-0 group">
-      <div className="flex items-center justify-center h-16 md:h-20 px-8 md:px-12 rounded-xl border border-white/10 bg-primary-dark/50 backdrop-blur-sm transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark">
-        {/* Placeholder text logo - replace with actual images when available */}
-        <span className="text-lg md:text-xl font-medium text-white/50 group-hover:text-gold whitespace-nowrap transition-colors duration-300">
-          {name}
-        </span>
+      <div className="flex items-center justify-center h-20 md:h-24 px-6 md:px-10 rounded-xl border border-white/10 bg-primary-dark/50 backdrop-blur-sm transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80">
+        <div className="relative w-28 md:w-36 h-14 md:h-16">
+          <Image
+            src={client.logo}
+            alt={client.name}
+            fill
+            className="object-contain object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
+            sizes="(max-width: 768px) 112px, 144px"
+            unoptimized
+          />
+        </div>
       </div>
     </div>
   );
 }
-
