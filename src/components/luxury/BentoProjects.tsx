@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { projects as allProjects } from "@/lib/data";
 
 interface Project {
   id: number;
@@ -12,36 +13,14 @@ interface Project {
   size: "small" | "large";
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Modern Villa Estate",
-    category: "Residential",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80",
-    size: "large",
-  },
-  {
-    id: 2,
-    title: "Corporate Office",
-    category: "Commercial",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    size: "small",
-  },
-  {
-    id: 3,
-    title: "Luxury Penthouse",
-    category: "Residential",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
-    size: "small",
-  },
-  {
-    id: 4,
-    title: "Boutique Hotel",
-    category: "Hospitality",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
-    size: "large",
-  },
-];
+// Map real projects to component interface, using first 6 projects
+const projects: Project[] = allProjects.slice(0, 6).map((project, index) => ({
+  id: index + 1,
+  title: project.title,
+  category: project.category.charAt(0).toUpperCase() + project.category.slice(1),
+  image: project.featuredImage,
+  size: index % 3 === 0 ? "large" : "small" as "small" | "large",
+}));
 
 export function BentoProjects() {
   return (
