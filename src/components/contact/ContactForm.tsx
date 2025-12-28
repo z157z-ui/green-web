@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,11 +8,19 @@ import * as z from "zod";
 import { Send, CheckCircle2 } from "lucide-react";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters"),
+  email: z.string()
+    .email("Please enter a valid email")
+    .max(255, "Email is too long"),
+  phone: z.string()
+    .min(10, "Please enter a valid phone number")
+    .max(20, "Phone number is too long"),
   projectType: z.string().min(1, "Please select a project type"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  message: z.string()
+    .min(10, "Message must be at least 10 characters")
+    .max(2000, "Message must be less than 2000 characters"),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -39,12 +47,29 @@ export function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    setIsSubmitted(true);
-    reset();
-    setTimeout(() => setIsSubmitted(false), 5000);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to send message');
+      }
+
+      setIsSubmitted(true);
+      reset();
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (error) {
+      // Only log errors in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Form submission error:', error);
+      }
+      // Show user-friendly error message
+      alert('Failed to send message. Please try again later.');
+    }
   };
 
   if (isSubmitted) {
@@ -188,7 +213,4 @@ const FloatingLabelInput = React.forwardRef<
 });
 
 FloatingLabelInput.displayName = "FloatingLabelInput";
-
-// Add React import
-import React from "react";
 

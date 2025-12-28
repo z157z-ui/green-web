@@ -6,6 +6,8 @@ import {
   ValuesSection,
   WhyChooseUs,
   CertificationsSection,
+  FactoryDetails,
+  VideoShowcase,
 } from "@/components/luxury";
 
 export default function AboutPage() {
@@ -20,6 +22,12 @@ export default function AboutPage() {
       </section>
 
       <CertificationsSection />
+      
+      {/* Factory Details Section */}
+      <FactoryDetails />
+      
+      {/* Video Showcase Section */}
+      <VideoShowcase />
     </main>
   );
 }

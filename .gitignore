@@ -95,3 +95,6 @@ Thumbs.db
 # Large video files
 content-to-upload/**/*.mp4
 content-to-upload/**/*.MP4
+public/videos/about-*.mp4
+public/videos/*.mp4
+!public/videos/hero-background.mp4

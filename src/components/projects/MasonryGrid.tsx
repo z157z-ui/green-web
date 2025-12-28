@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Project } from "@/lib/data";
@@ -11,10 +12,44 @@ interface MasonryGridProps {
 }
 
 export function MasonryGrid({ projects }: MasonryGridProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkAlignment = () => {
+      if (gridRef.current) {
+        const gridRect = gridRef.current.getBoundingClientRect();
+        const cards = gridRef.current.querySelectorAll('[class*="break-inside-avoid"]');
+        const cardWidths: number[] = [];
+        const cardPositions: { left: number; top: number }[] = [];
+        
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          cardWidths.push(rect.width);
+          cardPositions.push({ left: rect.left, top: rect.top });
+        });
+        
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MasonryGrid.tsx:checkAlignment',message:'Card alignment check',data:{gridWidth:gridRect.width,gridLeft:gridRect.left,cardCount:cards.length,cardWidths,cardPositions,windowWidth:window.innerWidth,isDesktop:window.innerWidth >= 1024},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'ALIGN'})}).catch(()=>{});
+        // #endregion
+      }
+    };
+    
+    // Delay to ensure layout is complete
+    const timeoutId = setTimeout(checkAlignment, 100);
+    window.addEventListener('resize', checkAlignment, { passive: true });
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', checkAlignment);
+    };
+  }, [projects]);
+
   return (
-    <div className="luxury-container py-12">
+    <div ref={containerRef} className="luxury-container py-12">
       <motion.div 
-        className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+        ref={gridRef}
+        className="columns-1 md:columns-2 lg:columns-3"
+        style={{ columnGap: '1.5rem', columnFill: 'balance' }}
         layout
       >
         <AnimatePresence mode="popLayout">
@@ -53,9 +88,10 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         layout: { type: "spring", stiffness: 300, damping: 30 }
       }}
       className="break-inside-avoid mb-6"
+      style={{ width: '100%', display: 'inline-block' }}
     >
-      <Link href={`/projects/${project.id}`} className="group block">
-        <div className={`relative ${aspectClass} overflow-hidden rounded-lg border border-white/10 group-hover:border-accent/50 transition-colors duration-500`}>
+      <Link href={`/projects/${project.id}`} className="group block w-full">
+        <div className={`relative ${aspectClass} w-full overflow-hidden rounded-lg border border-white/10 group-hover:border-accent/50 transition-colors duration-500`}>
           {/* Project Image */}
           <Image
             src={project.featuredImage}

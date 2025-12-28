@@ -10,4 +10,6 @@ export { CompanyTimeline } from "./CompanyTimeline";
 export { ValuesSection } from "./ValuesSection";
 export { ClientLogos } from "./ClientLogos";
 export { CertificationsSection } from "./CertificationsSection";
+export { FactoryDetails } from "./FactoryDetails";
+export { VideoShowcase } from "./VideoShowcase";
 

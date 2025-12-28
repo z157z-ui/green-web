@@ -83,9 +83,11 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(results, { status: 200 });
   } catch (error) {
-    console.error('GET error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('GET error:', error);
+    }
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
@@ -175,9 +177,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newService[0], { status: 201 });
   } catch (error) {
-    console.error('POST error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('POST error:', error);
+    }
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }

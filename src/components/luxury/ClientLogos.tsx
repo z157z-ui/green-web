@@ -43,17 +43,19 @@ export function ClientLogos() {
         </motion.div>
       </div>
 
-      {/* Marquee Container - hover detection on wrapper */}
-      <div 
-        className="relative cursor-pointer"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+      {/* Marquee Container - scrollable with animation */}
+      <div className="relative">
         {/* Gradient Overlays for fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Scrolling Track - Pauses on hover via state */}
+        {/* Scrollable Container - allows manual scrolling while animation continues */}
+        <div 
+          className="overflow-x-auto hide-scrollbar snap-x snap-mandatory cursor-grab active:cursor-grabbing"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Animated Scrolling Track */}
         <div 
           className="flex gap-8 md:gap-12 animate-marquee-slow"
           style={{ 
@@ -64,6 +66,7 @@ export function ClientLogos() {
           {duplicatedClients.map((client, index) => (
             <ClientLogo key={`${client.name}-${index}`} client={client} />
           ))}
+          </div>
         </div>
       </div>
     </section>
@@ -77,17 +80,15 @@ interface ClientLogoProps {
 function ClientLogo({ client }: ClientLogoProps) {
   return (
     <div className="flex-shrink-0 group">
-      <div className="flex items-center justify-center h-20 md:h-24 px-6 md:px-10 rounded-xl border border-white/10 bg-primary-dark/50 backdrop-blur-sm transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80">
-        <div className="relative w-28 md:w-36 h-14 md:h-16">
+      <div className="relative h-20 md:h-24 w-[142px] md:w-[170px] rounded-xl border border-white/10 bg-primary-dark/50 backdrop-blur-sm transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80 overflow-hidden">
           <Image
             src={client.logo}
             alt={client.name}
             fill
             className="object-contain object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
-            sizes="(max-width: 768px) 112px, 144px"
+          sizes="(max-width: 768px) 120px, 140px"
             unoptimized
           />
-        </div>
       </div>
     </div>
   );

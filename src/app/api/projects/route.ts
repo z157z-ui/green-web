@@ -9,9 +9,13 @@ export async function GET() {
     const allProjects = await db.select().from(projects);
     return NextResponse.json(allProjects, { status: 200 });
   } catch (error) {
-    console.error('GET all projects error:', error);
+    // Log error server-side only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('GET all projects error:', error);
+    }
+    // Don't expose internal error details
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
@@ -20,6 +24,15 @@ export async function GET() {
 // POST - Create new project
 export async function POST(request: NextRequest) {
   try {
+    // Check request body size (1MB limit)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 1024 * 1024) {
+      return NextResponse.json(
+        { error: 'Request too large', code: 'PAYLOAD_TOO_LARGE' },
+        { status: 413 }
+      );
+    }
+
     const session = await auth.api.getSession({ headers: request.headers });
 
     if (!session) {
@@ -121,9 +134,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newProject[0], { status: 201 });
   } catch (error) {
-    console.error('POST error:', error);
+    // Log error server-side only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('POST error:', error);
+    }
+    // Don't expose internal error details
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }

@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { OfficeMap } from "@/components/contact/OfficeMap";
 
 export default function ContactPage() {
+  // Shared state for office map interactions
+  const [hoveredOffice, setHoveredOffice] = useState<string | null>(null);
+  const [selectedOffice, setSelectedOffice] = useState<string | null>(null);
   return (
     <main className="min-h-screen bg-background pt-24">
       {/* Hero Section */}
@@ -113,9 +117,14 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="h-[600px] lg:h-[700px]"
+            className="h-[600px] lg:h-[700px] xl:h-[800px] w-full"
           >
-            <OfficeMap />
+            <OfficeMap 
+              hoveredOffice={hoveredOffice}
+              selectedOffice={selectedOffice}
+              onHover={setHoveredOffice}
+              onSelect={setSelectedOffice}
+            />
           </motion.div>
         </div>
       </section>

@@ -88,7 +88,7 @@ export function WhyChooseUs() {
               transition={{ duration: 0.8 }}
             >
               <span className="luxury-label text-gold">Why Choose Us</span>
-              <h2 className="mt-4 mb-8 font-display text-4xl font-light md:text-6xl">
+              <h2 className="mt-4 mb-8 font-display text-4xl font-light md:text-6xl text-gray-900">
                 Setting the Standard
                 <br />
                 in Luxury Design

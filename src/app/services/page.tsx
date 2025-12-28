@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -129,7 +130,7 @@ export default function ServicesPage() {
             </p>
             <Link
               href="/contact"
-              className="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg hover:bg-gold transition-colors"
+              className="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:text-white hover:border-gold transition-all duration-300"
             >
               Book Free Consultation
             </Link>
@@ -145,7 +146,7 @@ interface ServiceCardProps {
   index: number;
 }
 
-function ServiceCard({ service, index }: ServiceCardProps) {
+const ServiceCard = React.memo(function ServiceCard({ service, index }: ServiceCardProps) {
   const IconComponent = iconMap[service.icon] || Home;
 
   return (
@@ -165,6 +166,7 @@ function ServiceCard({ service, index }: ServiceCardProps) {
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading={index < 3 ? "eager" : "lazy"}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
             
@@ -193,4 +195,4 @@ function ServiceCard({ service, index }: ServiceCardProps) {
       </Link>
     </motion.div>
   );
-}
+});

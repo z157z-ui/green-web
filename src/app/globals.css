@@ -65,10 +65,10 @@
   --font-size-display-sm: 2.5rem;   /* 40px */
 
   /* === SPACING SCALE === */
-  --spacing-section-sm: 5rem;   /* 80px */
-  --spacing-section-md: 8rem;   /* 128px */
-  --spacing-section-lg: 12rem;  /* 192px */
-  --spacing-section-xl: 16rem;  /* 256px */
+  --spacing-section-sm: 3rem;   /* 48px */
+  --spacing-section-md: 4rem;   /* 64px */
+  --spacing-section-lg: 5rem;   /* 80px */
+  --spacing-section-xl: 6rem;   /* 96px */
 
   /* === ANIMATION CURVES === */
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);

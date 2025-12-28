@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Mail, X, Navigation2 } from "lucide-react";
 import Image from "next/image";
@@ -66,15 +66,79 @@ const offices: Office[] = [
   },
 ];
 
-export function OfficeMap() {
-  const [selectedOffice, setSelectedOffice] = useState<Office | null>(null);
-  const [hoveredOffice, setHoveredOffice] = useState<string | null>(null);
+interface OfficeMapProps {
+  hoveredOffice?: string | null;
+  selectedOffice?: string | null;
+  onHover?: (officeId: string | null) => void;
+  onSelect?: (officeId: string | null) => void;
+}
 
+export function OfficeMap({ 
+  hoveredOffice: externalHoveredOffice, 
+  selectedOffice: externalSelectedOffice, 
+  onHover: externalOnHover, 
+  onSelect: externalOnSelect 
+}: OfficeMapProps = {}) {
+  // Use internal state if props not provided (for backward compatibility)
+  const [internalHoveredOffice, setInternalHoveredOffice] = React.useState<string | null>(null);
+  const [internalSelectedOffice, setInternalSelectedOffice] = React.useState<string | null>(null);
+  
+  const hoveredOffice = externalHoveredOffice !== undefined ? externalHoveredOffice : internalHoveredOffice;
+  const selectedOffice = externalSelectedOffice !== undefined ? externalSelectedOffice : internalSelectedOffice;
+  const onHover = externalOnHover || setInternalHoveredOffice;
+  const onSelect = externalOnSelect || setInternalSelectedOffice;
   const hqOffice = offices.find((o) => o.isHQ);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [hasInteracted, setHasInteracted] = React.useState(false);
+  
+  // Get the office object for selected or hovered office
+  const displayOffice = selectedOffice 
+    ? offices.find(o => o.id === selectedOffice)
+    : hoveredOffice 
+    ? offices.find(o => o.id === hoveredOffice)
+    : null;
 
   // #region agent log
   useEffect(() => {
-    const svgEl = document.querySelector('svg[viewBox="0 0 100 100"]');
+    fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:99',message:'State update',data:{hoveredOffice,selectedOffice,displayOffice:displayOffice?.id,isMobile:typeof window!=='undefined'?window.innerWidth<1024:false,windowWidth:typeof window!=='undefined'?window.innerWidth:0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+  }, [hoveredOffice, selectedOffice, displayOffice]);
+  // #endregion
+
+  // Track when user first interacts with the map
+  useEffect(() => {
+    if (hoveredOffice || selectedOffice) {
+      setHasInteracted(true);
+    }
+  }, [hoveredOffice, selectedOffice]);
+
+  // Auto-select after 3 seconds of hover
+  useEffect(() => {
+    // Clear any existing timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+
+    // If hovering over an office (and it's not already selected), start timer
+    if (hoveredOffice && hoveredOffice !== selectedOffice) {
+      hoverTimeoutRef.current = setTimeout(() => {
+        onSelect(hoveredOffice);
+      }, 1000);
+    }
+
+    // Cleanup on unmount or when hover changes
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    };
+  }, [hoveredOffice, selectedOffice, onSelect]);
+
+  // #region agent log
+  useEffect(() => {
+    if(typeof window==='undefined'||typeof document==='undefined')return;
+    const svgEl = document.querySelector('svg[viewBox="0 0 100 133"]');
     const containerEl = document.querySelector('.relative.w-full.h-full');
     if (svgEl && containerEl) {
       const svgRect = svgEl.getBoundingClientRect();
@@ -85,9 +149,11 @@ export function OfficeMap() {
   // #endregion
 
   return (
-    <div className="relative w-full h-full min-h-[600px] bg-gradient-to-br from-background via-primary-dark/40 to-background rounded-xl overflow-hidden border border-accent/20 flex items-center justify-center">
-      {/* Fixed Aspect Ratio Container - maintains map proportions */}
-      <div className="relative w-full max-w-[500px] aspect-[3/4] mx-auto">
+    <div className="relative w-full h-full min-h-[600px] bg-gradient-to-br from-background via-primary-dark/40 to-background rounded-2xl border-2 border-accent/30 grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden">
+      {/* Left Column - Map Container */}
+      <div className="relative w-full h-full flex items-center justify-center lg:justify-center">
+        {/* Fixed Aspect Ratio Container - maintains map proportions, centered */}
+        <div className="relative w-full max-w-full aspect-[3/4] lg:max-w-[500px] xl:max-w-[550px] overflow-hidden">
         {/* Map Image Background - contained, not stretched */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -252,14 +318,34 @@ export function OfficeMap() {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 1 + index * 0.15, type: "spring", stiffness: 200 }}
-                onMouseEnter={() => setHoveredOffice(office.id)}
-                onMouseLeave={() => setHoveredOffice(null)}
-                onClick={() => setSelectedOffice(office)}
+                onMouseEnter={() => {
+                  // #region agent log
+                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:312',message:'Marker mouseEnter',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  // #endregion
+                  onHover(office.id);
+                }}
+                onMouseLeave={() => {
+                  // #region agent log
+                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:316',message:'Marker mouseLeave',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  // #endregion
+                  onHover(null);
+                }}
+                onClick={() => {
+                  // #region agent log
+                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:320',message:'Marker onClick',data:{officeId:office.id,isMobile:window.innerWidth<1024,windowWidth:window.innerWidth,selectedOffice,displayOffice:displayOffice?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});}
+                  // #endregion
+                  onSelect(office.id);
+                }}
+                onTouchStart={() => {
+                  // #region agent log
+                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:328',message:'Marker onTouchStart',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  // #endregion
+                }}
               >
                 {/* Pulse Rings */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <motion.div
-                    className={`absolute w-20 h-20 rounded-full border-2 ${
+                    className={`absolute w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 ${
                       office.isHQ ? "border-gold" : "border-accent"
                     }`}
                     animate={{
@@ -274,7 +360,7 @@ export function OfficeMap() {
                     }}
                   />
                   <motion.div
-                    className={`absolute w-14 h-14 rounded-full border-2 ${
+                    className={`absolute w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 ${
                       office.isHQ ? "border-gold" : "border-accent"
                     }`}
                     animate={{
@@ -292,159 +378,371 @@ export function OfficeMap() {
 
                 {/* Main Marker */}
                 <motion.div
-                  className={`relative w-14 h-14 rounded-full ${
+                  className={`relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full ${
                     office.isHQ ? "bg-gold" : "bg-accent"
                   } shadow-2xl flex items-center justify-center group-hover:scale-125 transition-transform duration-300`}
                   style={{
                     boxShadow: office.isHQ
-                      ? "0 0 30px rgba(197, 165, 114, 0.7), 0 0 60px rgba(197, 165, 114, 0.4)"
-                      : "0 0 30px rgba(183, 231, 161, 0.7), 0 0 60px rgba(183, 231, 161, 0.4)",
+                      ? "0 0 20px rgba(197, 165, 114, 0.7), 0 0 40px rgba(197, 165, 114, 0.4)"
+                      : "0 0 20px rgba(183, 231, 161, 0.7), 0 0 40px rgba(183, 231, 161, 0.4)",
                   }}
                 >
-                  <div className="w-7 h-7 rounded-full bg-background/90 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-white" />
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full bg-background/90 flex items-center justify-center">
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
                   </div>
                 </motion.div>
 
                 {/* City Label Below Marker */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 text-center whitespace-nowrap pointer-events-none">
-                  <p className={`font-serif text-sm font-semibold ${office.isHQ ? "text-gold" : "text-accent"}`}>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 sm:mt-1.5 md:mt-2 text-center whitespace-nowrap pointer-events-none">
+                  <p className={`font-serif text-xs sm:text-xs md:text-sm font-semibold ${office.isHQ ? "text-gold" : "text-accent"}`}>
                     {office.city}
                   </p>
                   {office.isHQ && (
-                    <p className="text-xs text-gold/80 uppercase tracking-wider font-semibold">
+                    <p className="text-[10px] sm:text-[10px] md:text-xs text-gold/80 uppercase tracking-wider font-semibold">
                       HQ
                     </p>
                   )}
                 </div>
 
-                {/* Enhanced Hover Tooltip */}
+                {/* Simple City Name on Hover - Above Marker */}
                 <AnimatePresence>
-                  {hoveredOffice === office.id && (
+                  {hoveredOffice === office.id && !selectedOffice && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 pointer-events-none z-50"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 sm:mb-2.5 md:mb-3 pointer-events-none z-50"
                     >
-                      <div className="bg-background/98 backdrop-blur-md border-2 border-accent/60 rounded-xl px-5 py-3 shadow-2xl">
-                        <p className="font-serif text-base font-semibold text-white">
-                          {office.city}
-                        </p>
-                        <p className="text-xs text-grey mt-0.5">{office.state}</p>
-                        {office.isHQ && (
-                          <p className="text-xs text-gold uppercase tracking-wider font-semibold mt-1">
-                            Headquarters
-                          </p>
-                        )}
-                        <p className="text-xs text-accent mt-2">Click for details</p>
-                      </div>
-                      {/* Arrow */}
-                      <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-accent/60" />
+                      <p className={`font-serif text-sm sm:text-sm md:text-base font-semibold whitespace-nowrap ${office.isHQ ? "text-gold" : "text-accent"}`}>
+                        {office.city}
+                      </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
             ))}
         </div>
+        </div>
       </div>
 
-      {/* Office Detail Card */}
-      <AnimatePresence>
-        {selectedOffice && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/70 backdrop-blur-md z-40"
-              onClick={() => setSelectedOffice(null)}
-            />
-
-            {/* Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-gradient-to-br from-background to-primary-dark border-2 border-accent/40 rounded-2xl p-8 shadow-2xl z-50"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedOffice(null)}
-                className="absolute top-4 right-4 text-grey hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              {/* Office Info */}
-              <div className="space-y-6">
-                <div>
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className={`mt-1 p-3 rounded-xl ${selectedOffice.isHQ ? "bg-gold/10" : "bg-accent/10"}`}>
-                      <MapPin className={`w-7 h-7 ${selectedOffice.isHQ ? "text-gold" : "text-accent"}`} />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-3xl font-medium text-white leading-tight">
-                        {selectedOffice.city}
-                      </h3>
-                      <p className="text-sm text-grey mt-1">{selectedOffice.state}</p>
-                    </div>
-                    {selectedOffice.isHQ && (
-                      <span className="ml-auto luxury-label text-gold text-xs mt-2 px-3 py-1 bg-gold/10 rounded-full border border-gold/30">
-                        HQ
-                      </span>
-                    )}
-                  </div>
+      {/* Right-Side Tooltip Panel */}
+      <AnimatePresence mode="wait">
+        {!hasInteracted && !displayOffice && (
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="hidden lg:block absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-0.25rem)] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] 2xl:w-[400px] max-w-[400px] z-40 pointer-events-none opacity-85 sm:opacity-90 md:opacity-95 lg:opacity-100"
+          >
+            <div className="bg-gradient-to-br from-background/95 via-primary-dark/85 to-background/95 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 xl:p-7 shadow-2xl pointer-events-auto opacity-85 sm:opacity-90 md:opacity-95 lg:opacity-100">
+              <div className="flex flex-col items-center justify-center text-center space-y-3 sm:space-y-3.5">
+                <div className="p-3 rounded-full bg-accent/10">
+                  <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-accent" />
                 </div>
-
-                <div className="h-px bg-accent/20" />
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3 text-grey group hover:text-white transition-colors">
-                    <div className="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                      <Navigation2 className="w-5 h-5 text-accent flex-shrink-0" />
-                    </div>
-                    <p className="leading-relaxed pt-1.5">
-                      {selectedOffice.address}
-                    </p>
-                  </div>
-
-                  <a
-                    href={`tel:${selectedOffice.phone}`}
-                    className="flex items-center gap-3 text-grey hover:text-accent transition-colors group"
-                  >
-                    <div className="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <span className="font-medium">{selectedOffice.phone}</span>
-                  </a>
-
-                  <a
-                    href={`mailto:${selectedOffice.email}`}
-                    className="flex items-center gap-3 text-grey hover:text-accent transition-colors group"
-                  >
-                    <div className="p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <span className="font-medium">{selectedOffice.email}</span>
-                  </a>
+                <h3 className="font-serif text-xl sm:text-2xl font-medium text-white">
+                  Explore Our Offices
+                </h3>
+                <p className="text-xs sm:text-sm text-text-grey leading-relaxed max-w-[280px] sm:max-w-none">
+                  Hover over any office marker to view details, or click to keep them visible
+                </p>
+                <div className="flex items-center gap-1.5 text-xs text-accent/80">
+                  <span>💡</span>
+                  <span>Hover for 1 second to auto-select</span>
                 </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    // Open Google Maps with the office address
-                    const address = encodeURIComponent(selectedOffice.address);
-                    window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
-                  }}
-                  className="w-full py-4 bg-accent text-primary-dark text-center font-semibold rounded-xl hover:bg-accent-dark transition-colors shadow-lg hover:shadow-accent/20"
-                >
-                  Get Directions
-                </motion.button>
               </div>
+            </div>
+          </motion.div>
+        )}
+        {displayOffice && (
+          <>
+            {/* Mobile: Centered Popup */}
+            <motion.div
+              key={`mobile-${displayOffice.id}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="lg:hidden absolute inset-0 z-40 flex items-center justify-center p-4 pointer-events-none"
+              onAnimationStart={() => {
+                // #region agent log
+                if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:436',message:'Mobile popup animation start',data:{officeId:displayOffice.id,windowWidth:window.innerWidth,zIndex:40},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});}
+                // #endregion
+              }}
+            >
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                onClick={(e) => {
+                  // #region agent log
+                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:444',message:'Backdrop onClick',data:{target:e.target?.toString(),currentTarget:e.currentTarget?.toString(),windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});}
+                  // #endregion
+                  onSelect(null);
+                }}
+              />
+              
+              {/* Panel */}
+              <motion.div 
+                className="relative w-full max-w-sm bg-gradient-to-br from-background/98 via-primary-dark/90 to-background/98 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-4 sm:p-5 shadow-2xl pointer-events-auto max-h-[85vh] overflow-y-auto"
+                layout
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                {selectedOffice && (
+                  <button
+                    onClick={() => onSelect(null)}
+                    className="absolute top-3 right-3 text-text-grey hover:text-white transition-colors p-1.5 hover:bg-white/5 rounded-full z-10"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+
+                {/* Office Info - Same content as desktop */}
+                <motion.div 
+                  className="space-y-3 sm:space-y-3.5"
+                  key={displayOffice.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <div>
+                    <div className="flex items-start gap-2 sm:gap-2.5 mb-1.5 sm:mb-2">
+                      <motion.div 
+                        className={`p-2 sm:p-2.5 rounded-xl flex-shrink-0 ${displayOffice.isHQ ? "bg-gold/10" : "bg-accent/10"}`}
+                        layout
+                      >
+                        <MapPin className={`w-4 h-4 sm:w-5 sm:h-5 ${displayOffice.isHQ ? "text-gold" : "text-accent"}`} />
+                      </motion.div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1 flex-wrap">
+                          <motion.h3 
+                            className="font-serif text-lg sm:text-xl font-medium text-white leading-tight"
+                            layout
+                          >
+                            {displayOffice.city}
+                          </motion.h3>
+                          <AnimatePresence>
+                            {displayOffice.isHQ && (
+                              <motion.span 
+                                className="luxury-label text-gold text-xs px-2 py-1 bg-gold/10 rounded-full border border-gold/30 flex-shrink-0"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                HQ
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <motion.p 
+                          className="text-xs text-text-grey"
+                          layout
+                        >
+                          {displayOffice.state}
+                        </motion.p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-accent/20" />
+
+                  <div className="space-y-2 sm:space-y-2.5">
+                    <motion.div 
+                      className="flex items-start gap-2 sm:gap-2.5"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 flex-shrink-0 mt-0.5">
+                        <Navigation2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
+                      </div>
+                      <p className="text-xs text-text-grey leading-relaxed">
+                        {displayOffice.address}
+                      </p>
+                    </motion.div>
+
+                    <motion.a
+                      href={`tel:${displayOffice.phone}`}
+                      className="flex items-center gap-2 sm:gap-2.5 text-text-grey hover:text-accent transition-colors group"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.15 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      </div>
+                      <span className="text-xs font-medium">{displayOffice.phone}</span>
+                    </motion.a>
+
+                    <motion.a
+                      href={`mailto:${displayOffice.email}`}
+                      className="flex items-center gap-2 sm:gap-2.5 text-text-grey hover:text-accent transition-colors group"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      </div>
+                      <span className="text-xs font-medium break-all">{displayOffice.email}</span>
+                    </motion.a>
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      const address = encodeURIComponent(displayOffice.address);
+                      window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
+                    }}
+                    className="w-full py-2 sm:py-2.5 bg-accent text-primary-dark text-center text-xs font-semibold rounded-xl hover:bg-accent-dark transition-colors shadow-lg hover:shadow-accent/20 mt-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.25 }}
+                  >
+                    Get Directions
+                  </motion.button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Desktop: Right-Side Panel */}
+            <motion.div
+              key={`desktop-${displayOffice.id}`}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="hidden lg:block absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-0.25rem)] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] 2xl:w-[400px] max-w-[400px] z-40 pointer-events-none opacity-85 sm:opacity-90 md:opacity-95 lg:opacity-100"
+            >
+            <motion.div 
+              className="bg-gradient-to-br from-background/95 via-primary-dark/85 to-background/95 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-2.5 sm:p-3 md:p-4 lg:p-5 xl:p-6 shadow-2xl pointer-events-auto"
+              layout
+            >
+                {/* Close Button - Only show when office is selected */}
+                {selectedOffice && (
+                  <button
+                    onClick={() => onSelect(null)}
+                    className="absolute top-3 right-3 sm:top-4 sm:right-4 text-text-grey hover:text-white transition-colors p-1.5 sm:p-2 hover:bg-white/5 rounded-full z-10"
+                  >
+                    <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                )}
+
+                {/* Office Info */}
+                <motion.div 
+                  className="space-y-4 sm:space-y-4 md:space-y-5"
+                  key={displayOffice.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <div>
+                    <div className="flex items-start gap-3 sm:gap-3.5 mb-2">
+                      <motion.div 
+                        className={`p-2.5 sm:p-3 rounded-xl flex-shrink-0 ${displayOffice.isHQ ? "bg-gold/10" : "bg-accent/10"}`}
+                        layout
+                      >
+                        <MapPin className={`w-5 h-5 sm:w-6 sm:h-6 ${displayOffice.isHQ ? "text-gold" : "text-accent"}`} />
+                      </motion.div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <motion.h3 
+                            className="font-serif text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-medium text-white leading-tight"
+                            layout
+                          >
+                            {displayOffice.city}
+                          </motion.h3>
+                          <AnimatePresence>
+                            {displayOffice.isHQ && (
+                              <motion.span 
+                                className="luxury-label text-gold text-xs px-2 py-1 bg-gold/10 rounded-full border border-gold/30 flex-shrink-0"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                HQ
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <motion.p 
+                          className="text-xs sm:text-sm text-text-grey"
+                          layout
+                        >
+                          {displayOffice.state}
+                        </motion.p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-accent/20" />
+
+                  <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
+                    <motion.div 
+                      className="flex items-start gap-2 sm:gap-2.5 md:gap-3"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 flex-shrink-0 mt-0.5">
+                        <Navigation2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-accent" />
+                      </div>
+                      <p className="text-xs sm:text-xs md:text-sm text-text-grey leading-relaxed">
+                        {displayOffice.address}
+                      </p>
+                    </motion.div>
+
+                    <motion.a
+                      href={`tel:${displayOffice.phone}`}
+                      className="flex items-center gap-2 sm:gap-2.5 md:gap-3 text-text-grey hover:text-accent transition-colors group"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.15 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                      </div>
+                      <span className="text-xs sm:text-xs md:text-sm font-medium">{displayOffice.phone}</span>
+                    </motion.a>
+
+                    <motion.a
+                      href={`mailto:${displayOffice.email}`}
+                      className="flex items-center gap-2 sm:gap-2.5 md:gap-3 text-text-grey hover:text-accent transition-colors group"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                        <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                      </div>
+                      <span className="text-xs sm:text-xs md:text-sm font-medium break-all">{displayOffice.email}</span>
+                    </motion.a>
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      const address = encodeURIComponent(displayOffice.address);
+                      window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
+                    }}
+                    className="w-full py-2 sm:py-2.5 md:py-3 bg-accent text-primary-dark text-center text-xs sm:text-xs md:text-sm font-semibold rounded-xl hover:bg-accent-dark transition-colors shadow-lg hover:shadow-accent/20 mt-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.25 }}
+                  >
+                    Get Directions
+                  </motion.button>
+                </motion.div>
+              </motion.div>
             </motion.div>
           </>
         )}
@@ -465,17 +763,6 @@ export function OfficeMap() {
         </div>
       </div>
 
-      {/* Instruction Hint */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2 }}
-        className="absolute top-6 left-1/2 -translate-x-1/2 bg-accent/15 backdrop-blur-sm border border-accent/40 rounded-full px-6 py-3 shadow-lg z-30"
-      >
-        <p className="text-sm text-accent font-medium">
-          Click on any marker to view office details
-        </p>
-      </motion.div>
     </div>
   );
 }

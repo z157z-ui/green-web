@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ProjectFilter, MasonryGrid } from "@/components/projects";
 import { projects, getProjectsByCategory, ProjectCategory } from "@/lib/data";
@@ -8,11 +8,36 @@ import { projects, getProjectsByCategory, ProjectCategory } from "@/lib/data";
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>("all");
   const filteredProjects = getProjectsByCategory(activeCategory);
+  const heroRef = useRef<HTMLElement>(null);
+  const filterRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkGaps = () => {
+      if (heroRef.current && filterRef.current && gridRef.current) {
+        const heroBottom = heroRef.current.getBoundingClientRect().bottom;
+        const filterTop = filterRef.current.getBoundingClientRect().top;
+        const filterBottom = filterRef.current.getBoundingClientRect().bottom;
+        const gridTop = gridRef.current.getBoundingClientRect().top;
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'projects/page.tsx:checkGaps',message:'Gap measurements',data:{heroBottom,filterTop,filterBottom,gridTop,gapHeroToFilter:filterTop - heroBottom,gapFilterToGrid:gridTop - filterBottom,scrollY:window.scrollY},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
+        // #endregion
+      }
+    };
+    
+    checkGaps();
+    window.addEventListener('scroll', checkGaps, { passive: true });
+    window.addEventListener('resize', checkGaps, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', checkGaps);
+      window.removeEventListener('resize', checkGaps);
+    };
+  }, []);
 
   return (
     <main className="min-h-screen bg-background pt-24">
       {/* Hero Section */}
-      <section className="py-16 md:py-24">
+      <section ref={heroRef} className="py-16 md:py-24">
         <div className="luxury-container text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -50,7 +75,7 @@ export default function ProjectsPage() {
             className="flex items-center justify-center gap-12 mt-12"
           >
             <div className="text-center">
-              <span className="block text-4xl font-serif text-gold">{projects.length}+</span>
+              <span className="block text-4xl font-serif text-gold">50+</span>
               <span className="text-sm text-text-grey uppercase tracking-wider">Projects</span>
             </div>
             <div className="w-px h-12 bg-white/20" />
@@ -60,7 +85,7 @@ export default function ProjectsPage() {
             </div>
             <div className="w-px h-12 bg-white/20" />
             <div className="text-center">
-              <span className="block text-4xl font-serif text-gold">8+</span>
+              <span className="block text-4xl font-serif text-gold">7+</span>
               <span className="text-sm text-text-grey uppercase tracking-wider">Years</span>
             </div>
           </motion.div>
@@ -68,13 +93,17 @@ export default function ProjectsPage() {
       </section>
 
       {/* Filter */}
-      <ProjectFilter 
-        activeCategory={activeCategory} 
-        onCategoryChange={setActiveCategory} 
-      />
+      <div ref={filterRef}>
+        <ProjectFilter 
+          activeCategory={activeCategory} 
+          onCategoryChange={setActiveCategory} 
+        />
+      </div>
 
-      {/* Projects Grid */}
-      <MasonryGrid projects={filteredProjects} />
+      {/* Projects Grid - Add spacing to prevent overlap with sticky filter */}
+      <section ref={gridRef} className="pt-4">
+        <MasonryGrid projects={filteredProjects} />
+      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-primary-dark">

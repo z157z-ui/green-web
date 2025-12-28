@@ -137,6 +137,28 @@ export const projects: Project[] = [
     solution: "Executed a comprehensive renovation including updated electrical and plumbing systems, modern kitchen and bathroom designs, fresh paint and finishes throughout, and improved space planning. Used contemporary materials, energy-efficient fixtures, and smart storage solutions to maximize functionality. The renovation transformed the apartment into a modern, comfortable 2 BHK home with updated aesthetics and improved livability.",
     description: "A complete 2 BHK apartment renovation in Vaishnavi Gardenia, Jalahalli, showcasing our expertise in residential renovation projects. This 1,100 sq ft transformation demonstrates how thoughtful renovation can breathe new life into existing spaces.",
   },
+  {
+    id: "toyota-rd",
+    title: "Toyota R&D Office",
+    client: "Toyota",
+    location: "Bangalore, Karnataka",
+    category: "commercial",
+    year: 2025,
+    size: "Office Space",
+    featuredImage: "/images/projects/toyota-rd-1.jpeg",
+    images: [
+      "/images/projects/toyota-rd-1.jpeg",
+      "/images/projects/toyota-rd-2.jpeg",
+      "/images/projects/toyota-rd-3.jpeg",
+      "/images/projects/toyota-rd-4.jpeg",
+      "/images/projects/toyota-rd-5.jpeg",
+      "/images/projects/toyota-rd-6.jpeg",
+    ],
+    aspectRatio: "landscape",
+    challenge: "Design and execute a modern R&D office space for Toyota that reflects innovation, collaboration, and Japanese corporate excellence. The challenge was to create a workspace that supports research and development activities while maintaining Toyota's brand identity and providing a productive, inspiring environment for engineers and researchers.",
+    solution: "Developed a contemporary office design featuring collaborative workspaces, modern meeting rooms, and ergonomic workstations. Integrated advanced technology infrastructure, flexible layouts for team collaboration, and premium finishes that reflect Toyota's commitment to quality. The design emphasizes natural light, open communication areas, and spaces that foster innovation while maintaining professional aesthetics.",
+    description: "A state-of-the-art R&D office design for Toyota in Bangalore, showcasing modern commercial interior design with focus on innovation, collaboration, and corporate excellence. This project demonstrates our expertise in creating high-tech workspaces for leading global corporations.",
+  },
 ];
 
 export const projectCategories = [

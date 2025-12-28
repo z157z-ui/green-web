@@ -33,9 +33,11 @@ export async function GET(
 
     return NextResponse.json(project[0], { status: 200 });
   } catch (error) {
-    console.error('GET error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('GET error:', error);
+    }
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
@@ -185,9 +187,11 @@ export async function PUT(
 
     return NextResponse.json(updatedProject[0], { status: 200 });
   } catch (error) {
-    console.error('PUT error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('PUT error:', error);
+    }
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
@@ -242,9 +246,11 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
-    console.error('DELETE error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('DELETE error:', error);
+    }
     return NextResponse.json(
-      { error: 'Internal server error: ' + (error as Error).message },
+      { error: 'Internal server error', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }

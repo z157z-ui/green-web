@@ -27,8 +27,11 @@ function rateLimit(ip: string): boolean {
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Get client IP for rate limiting
-  const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
+  // Get client IP for rate limiting (handle X-Forwarded-For properly)
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const ip = request.ip || 
+             (forwardedFor ? forwardedFor.split(',')[0].trim() : null) || 
+             "unknown";
 
   // Apply rate limiting
   if (!rateLimit(ip)) {
@@ -47,13 +50,14 @@ export async function middleware(request: NextRequest) {
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
   
-  // Content Security Policy
+  // Improved Content Security Policy - Remove unsafe-eval
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net;
+    script-src 'self' https://cdn.jsdelivr.net;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https:;
     font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
@@ -63,9 +67,23 @@ export async function middleware(request: NextRequest) {
   
   response.headers.set("Content-Security-Policy", cspHeader);
 
-  // CORS headers for API routes
+  // Secure CORS - Only allow specific origins
   if (request.nextUrl.pathname.startsWith("/api/")) {
-    response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin") || "*");
+    const origin = request.headers.get("origin");
+    const allowedOrigins = [
+      process.env.NEXT_PUBLIC_SITE_URL,
+      'https://greenbuildersandinteriors.com',
+      'https://www.greenbuildersandinteriors.com',
+    ].filter(Boolean) as string[];
+
+    if (origin && allowedOrigins.includes(origin)) {
+      response.headers.set("Access-Control-Allow-Origin", origin);
+      response.headers.set("Access-Control-Allow-Credentials", "true");
+    } else if (process.env.NODE_ENV === 'development') {
+      // Allow localhost in development only
+      response.headers.set("Access-Control-Allow-Origin", origin || "*");
+    }
+
     response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     response.headers.set("Access-Control-Max-Age", "86400");

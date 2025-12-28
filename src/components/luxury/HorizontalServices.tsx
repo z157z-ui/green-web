@@ -1,6 +1,8 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import {
   Home,
   Building2,
@@ -50,8 +52,21 @@ const services: Service[] = [
 ];
 
 export function HorizontalServices() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Set initial scroll position on mobile to show ~60% of first card and ~40% of second
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      const container = scrollContainerRef.current;
+      if (container) {
+        // Scroll to show partial first card (160px = half of 320px card width)
+        container.scrollLeft = 160;
+      }
+    }
+  }, []);
+
   return (
-    <section className="relative overflow-hidden bg-primary-dark py-20 md:py-24">
+    <section className="relative overflow-hidden bg-primary-dark py-12 md:py-16">
       <div className="luxury-container mb-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -72,7 +87,10 @@ export function HorizontalServices() {
 
       {/* Horizontal Scroll Container */}
       <div className="relative">
-        <div className="flex gap-6 overflow-x-auto px-6 pb-8 hide-scrollbar md:px-12 snap-x snap-mandatory">
+        <div 
+          ref={scrollContainerRef}
+          className="flex gap-6 overflow-x-auto px-6 pb-8 hide-scrollbar md:px-12 snap-x snap-mandatory"
+        >
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}
@@ -101,7 +119,7 @@ interface ServiceCardProps {
   index: number;
 }
 
-function ServiceCard({ service, index }: ServiceCardProps) {
+const ServiceCard = React.memo(function ServiceCard({ service, index }: ServiceCardProps) {
   const Icon = service.icon;
 
   return (
@@ -110,7 +128,9 @@ function ServiceCard({ service, index }: ServiceCardProps) {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
-      className="group relative min-w-[320px] snap-center md:min-w-[380px]"
+      className={`group relative min-w-[320px] md:min-w-[380px] ${
+        index === 0 ? 'snap-start' : 'snap-center'
+      }`}
     >
       <div className="h-full bg-background-elevated border border-white/10 hover:border-accent/30 rounded-xl p-8 transition-all duration-500 hover:shadow-2xl">
         {/* Icon */}
@@ -136,5 +156,5 @@ function ServiceCard({ service, index }: ServiceCardProps) {
       </div>
     </motion.div>
   );
-}
+});
 
