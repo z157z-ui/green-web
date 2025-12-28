@@ -5,18 +5,20 @@ A modern, full-stack web application built with Next.js 15 for Green Builders an
 ## Features
 
 ### Public Website
-- **Home Page**: Hero section with video background, call-to-action, featured projects grid, and services showcase
+- **Home Page**: Hero section with video background, reduced text sizes, call-to-action, 4-project featured grid with perfect layout, and services showcase
 - **Services Page**: Comprehensive 12-service catalog including villa design, apartment design, office design, renovations, and construction
 - **About Page**: Company overview with 7+ years of experience, 50+ projects delivered, and company history timeline
 - **Team Page**: Team member profiles and leadership information
 - **Contact Page**: Multi-location contact information with contact form and 5 office locations (Bangalore, Visakhapatnam, Hyderabad, Kochi, Chennai)
 - **Projects Gallery**: Portfolio showcase with filtering capabilities
-- **Client Logos**: Scrolling marquee showcasing trusted partners (Smart Node, Alsina, Bajaj Allianz, Mitsubishi Electric, Thoughtworks, BluArmor, Awfis, Credel Capital)
+- **Client Logos**: Scrolling marquee showcasing trusted partners with clickable links (Smart Node, Alsina, Bajaj Allianz, Mitsubishi Electric, Thoughtworks, BluArmor, Awfis, Credel Capital, Toyota, Kargil Equipments, Fateh, SAPRO, Mibo, Aster Pharmacy, Softtek)
 - **Client Testimonials**: Aesthetic testimonial section with names and comments
 - **WhatsApp Integration**: Floating chat widget for instant customer communication
 - **Smooth Navigation**: Anchor-based smooth scrolling, fade effects on scroll, and mega menu for services
 - **Responsive Design**: Mobile-first approach with modern UI components
-- **Video Background**: Cinematic hero section with autoplay video background
+- **Video Background**: Cinematic hero section with autoplay video background and reduced text sizes for better visual balance
+- **Featured Projects Grid**: Perfectly filled 4-project layout with enhanced design elements, hover effects, and responsive grid system
+- **Centered Navigation**: Navigation menu centered with logo on left and CTA button on right
 
 ### Admin Dashboard
 - Content Management System (CMS) for:

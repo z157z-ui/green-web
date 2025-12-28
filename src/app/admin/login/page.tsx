@@ -13,10 +13,12 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setInfo("");
     setIsLoading(true);
 
     try {
@@ -37,8 +39,8 @@ export default function AdminLoginPage() {
       // For now, just redirect to admin dashboard (which doesn't exist yet)
       // router.push('/admin/dashboard');
       
-      // Show success message
-      setError("Authentication not yet implemented. This is a placeholder page.");
+      // Show informational message
+      setInfo("Authentication not yet implemented. This is a placeholder page.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to sign in");
     } finally {
@@ -84,6 +86,11 @@ export default function AdminLoginPage() {
             {error && (
               <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
                 {error}
+              </div>
+            )}
+            {info && (
+              <div className="text-sm text-info bg-info/10 dark:text-info dark:bg-info/30 p-3 rounded-md">
+                {info}
               </div>
             )}
             <Button

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, Loader2 } from "lucide-react";
 
 const videos = [
   {
@@ -21,15 +21,37 @@ const videos = [
 
 export function VideoShowcase() {
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [isPlayingLoading, setIsPlayingLoading] = useState<string | null>(null);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
+  const mountedRef = useRef(true);
 
-  const toggleVideo = (videoId: string) => {
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  const toggleVideo = async (videoId: string) => {
     const video = videoRefs.current[videoId];
     if (!video) return;
 
+    // Guard against concurrent video loading
+    // Capture current loading state safely
+    const currentLoadingId = isPlayingLoading;
+    if (currentLoadingId === videoId) {
+      // Same video is already loading, ignore click
+      return;
+    }
+    if (currentLoadingId !== null && currentLoadingId !== videoId) {
+      // Another video is currently loading, ignore click
+      return;
+    }
+
     if (playingVideo === videoId) {
       video.pause();
-      setPlayingVideo(null);
+      if (mountedRef.current) {
+        setPlayingVideo(null);
+      }
     } else {
       // Pause all other videos
       Object.values(videoRefs.current).forEach((v) => {
@@ -37,8 +59,31 @@ export function VideoShowcase() {
           v.pause();
         }
       });
-      video.play();
-      setPlayingVideo(videoId);
+      
+      // Set loading state before async operation
+      if (mountedRef.current) {
+        setIsPlayingLoading(videoId);
+      }
+
+      try {
+        await video.play();
+        if (mountedRef.current) {
+          setPlayingVideo(videoId);
+        }
+      } catch (error) {
+        // Handle autoplay policy or other play() errors
+        console.error(`Failed to play video ${videoId}:`, error);
+        if (mountedRef.current) {
+          setPlayingVideo(null);
+        }
+        // Ensure video is paused on error
+        video.pause();
+      } finally {
+        // Always clear loading state, even on error
+        if (mountedRef.current) {
+          setIsPlayingLoading(null);
+        }
+      }
     }
   };
 
@@ -66,6 +111,7 @@ export function VideoShowcase() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {videos.map((video, index) => {
             const isPlaying = playingVideo === video.id;
+            const isLoading = isPlayingLoading === video.id;
             return (
               <motion.div
                 key={video.id}
@@ -86,10 +132,14 @@ export function VideoShowcase() {
                     loop
                     muted
                     playsInline
-                    onPlay={() => setPlayingVideo(video.id)}
+                    onPlay={() => {
+                      if (mountedRef.current) {
+                        setPlayingVideo(video.id);
+                      }
+                    }}
                     onPause={() => {
-                      if (playingVideo === video.id) {
-                        setPlayingVideo(null);
+                      if (mountedRef.current) {
+                        setPlayingVideo((prev) => (prev === video.id ? null : prev));
                       }
                     }}
                   />
@@ -100,16 +150,19 @@ export function VideoShowcase() {
                   {/* Play/Pause Button */}
                   <button
                     onClick={() => toggleVideo(video.id)}
-                    className="absolute inset-0 flex items-center justify-center group/btn"
+                    disabled={isLoading}
+                    className="absolute inset-0 flex items-center justify-center group/btn disabled:cursor-not-allowed disabled:opacity-75"
                     aria-label={isPlaying ? "Pause video" : "Play video"}
                   >
                     <motion.div
                       className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/30 flex items-center justify-center group-hover/btn:bg-white/20 group-hover/btn:border-gold transition-all duration-300"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={!isLoading ? { scale: 1.1 } : {}}
+                      whileTap={!isLoading ? { scale: 0.95 } : {}}
                     >
-                      {isPlaying ? (
-                        <Pause className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />
+                      {isLoading ? (
+                        <Loader2 className="w-8 h-8 md:w-10 md:h-10 text-white animate-spin" />
+                      ) : isPlaying ? (
+                        <Pause className="w-8 h-8 md:w-10 md:h-10 text-white" />
                       ) : (
                         <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />
                       )}

@@ -76,6 +76,17 @@
 }
 
 @layer base {
+  :root {
+    /* === SHADCN/UI SEMANTIC TOKENS === */
+    --info: 169 19% 28%; /* HSL matches primary-light (#3A5550) for info background/surface - verified: HSL(169, 19%, 28%) = #3A5550 */
+    --info-foreground: 150 30% 95%; /* light teal in HSL - text on info background - WCAG contrast: 7.36:1 (exceeds 4.5:1 requirement) */
+  }
+
+  .dark {
+    --info: 160 30% 50%; /* teal-500 in HSL - lighter teal for dark mode info background/surface */
+    --info-foreground: 150 25% 10%; /* dark teal in HSL - text on info background */
+  }
+
   * {
     @apply border-divider;
   }
@@ -406,6 +417,19 @@
     display: none;
   }
 
+  /* Mask for logo fade effect - prevents shadow artifacts */
+  .logo-fade-mask {
+    mask-image: linear-gradient(to right, transparent 0px, black 96px, black calc(100% - 96px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0px, black 96px, black calc(100% - 96px), transparent 100%);
+  }
+
+  @media (min-width: 768px) {
+    .logo-fade-mask {
+      mask-image: linear-gradient(to right, transparent 0px, black 160px, black calc(100% - 160px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0px, black 160px, black calc(100% - 160px), transparent 100%);
+    }
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -489,19 +513,25 @@
 /* === MARQUEE ANIMATION === */
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .animate-marquee {
   animation: marquee 60s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  /* Removed perspective to prevent shadow artifacts */
 }
 
 .animate-marquee-slow {
   animation: marquee 80s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  /* Removed perspective to prevent shadow artifacts */
 }
 
 /* === REDUCED MOTION === */

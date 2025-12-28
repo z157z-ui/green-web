@@ -118,7 +118,7 @@ export function Header() {
             {/* Logo with hover effect */}
             <Link 
               href="/" 
-              className="relative z-10 group"
+              className="relative z-10 group flex-shrink-0"
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -135,8 +135,8 @@ export function Header() {
               </motion.div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
+            {/* Desktop Navigation - Centered */}
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-12 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -161,7 +161,7 @@ export function Header() {
 
             {/* CTA Button (Desktop) */}
             <motion.div 
-              className="hidden lg:flex items-center gap-6"
+              className="hidden lg:flex items-center gap-6 flex-shrink-0 ml-auto"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}

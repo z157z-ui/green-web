@@ -159,6 +159,26 @@ export const projects: Project[] = [
     solution: "Developed a contemporary office design featuring collaborative workspaces, modern meeting rooms, and ergonomic workstations. Integrated advanced technology infrastructure, flexible layouts for team collaboration, and premium finishes that reflect Toyota's commitment to quality. The design emphasizes natural light, open communication areas, and spaces that foster innovation while maintaining professional aesthetics.",
     description: "A state-of-the-art R&D office design for Toyota in Bangalore, showcasing modern commercial interior design with focus on innovation, collaboration, and corporate excellence. This project demonstrates our expertise in creating high-tech workspaces for leading global corporations.",
   },
+  {
+    id: "nandini-madikeri-coorg",
+    title: "Nandini Madikeri Coorg",
+    location: "B 27/7, Madikeri, Coorg, Karnataka",
+    category: "residential",
+    year: 2024,
+    size: "2000 sq ft",
+    featuredImage: "/images/projects/nandini-madikeri-coorg-1.jpeg",
+    images: [
+      "/images/projects/nandini-madikeri-coorg-1.jpeg",
+      "/images/projects/nandini-madikeri-coorg-2.jpeg",
+      "/images/projects/nandini-madikeri-coorg-3.jpeg",
+      "/images/projects/nandini-madikeri-coorg-4.jpeg",
+      "/images/projects/nandini-madikeri-coorg-5.jpeg",
+    ],
+    aspectRatio: "landscape",
+    challenge: "Design a spacious 2 BHK, 2-floor residential home in the scenic location of Madikeri, Coorg. The challenge was to create a comfortable, modern living space that takes advantage of the beautiful surroundings while providing all modern amenities and efficient space utilization across two floors.",
+    solution: "Designed a comprehensive 2 BHK home spread across two floors with thoughtful space planning, modern interiors, and premium finishes. Created distinct functional zones for living, dining, and private areas while ensuring seamless flow between floors. Integrated contemporary design elements, quality materials, and smart storage solutions to maximize the 2000 sq ft space. The design emphasizes natural light, ventilation, and connection with the beautiful Coorg landscape.",
+    description: "A complete 2 BHK residential design project in Madikeri, Coorg, featuring modern design principles, efficient space planning across two floors, and premium finishes. This 2000 sq ft home showcases contemporary residential design excellence in a beautiful hill station setting.",
+  },
 ];
 
 export const projectCategories = [
