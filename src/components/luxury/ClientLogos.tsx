@@ -18,6 +18,16 @@ const clients: Client[] = [
   { name: "BluArmor", logo: "/images/logos/clients/blua.jpg" },
   { name: "Awfis", logo: "/images/logos/clients/awfis.jpg" },
   { name: "Credel Capital", logo: "/images/logos/clients/credal.jpg" },
+  { name: "Air Force", logo: "/images/logos/clients/airforce.jpg" },
+  { name: "Aster Pharmacy", logo: "/images/logos/clients/aster-pharmacy.jpg" },
+  { name: "BSF Design", logo: "/images/logos/clients/bsf-design.jpg" },
+  { name: "Fateh", logo: "/images/logos/clients/fateh.jpg" },
+  { name: "Kargil Equipments", logo: "/images/logos/clients/kargil-equipments.jpg" },
+  { name: "Mibo", logo: "/images/logos/clients/mibo.jpg" },
+  { name: "NV5", logo: "/images/logos/clients/nv5.jpg" },
+  { name: "Sapro", logo: "/images/logos/clients/sapro.jpg" },
+  { name: "Softtek", logo: "/images/logos/clients/softtek.jpg" },
+  { name: "Toyota", logo: "/images/logos/clients/toyota.jpg" },
 ];
 
 export function ClientLogos() {
@@ -235,10 +245,6 @@ export function ClientLogos() {
           WebkitOverflowScrolling: "touch",
         }}
       >
-        {/* Gradient Overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-
         {/* Animated Scrolling Track */}
         <div 
           ref={scrollTrackRef}
@@ -264,14 +270,13 @@ interface ClientLogoProps {
 function ClientLogo({ client }: ClientLogoProps) {
   return (
     <div className="flex-shrink-0 group">
-      <div className="relative h-20 md:h-24 w-[142px] md:w-[170px] rounded-xl border border-white/10 bg-primary-dark/60 transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80 overflow-hidden">
-        {/* Removed backdrop-blur-sm to prevent shadow moving with animation */}
+      <div className="relative h-20 md:h-32 lg:h-36 w-[143px] md:w-[200px] lg:w-[240px] rounded-xl border border-white/10 bg-primary-dark/60 transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80 overflow-hidden">
         <Image
           src={client.logo}
           alt={client.name}
           fill
-          className="object-contain object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
-          sizes="(max-width: 768px) 142px, 170px"
+          className="object-cover object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
+          sizes="(max-width: 768px) 143px, (max-width: 1024px) 200px, 240px"
           unoptimized
         />
       </div>
