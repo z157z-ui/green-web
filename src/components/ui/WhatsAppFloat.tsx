@@ -32,7 +32,7 @@ export function WhatsAppFloat({
       }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-8 right-8 z-50 group"
+      className="fixed bottom-8 left-8 z-50 group"
       aria-label="Contact us on WhatsApp"
     >
       {/* Ping Animation */}
@@ -44,10 +44,10 @@ export function WhatsAppFloat({
       </div>
 
       {/* Tooltip */}
-      <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div className="absolute bottom-full left-0 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
         <div className="bg-white text-primary-dark px-4 py-2 rounded-lg shadow-xl whitespace-nowrap text-sm font-medium">
           Chat with us on WhatsApp
-          <div className="absolute top-full right-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white" />
+          <div className="absolute top-full left-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white" />
         </div>
       </div>
     </motion.button>

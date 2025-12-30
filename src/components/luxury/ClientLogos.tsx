@@ -7,25 +7,17 @@ import Image from "next/image";
 interface Client {
   name: string;
   logo: string;
-  url: string;
 }
 
 const clients: Client[] = [
-  { name: "Smart Node", logo: "/images/logos/clients/smart-node.jpg", url: "https://smartnode.in" },
-  { name: "Alsina", logo: "/images/logos/clients/alsina.jpg", url: "https://www.alsina.com" },
-  { name: "Bajaj Allianz", logo: "/images/logos/clients/bajaj.jpg", url: "https://www.bajajallianz.com" },
-  { name: "Mitsubishi Electric", logo: "/images/logos/clients/mistubishi.jpg", url: "https://in.mitsubishielectric.com/en/index.html" },
-  { name: "Thoughtworks", logo: "/images/logos/clients/thoughtworks.jpg", url: "https://www.thoughtworks.com" },
-  { name: "BluArmor", logo: "/images/logos/clients/blua.jpg", url: "https://thebluarmor.com" },
-  { name: "Awfis", logo: "/images/logos/clients/awfis.jpg", url: "https://www.awfis.com" },
-  { name: "Credel Capital", logo: "/images/logos/clients/credal.jpg", url: "http://www.credelcapital.com" },
-  { name: "Toyota", logo: "/images/logos/clients/toyota.jpg", url: "https://www.toyotabharat.com" },
-  { name: "Kargil Equipments", logo: "/images/logos/clients/kargil-equipments.jpg", url: "http://www.kargilequipments.com" },
-  { name: "Fateh", logo: "/images/logos/clients/fateh.jpg", url: "https://www.fateheducation.com" },
-  { name: "SAPRO", logo: "/images/logos/clients/sapro.jpg", url: "https://www.sapro.com" },
-  { name: "Mibo", logo: "/images/logos/clients/mibo.jpg", url: "https://mibo.care" },
-  { name: "Aster Pharmacy", logo: "/images/logos/clients/aster-pharmacy.jpg", url: "https://www.asterpharmacy.com" },
-  { name: "Softtek", logo: "/images/logos/clients/softtek.jpg", url: "https://www.softtek.com" },
+  { name: "Smart Node", logo: "/images/logos/clients/smart-node.jpg" },
+  { name: "Alsina", logo: "/images/logos/clients/alsina.jpg" },
+  { name: "Bajaj Allianz", logo: "/images/logos/clients/bajaj.jpg" },
+  { name: "Mitsubishi Electric", logo: "/images/logos/clients/mistubishi.jpg" },
+  { name: "Thoughtworks", logo: "/images/logos/clients/thoughtworks.jpg" },
+  { name: "BluArmor", logo: "/images/logos/clients/blua.jpg" },
+  { name: "Awfis", logo: "/images/logos/clients/awfis.jpg" },
+  { name: "Credel Capital", logo: "/images/logos/clients/credal.jpg" },
 ];
 
 export function ClientLogos() {
@@ -230,7 +222,7 @@ export function ClientLogos() {
       {/* Marquee Container - auto-playing animation with manual scroll support */}
       <div 
         ref={scrollContainerRef}
-        className="relative overflow-x-auto overflow-y-hidden hide-scrollbar logo-fade-mask"
+        className="relative overflow-x-auto overflow-y-hidden hide-scrollbar"
         role="group"
         aria-label="Scrolling list of client logos; animation pauses on hover or focus; scrollable with mouse wheel or touch"
         onMouseEnter={handlePause}
@@ -243,25 +235,24 @@ export function ClientLogos() {
           WebkitOverflowScrolling: "touch",
         }}
       >
-          {/* Animated Scrolling Track - isolated in its own layer */}
-          <div 
-            ref={scrollTrackRef}
-            className="flex gap-8 md:gap-12 animate-marquee-slow"
-            style={{ 
-              width: "max-content",
-              animationPlayState: isPaused ? "paused" : "running",
-              transform: "translateZ(0)", // Force GPU acceleration
-              isolation: "isolate", // Create new stacking context to prevent shadow artifacts
-              position: "relative",
-              zIndex: 1,
-              contain: "layout style paint", // Isolate rendering to prevent artifacts
-            }}
-          >
-            {duplicatedClients.map((client, index) => (
-              <ClientLogo key={`${client.name}-${index}`} client={client} />
-            ))}
-          </div>
+        {/* Gradient Overlays for fade effect */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+        {/* Animated Scrolling Track */}
+        <div 
+          ref={scrollTrackRef}
+          className="flex gap-8 md:gap-12 animate-marquee-slow"
+          style={{ 
+            width: "max-content",
+            animationPlayState: isPaused ? "paused" : "running"
+          }}
+        >
+          {duplicatedClients.map((client, index) => (
+            <ClientLogo key={`${client.name}-${index}`} client={client} />
+          ))}
         </div>
+      </div>
     </section>
   );
 }
@@ -271,63 +262,19 @@ interface ClientLogoProps {
 }
 
 function ClientLogo({ client }: ClientLogoProps) {
-  // New logos that should be zoomed to fill container
-  const newLogos = ["Toyota", "Kargil Equipments", "Fateh", "SAPRO", "Mibo", "Aster Pharmacy", "Softtek"];
-  const isNewLogo = newLogos.includes(client.name);
-  const objectFitClass = isNewLogo ? "object-cover" : "object-contain";
-
   return (
-    <div 
-      className="flex-shrink-0 group" 
-      style={{ 
-        transform: "translateZ(0)", 
-        willChange: "transform",
-        isolation: "isolate",
-      }}
-    >
-      <a
-        href={client.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Visit ${client.name} website`}
-        className="block cursor-pointer"
-        onClick={(e) => {
-          // Prevent link click from interfering with scroll
-          e.stopPropagation();
-        }}
-      >
-        <div 
-          className="relative h-20 md:h-24 w-[142px] md:w-[170px] bg-primary-dark/60 transition-all duration-300 group-hover:bg-primary-dark/80 overflow-hidden"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            transform: "translateZ(0)",
-            boxShadow: "none",
-            filter: "none",
-            WebkitFilter: "none",
-            border: "none",
-            outline: "none",
-            borderRadius: "0", // Remove rounded corners to test if they're causing shadow
-          }}
-        >
-          <Image
-            src={client.logo}
-            alt={client.name}
-            fill
-            className={`${objectFitClass} object-center opacity-70 group-hover:opacity-100 transition-opacity duration-300`}
-            sizes="(max-width: 768px) 142px, 170px"
-            unoptimized
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "translateZ(0)",
-              filter: "none",
-              WebkitFilter: "none",
-              imageRendering: "crisp-edges", // Prevent image rendering artifacts
-            }}
-          />
-        </div>
-      </a>
+    <div className="flex-shrink-0 group">
+      <div className="relative h-20 md:h-24 w-[142px] md:w-[170px] rounded-xl border border-white/10 bg-primary-dark/60 transition-all duration-300 group-hover:border-gold/30 group-hover:bg-primary-dark/80 overflow-hidden">
+        {/* Removed backdrop-blur-sm to prevent shadow moving with animation */}
+        <Image
+          src={client.logo}
+          alt={client.name}
+          fill
+          className="object-contain object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
+          sizes="(max-width: 768px) 142px, 170px"
+          unoptimized
+        />
+      </div>
     </div>
   );
 }

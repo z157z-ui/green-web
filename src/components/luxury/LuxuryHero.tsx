@@ -163,11 +163,11 @@ export function LuxuryHero() {
 
       {/* Content - pushed down from navigation, stays fixed on scroll */}
       <motion.div
-        className="relative z-20 flex h-full flex-col items-center justify-end pb-12 sm:pb-16 md:justify-center md:pt-32 lg:pt-36 px-4 sm:px-6 text-center"
+        className="relative z-20 flex h-full flex-col items-center justify-end pb-12 sm:pb-16 md:justify-center md:pt-40 lg:justify-center px-4 sm:px-6 text-center"
       >
         {/* Main Heading with smooth slow fade animation - aesthetic styling with glass background */}
         <motion.div
-          className="relative mb-3 sm:mb-4 md:mb-6 max-w-3xl mx-auto"
+          className="relative mb-3 sm:mb-4 md:mb-6 max-w-4xl mx-auto"
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           animate={isMobile ? { opacity: 1, y: 0 } : { opacity: textFaded ? 0 : 1, y: 0 }}
           transition={isMobile ? { duration: 0 } : { 
@@ -176,19 +176,19 @@ export function LuxuryHero() {
             ease: [0.16, 1, 0.3, 1] 
           }}
         >
-          {/* Glass blur background - reduced size and blur */}
+          {/* Glass blur background */}
           <div 
-            className="absolute inset-0 rounded-xl -z-10"
+            className="absolute inset-0 rounded-2xl -z-10"
             style={{
-              background: 'rgba(0, 0, 0, 0.3)',
-              backdropFilter: isMobile ? 'blur(3px)' : 'blur(4px)',
-              WebkitBackdropFilter: isMobile ? 'blur(3px)' : 'blur(4px)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4)',
+              background: 'rgba(0, 0, 0, 0.35)',
+              backdropFilter: isMobile ? 'blur(4px)' : 'blur(8px)',
+              WebkitBackdropFilter: isMobile ? 'blur(4px)' : 'blur(8px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
             }}
           />
           <motion.h1
-            className="relative z-10 font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-light leading-[1.15] text-white tracking-tight px-5 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5"
+            className="relative z-10 font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-[1.15] text-white tracking-tight px-6 py-4 sm:px-8 sm:py-6 md:px-10 md:py-8"
           >
           <motion.span 
             className="block mb-2 sm:mb-3 md:mb-4"
@@ -255,7 +255,7 @@ export function LuxuryHero() {
           className="mb-3 sm:mb-4 md:mb-6"
         >
           <span className="inline-block px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full bg-accent/10 border border-accent/30 backdrop-blur-[2px] sm:backdrop-blur-sm shadow-lg shadow-accent/20">
-            <span className="text-accent font-medium tracking-[0.1em] sm:tracking-[0.15em] text-[9px] sm:text-[10px] md:text-xs">
+            <span className="text-accent font-medium tracking-[0.1em] sm:tracking-[0.15em] text-[10px] sm:text-xs md:text-sm">
               7+ YEARS OF EXCELLENCE • 50+ PROJECTS
             </span>
           </span>
@@ -272,20 +272,20 @@ export function LuxuryHero() {
           }}
           className="relative mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto"
         >
-          {/* Glass blur background for subtitle - reduced size and blur */}
+          {/* Glass blur background for subtitle */}
           <div 
-            className="absolute inset-0 rounded-lg -z-10"
+            className="absolute inset-0 rounded-xl -z-10"
             style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              backdropFilter: isMobile ? 'blur(2px)' : 'blur(3px)',
-              WebkitBackdropFilter: isMobile ? 'blur(2px)' : 'blur(3px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              boxShadow: '0 2px 16px rgba(0, 0, 0, 0.3)',
+              background: 'rgba(0, 0, 0, 0.25)',
+              backdropFilter: isMobile ? 'blur(4px)' : 'blur(6px)',
+              WebkitBackdropFilter: isMobile ? 'blur(4px)' : 'blur(6px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4)',
             }}
           />
-          <div className="relative z-10 px-3 py-2 sm:px-4 sm:py-3">
+          <div className="relative z-10 px-4 py-3 sm:px-6 sm:py-4">
             <motion.p 
-              className="text-[10px] sm:text-xs md:text-sm text-white/95 font-light max-w-xl sm:max-w-2xl mb-2 sm:mb-3 leading-relaxed"
+              className="text-xs sm:text-sm md:text-base text-white/95 font-light max-w-xl sm:max-w-2xl mb-2 sm:mb-3 leading-relaxed"
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={isMobile ? { opacity: 1 } : { opacity: textFaded ? 0 : 1 }}
               transition={isMobile ? { duration: 0 } : { 
@@ -301,7 +301,7 @@ export function LuxuryHero() {
               interior and turnkey solutions
             </motion.p>
             <motion.p 
-              className="text-accent/95 text-[9px] sm:text-[10px] md:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium"
+              className="text-accent/95 text-[10px] sm:text-xs md:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium"
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={isMobile ? { opacity: 1 } : { opacity: textFaded ? 0 : 1 }}
               transition={isMobile ? { duration: 0 } : { 
@@ -333,11 +333,11 @@ export function LuxuryHero() {
         >
           <Link
             href="/contact"
-            className="group relative z-50 inline-flex items-center justify-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 lg:px-8 lg:py-3 bg-accent font-semibold text-[10px] sm:text-xs md:text-sm lg:text-sm rounded-full overflow-hidden transition-all duration-500 hover:bg-gold hover:text-white hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] hover:-translate-y-1 whitespace-nowrap shadow-lg shadow-accent/50 border-2 border-white/20"
+            className="group relative z-50 inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 bg-accent font-semibold text-xs sm:text-sm md:text-base lg:text-base rounded-full overflow-hidden transition-all duration-500 hover:bg-gold hover:text-white hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] hover:-translate-y-1 whitespace-nowrap shadow-lg shadow-accent/50 border-2 border-white/20"
           >
             <span className="relative z-10 text-white font-bold [text-shadow:_2px_2px_10px_rgba(0,0,0,1),_0_0_25px_rgba(0,0,0,0.7),_1px_1px_0_rgba(0,0,0,0.8)]">Start Your Project</span>
             <motion.span
-              className="inline-block relative z-10 text-xs sm:text-sm md:text-sm text-white font-bold [text-shadow:_2px_2px_8px_rgba(0,0,0,0.8)]"
+              className="inline-block relative z-10 text-sm sm:text-base md:text-base text-white font-bold [text-shadow:_2px_2px_8px_rgba(0,0,0,0.8)]"
               initial={{ x: 0 }}
               whileHover={{ x: 5 }}
             >
@@ -346,7 +346,7 @@ export function LuxuryHero() {
           </Link>
           <Link
             href="/projects"
-            className="group relative z-50 inline-flex items-center justify-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 lg:px-8 lg:py-3 border-2 border-white/40 text-white font-medium text-[10px] sm:text-xs md:text-sm lg:text-sm rounded-full backdrop-blur-sm hover:border-gold hover:text-gold transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.2)] whitespace-nowrap"
+            className="group relative z-50 inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 border-2 border-white/40 text-white font-medium text-xs sm:text-sm md:text-base lg:text-base rounded-full backdrop-blur-sm hover:border-gold hover:text-gold transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.2)] whitespace-nowrap"
           >
             <span className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] [text-shadow:_0_0_8px_rgba(0,0,0,0.8)]">View Portfolio</span>
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2 md:h-2 rounded-full bg-accent group-hover:bg-gold transition-colors" />
