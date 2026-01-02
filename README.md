@@ -11,9 +11,15 @@ A modern, full-stack web application built with Next.js 15 for Green Builders an
 - **Team Page**: Team member profiles and leadership information
 - **Contact Page**: Multi-location contact information with contact form and 5 office locations (Bangalore, Visakhapatnam, Hyderabad, Kochi, Chennai)
 - **Projects Gallery**: Portfolio showcase with filtering capabilities
-- **Client Logos**: Scrolling marquee showcasing trusted partners (Smart Node, Alsina, Bajaj Allianz, Mitsubishi Electric, Thoughtworks, BluArmor, Awfis, Credel Capital)
+- **Client Logos**: Infinite scrolling carousel showcasing 18 trusted partners with:
+  - Smooth auto-scroll animation that pauses on hover
+  - Clickable logos with hyperlinks to company websites
+  - Bidirectional infinite loop scrolling (left and right)
+  - Responsive design optimized for mobile and desktop
+  - Accessibility features including keyboard navigation and focus states
+  - Partners include: Smart Node, Alsina, Bajaj Allianz, Mitsubishi Electric, Thoughtworks, BluArmor, Awfis, Credel Capital, Air Force, Aster Pharmacy, BSF Design, Fateh, Kargil Equipments, Mibo, NV5, Sapro, Softtek, Toyota
 - **Client Testimonials**: Aesthetic testimonial section with names and comments
-- **WhatsApp Integration**: Floating chat widget for instant customer communication
+- **WhatsApp Integration**: Floating chat widget positioned on the right side for instant customer communication
 - **Smooth Navigation**: Anchor-based smooth scrolling, fade effects on scroll, and mega menu for services
 - **Responsive Design**: Mobile-first approach with modern UI components
 - **Video Background**: Cinematic hero section with autoplay video background
