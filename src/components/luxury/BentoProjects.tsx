@@ -55,11 +55,11 @@ export function BentoProjects() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-12 text-center z-20 relative"
         >
           <Link
             href="/projects"
-            className="btn-outline rounded-full inline-block"
+            className="px-8 py-4 rounded-full font-semibold transition-all duration-300 border-2 border-accent/80 text-accent bg-white/5 hover:bg-accent hover:text-white hover:border-accent inline-block opacity-100 z-20 relative shadow-lg shadow-accent/20"
           >
             View All Projects
           </Link>

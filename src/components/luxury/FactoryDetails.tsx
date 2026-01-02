@@ -201,7 +201,7 @@ export function FactoryDetails() {
               />
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors"
+                className="absolute top-4 right-4 z-[60] p-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors opacity-100"
                 aria-label="Close"
               >
                 <svg

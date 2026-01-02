@@ -130,9 +130,9 @@ export default function ServicesPage() {
             </p>
             <Link
               href="/contact"
-              className="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:text-white hover:border-gold transition-all duration-300"
+              className="inline-block px-8 py-4 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:text-white hover:border-gold transition-all duration-300 opacity-100 z-20 relative"
             >
-              Book Free Consultation
+              Get in Touch
             </Link>
           </motion.div>
         </div>

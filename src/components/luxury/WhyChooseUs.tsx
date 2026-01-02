@@ -112,11 +112,11 @@ export function WhyChooseUs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-12"
+              className="mt-12 z-20 relative"
             >
               <a
-                href="#contact"
-                className="inline-flex items-center gap-3 bg-gold px-8 py-4 text-black font-medium tracking-wide transition-all hover:bg-black hover:text-gold border-2 border-gold"
+                href="/contact"
+                className="inline-flex items-center gap-3 bg-gold px-8 py-4 text-black font-bold tracking-wide transition-all hover:bg-gold/90 hover:text-black border-2 border-gold shadow-lg shadow-gold/50 opacity-100 z-20 relative"
               >
                 <span>Start Your Project</span>
                 <svg
@@ -194,12 +194,12 @@ export function WhyChooseUs() {
                 <FloatingElements />
 
                 {/* Image Indicators */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                   {images.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`h-2 transition-all ${
+                      className={`h-2 transition-all opacity-100 z-20 relative ${
                         index === currentImageIndex
                           ? "w-8 bg-gold"
                           : "w-2 bg-white/50 hover:bg-white/80"

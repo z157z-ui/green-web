@@ -22,7 +22,7 @@ export default function ProjectDetailPage() {
           <p className="text-text-grey mb-8">The project you&apos;re looking for doesn&apos;t exist.</p>
           <Link 
             href="/projects" 
-            className="inline-block px-6 py-3 bg-accent text-primary-dark font-semibold rounded-lg"
+            className="inline-block px-6 py-3 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 opacity-100 z-20 relative"
           >
             View All Projects
           </Link>
@@ -159,7 +159,7 @@ export default function ProjectDetailPage() {
             {/* All Projects Link */}
             <Link 
               href="/projects"
-              className="hidden md:flex items-center gap-2 px-6 py-3 border border-white/20 rounded-lg text-text-grey hover:text-white hover:border-accent transition-all"
+              className="hidden md:flex items-center gap-2 px-6 py-3 border-2 border-accent/80 rounded-lg text-white font-semibold bg-white/5 hover:text-gold hover:border-gold hover:bg-white/10 transition-all duration-300"
             >
               <span className="text-sm uppercase tracking-widest">All Projects</span>
             </Link>
@@ -199,7 +199,7 @@ export default function ProjectDetailPage() {
             </p>
             <Link
               href="/contact"
-              className="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg hover:bg-gold transition-colors"
+              className="inline-block px-8 py-4 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 opacity-100 z-20 relative"
             >
               Start Your Project
             </Link>

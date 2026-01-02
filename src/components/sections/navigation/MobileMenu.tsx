@@ -87,10 +87,10 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
           >
             <div className="relative w-full max-w-md max-h-[90vh] bg-gradient-to-b from-primary-dark to-black rounded-2xl overflow-hidden flex flex-col">
               {/* Close Button */}
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[80]">
                 <button
                   onClick={onClose}
-                  className="p-1.5 sm:p-2 text-white/70 hover:text-white transition-colors"
+                  className="p-1.5 sm:p-2 text-white/70 hover:text-white transition-colors opacity-100 z-[80] relative"
                   aria-label="Close menu"
                 >
                   <X size={24} className="sm:w-7 sm:h-7" />
@@ -131,11 +131,11 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                 </nav>
 
                 {/* CTA Button - High Visibility */}
-                <motion.div variants={itemVariants} className="mt-6 sm:mt-8">
+                <motion.div variants={itemVariants} className="mt-6 sm:mt-8 z-20 relative">
                   <Link
                     href="/contact"
                     onClick={onClose}
-                    className="block w-full py-3 sm:py-3.5 bg-gold text-black text-center font-semibold text-base sm:text-lg rounded-full shadow-lg shadow-gold/30 hover:bg-white hover:text-primary-dark transition-all duration-300"
+                    className="block w-full py-3 sm:py-3.5 bg-gold text-black text-center font-semibold text-base sm:text-lg rounded-full shadow-lg shadow-gold/30 hover:bg-white hover:text-primary-dark transition-all duration-300 opacity-100 z-20 relative"
                   >
                     Start Your Project
                   </Link>

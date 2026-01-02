@@ -161,14 +161,14 @@ export function Header() {
 
             {/* CTA Button (Desktop) */}
             <motion.div 
-              className="hidden lg:flex items-center gap-6"
+              className="hidden lg:flex items-center gap-6 z-20 relative"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <Link
                 href="/contact"
-                className="relative px-8 py-3 bg-accent text-primary-dark font-medium rounded-full overflow-hidden group transition-all duration-300 hover:bg-gold hover:text-white hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] hover:-translate-y-0.5"
+                className="relative px-8 py-3 bg-accent text-white font-bold rounded-full overflow-hidden group transition-all duration-300 border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] hover:-translate-y-0.5 opacity-100 z-20"
               >
                 <span className="relative z-10">Start Your Project</span>
                 {/* Shine effect */}
@@ -183,7 +183,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <motion.button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden relative z-10 p-2 text-white hover:text-accent transition-colors"
+              className="lg:hidden relative z-20 p-2 text-white hover:text-accent transition-colors opacity-100"
               aria-label="Open menu"
               whileTap={{ scale: 0.95 }}
             >

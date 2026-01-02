@@ -99,7 +99,7 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg hover:bg-gold transition-colors"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300"
           >
             <Home className="w-5 h-5" />
             Return to Home
@@ -107,7 +107,7 @@ export default function NotFound() {
           
           <Link
             href="/projects"
-            className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white font-medium rounded-lg hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-3 px-8 py-4 border-2 border-accent/80 text-white font-semibold rounded-lg bg-white/5 hover:border-gold hover:text-gold hover:bg-white/10 transition-all duration-300"
           >
             <Search className="w-5 h-5" />
             Browse Projects

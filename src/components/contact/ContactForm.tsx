@@ -164,7 +164,7 @@ export function ContactForm() {
         disabled={isSubmitting}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="group w-full md:w-auto px-12 py-4 bg-accent text-primary-dark font-medium rounded-full flex items-center justify-center gap-3 hover:bg-accent-dark transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group w-full md:w-auto px-12 py-4 bg-accent text-white font-bold rounded-full flex items-center justify-center gap-3 border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-100 z-20 relative"
       >
         {isSubmitting ? (
           <>

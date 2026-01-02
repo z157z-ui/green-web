@@ -30,7 +30,7 @@ export default function ServiceDetailPage() {
           <p className="text-text-grey mb-8">The service you&apos;re looking for doesn&apos;t exist.</p>
           <Link 
             href="/services" 
-            className="inline-block px-6 py-3 bg-accent text-primary-dark font-semibold rounded-lg"
+            className="inline-block px-6 py-3 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 opacity-100 z-20 relative"
           >
             View All Services
           </Link>
@@ -279,14 +279,14 @@ export default function ServiceDetailPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg hover:bg-gold transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 opacity-100 z-20 relative"
               >
                 <Phone className="w-5 h-5" />
                 Book Consultation
               </Link>
               <Link
                 href="/services"
-                className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-lg hover:border-accent hover:text-accent transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 border-2 border-accent/80 text-white font-semibold rounded-lg bg-white/5 hover:border-gold hover:text-gold hover:bg-white/10 transition-all duration-300 opacity-100 z-20 relative"
               >
                 View All Services
               </Link>

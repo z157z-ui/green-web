@@ -497,22 +497,29 @@
   }
 }
 
-/* === MARQUEE ANIMATION === */
-@keyframes marquee {
+/* === CAROUSEL ANIMATION === */
+@keyframes carousel {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
-.animate-marquee {
-  animation: marquee 60s linear infinite;
+.carousel-track {
+  animation: carousel 60s linear infinite;
+  will-change: transform;
 }
 
-.animate-marquee-slow {
-  animation: marquee 80s linear infinite;
+.carousel-track.paused {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    animation: none;
+  }
 }
 
 /* === REDUCED MOTION === */
@@ -533,3 +540,4 @@
     @apply bg-white text-black;
   }
 }
+

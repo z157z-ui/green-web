@@ -151,11 +151,11 @@ export function VideoShowcase() {
                   <button
                     onClick={() => toggleVideo(video.id)}
                     disabled={isLoading}
-                    className="absolute inset-0 flex items-center justify-center group/btn disabled:cursor-not-allowed disabled:opacity-75"
+                    className="absolute inset-0 z-20 flex items-center justify-center group/btn disabled:cursor-not-allowed disabled:opacity-75 opacity-100"
                     aria-label={isPlaying ? "Pause video" : "Play video"}
                   >
                     <motion.div
-                      className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/30 flex items-center justify-center group-hover/btn:bg-white/20 group-hover/btn:border-gold transition-all duration-300"
+                      className="relative z-20 w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/30 flex items-center justify-center group-hover/btn:bg-white/20 group-hover/btn:border-gold transition-all duration-300 opacity-100"
                       whileHover={!isLoading ? { scale: 1.1 } : {}}
                       whileTap={!isLoading ? { scale: 0.95 } : {}}
                     >

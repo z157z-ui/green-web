@@ -321,8 +321,8 @@ export function LuxuryHero() {
 
         {/* CTA Buttons - always visible */}
         <motion.div
-          className="relative z-50 flex flex-col gap-3 sm:flex-row sm:gap-4 md:gap-4 lg:gap-6 w-full sm:w-auto justify-center items-center px-2 sm:px-0 mb-16 sm:mb-20 md:mb-24 lg:mb-32"
-          style={{ position: 'relative', zIndex: 50 }}
+          className="relative z-[100] flex flex-col gap-3 sm:flex-row sm:gap-4 md:gap-4 lg:gap-6 w-full sm:w-auto justify-center items-center px-2 sm:px-0 mb-16 sm:mb-20 md:mb-24 lg:mb-32"
+          style={{ position: 'relative', zIndex: 100 }}
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={isMobile ? { duration: 0 } : { 
@@ -333,7 +333,7 @@ export function LuxuryHero() {
         >
           <Link
             href="/contact"
-            className="group relative z-50 inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 bg-accent font-semibold text-xs sm:text-sm md:text-base lg:text-base rounded-full overflow-hidden transition-all duration-500 hover:bg-gold hover:text-white hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] hover:-translate-y-1 whitespace-nowrap shadow-lg shadow-accent/50 border-2 border-white/20"
+            className="group relative z-[100] inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 bg-accent font-bold text-xs sm:text-sm md:text-base lg:text-base rounded-full overflow-hidden transition-all duration-500 hover:bg-gold hover:text-white hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] hover:-translate-y-1 whitespace-nowrap shadow-lg shadow-accent/50 border-2 border-accent opacity-100"
           >
             <span className="relative z-10 text-white font-bold [text-shadow:_2px_2px_10px_rgba(0,0,0,1),_0_0_25px_rgba(0,0,0,0.7),_1px_1px_0_rgba(0,0,0,0.8)]">Start Your Project</span>
             <motion.span
@@ -346,7 +346,7 @@ export function LuxuryHero() {
           </Link>
           <Link
             href="/projects"
-            className="group relative z-50 inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 border-2 border-white/40 text-white font-medium text-xs sm:text-sm md:text-base lg:text-base rounded-full backdrop-blur-sm hover:border-gold hover:text-gold transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.2)] whitespace-nowrap"
+            className="group relative z-[100] inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 md:px-9 md:py-3.5 lg:px-10 lg:py-4 border-2 border-accent/80 text-white font-semibold text-xs sm:text-sm md:text-base lg:text-base rounded-full backdrop-blur-sm bg-white/5 hover:border-gold hover:text-gold hover:bg-white/10 transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] whitespace-nowrap opacity-100"
           >
             <span className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] [text-shadow:_0_0_8px_rgba(0,0,0,0.8)]">View Portfolio</span>
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2 md:h-2 rounded-full bg-accent group-hover:bg-gold transition-colors" />

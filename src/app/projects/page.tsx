@@ -122,7 +122,7 @@ export default function ProjectsPage() {
             </p>
             <a
               href="/contact"
-              className="inline-block px-8 py-4 bg-accent text-primary-dark font-semibold rounded-lg hover:bg-gold transition-colors"
+              className="inline-block px-8 py-4 bg-accent text-white font-bold rounded-lg border-2 border-accent shadow-lg shadow-accent/50 hover:bg-gold hover:border-gold hover:text-white transition-all duration-300 opacity-100 z-20 relative"
             >
               Get in Touch
             </a>
