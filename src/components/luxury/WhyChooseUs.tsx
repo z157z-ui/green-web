@@ -64,8 +64,17 @@ const images = [
   "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80",
 ];
 
-export function WhyChooseUs() {
+interface WhyChooseUsProps {
+  variant?: "light" | "dark";
+}
+
+export function WhyChooseUs({ variant = "light" }: WhyChooseUsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const isDark = variant === "dark";
+  const bgClass = isDark ? "bg-background" : "bg-white";
+  const textPrimaryClass = isDark ? "text-white" : "text-gray-900";
+  const textSecondaryClass = isDark ? "text-grey" : "text-gray-600";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,7 +85,7 @@ export function WhyChooseUs() {
   }, []);
 
   return (
-    <section className="relative bg-white section-padding-lg overflow-hidden">
+    <section className={`relative ${bgClass} section-padding-lg overflow-hidden`}>
       <div className="luxury-container">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           {/* Left Side - Text Content */}
@@ -88,12 +97,12 @@ export function WhyChooseUs() {
               transition={{ duration: 0.8 }}
             >
               <span className="luxury-label text-gold">Why Choose Us</span>
-              <h2 className="mt-4 mb-8 font-display text-4xl font-light md:text-6xl text-gray-900">
+              <h2 className={`mt-4 mb-8 font-display text-4xl font-light md:text-6xl ${textPrimaryClass}`}>
                 Setting the Standard
                 <br />
                 in Luxury Design
               </h2>
-              <p className="mb-12 text-lg text-gray-600 leading-relaxed">
+              <p className={`mb-12 text-lg ${textSecondaryClass} leading-relaxed`}>
                 We don't just build spaces—we craft experiences that elevate
                 everyday living and inspire lasting memories.
               </p>
@@ -102,7 +111,7 @@ export function WhyChooseUs() {
             {/* Reasons List */}
             <div className="space-y-8">
               {reasons.map((reason, index) => (
-                <ReasonItem key={index} reason={reason} index={index} />
+                <ReasonItem key={index} reason={reason} index={index} variant={variant} />
               ))}
             </div>
 
@@ -220,10 +229,14 @@ export function WhyChooseUs() {
 interface ReasonItemProps {
   reason: Reason;
   index: number;
+  variant?: "light" | "dark";
 }
 
-function ReasonItem({ reason, index }: ReasonItemProps) {
+function ReasonItem({ reason, index, variant = "light" }: ReasonItemProps) {
   const Icon = reason.icon;
+  const isDark = variant === "dark";
+  const textPrimaryClass = isDark ? "text-white" : "text-gray-900";
+  const textSecondaryClass = isDark ? "text-grey" : "text-gray-600";
 
   return (
     <motion.div
@@ -243,10 +256,10 @@ function ReasonItem({ reason, index }: ReasonItemProps) {
 
       {/* Content */}
       <div className="flex-1 pt-1">
-        <h3 className="mb-2 text-xl font-medium text-gray-900">
+        <h3 className={`mb-2 text-xl font-medium ${textPrimaryClass}`}>
           {reason.title}
         </h3>
-        <p className="text-gray-600 leading-relaxed">{reason.description}</p>
+        <p className={`${textSecondaryClass} leading-relaxed`}>{reason.description}</p>
       </div>
     </motion.div>
   );

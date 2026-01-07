@@ -14,17 +14,17 @@ const certifications = [
   },
   {
     title: "Udyam Registration",
-    number: "UDYAM-XX-XX-XXXXXXX",
-    description: "MSME registered enterprise",
+    number: "UDYAM-KR-03-0312492",
+    description: "MSME registered enterprise (Udyam Certificate)",
     icon: Shield,
     pdfLink: "/documents/udyam-registration.pdf",
   },
   {
     title: "NIC Classification",
     number: "9 Categories",
-    description: "National Industry Classification certified",
+    description: "National Industry Classification (included in MSME certificate)",
     icon: Award,
-    pdfLink: "/documents/nic-classification.pdf",
+    pdfLink: "/documents/udyam-registration.pdf", // Same document as MSME since NIC is included
   },
 ];
 

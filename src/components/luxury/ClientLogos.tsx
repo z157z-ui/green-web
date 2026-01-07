@@ -161,7 +161,7 @@ export function ClientLogos() {
         const set1Start = 0;
         const set2End = singleSetWidth * 2;
 
-        let newScrollLeft = currentContainer.scrollLeft + 0.5; // 0.5px per interval
+        let newScrollLeft = currentContainer.scrollLeft + 1.2; // 1.2px per interval (faster scroll)
 
         if (newScrollLeft >= set2End) {
           const overflow = newScrollLeft - set2End;

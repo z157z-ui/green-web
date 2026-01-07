@@ -13,8 +13,8 @@ interface Project {
   size: "small" | "large";
 }
 
-// Map real projects to component interface, using first 6 projects
-const projects: Project[] = allProjects.slice(0, 6).map((project, index) => ({
+// Map real projects to component interface, using first 4 projects
+const projects: Project[] = allProjects.slice(0, 4).map((project, index) => ({
   id: index + 1,
   title: project.title,
   category: project.category.charAt(0).toUpperCase() + project.category.slice(1),

@@ -18,7 +18,7 @@ export default function AboutPage() {
       <ValuesSection />
       
       <section className="py-20 md:py-24 bg-primary-dark">
-        <WhyChooseUs />
+        <WhyChooseUs variant="dark" />
       </section>
 
       <CertificationsSection />

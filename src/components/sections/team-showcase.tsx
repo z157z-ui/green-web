@@ -16,6 +16,7 @@ interface LeaderMember {
 interface CoreMember {
   name: string;
   role: string;
+  image?: string;
 }
 
 const leadership: LeaderMember[] = [
@@ -58,6 +59,7 @@ const teamDepartments: TeamDepartment[] = [
     members: [
       { name: "Naresh Joseph", role: "Principal Architect" },
       { name: "Abhilash Nair", role: "Senior Interior Designer" },
+      { name: "Abhilash TK", role: "3D Visualizer", image: "/images/team/Abhilash TK.png" },
       { name: "Hrithik", role: "Interior Designer" },
     ]
   },
@@ -65,26 +67,28 @@ const teamDepartments: TeamDepartment[] = [
     name: "Engineering & Technical",
     description: "Expert engineers ensuring structural excellence",
     members: [
-      { name: "Bijoy", role: "Lead Civil Engineer" },
+      { name: "Bijoy", role: "Lead Civil Engineer", image: "/images/team/Bijoy.png" },
       { name: "Adarsh", role: "Civil Engineer" },
       { name: "Chandrashekhar", role: "Structural Engineer" },
-      { name: "Deepesh", role: "HVAC Engineer" },
-      { name: "Amal Vijayan", role: "Electrical Engineer" },
+      { name: "Deepesh", role: "HVAC Engineer", image: "/images/team/Deepesh.png" },
+      { name: "Amal Vijayan", role: "Electrical Engineer", image: "/images/team/Amal Vijayan.png" },
     ]
   },
   {
     name: "Admin & Operations",
     description: "Managing seamless project delivery and business operations",
     members: [
-      { name: "Arjun", role: "Business Operations & Talent Support Manager" },
+      { name: "Arjun", role: "Business Operations & Talent Support Manager", image: "/images/team/Arjun.png" },
+      { name: "KP Prashant", role: "Business Head", image: "/images/team/KP Prashant.png" },
       { name: "Akash S", role: "Safety Officer" },
+      { name: "Abdul Hadhi P R", role: "Team Member", image: "/images/team/Abdul Hadhi P R.png" },
     ]
   },
   {
     name: "Marketing & Business Development",
     description: "Building relationships and growing our presence",
     members: [
-      { name: "Aditya", role: "Media Specialist" },
+      { name: "Aditya", role: "Media Specialist", image: "/images/team/Aditya.png" },
       { name: "Amal", role: "Media Coordinator" },
     ]
   }
@@ -99,7 +103,7 @@ const LeaderCard = ({ member }: { member: LeaderMember }) => {
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -152,8 +156,18 @@ const LeaderCard = ({ member }: { member: LeaderMember }) => {
 const CoreTeamCard = ({ member }: { member: CoreMember }) => {
   return (
     <div className="group bg-card border border-border rounded-sm overflow-hidden transform transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-lg h-full flex flex-col">
-      <div className="relative aspect-[3/4] max-h-[240px] bg-secondary flex items-center justify-center grayscale">
-        <User className="h-16 w-16 text-muted" />
+      <div className="relative aspect-[3/4] max-h-[240px] bg-secondary flex items-center justify-center overflow-hidden">
+        {member.image ? (
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <User className="h-16 w-16 text-muted" />
+        )}
       </div>
       <div className="p-5 flex-1 flex flex-col justify-center">
         <h3 className="font-body font-semibold text-base text-text-primary leading-tight mb-1">
