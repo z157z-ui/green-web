@@ -73,16 +73,16 @@ interface OfficeMapProps {
   onSelect?: (officeId: string | null) => void;
 }
 
-export function OfficeMap({ 
-  hoveredOffice: externalHoveredOffice, 
-  selectedOffice: externalSelectedOffice, 
-  onHover: externalOnHover, 
-  onSelect: externalOnSelect 
+export function OfficeMap({
+  hoveredOffice: externalHoveredOffice,
+  selectedOffice: externalSelectedOffice,
+  onHover: externalOnHover,
+  onSelect: externalOnSelect
 }: OfficeMapProps = {}) {
   // Use internal state if props not provided (for backward compatibility)
   const [internalHoveredOffice, setInternalHoveredOffice] = React.useState<string | null>(null);
   const [internalSelectedOffice, setInternalSelectedOffice] = React.useState<string | null>(null);
-  
+
   const hoveredOffice = externalHoveredOffice !== undefined ? externalHoveredOffice : internalHoveredOffice;
   const selectedOffice = externalSelectedOffice !== undefined ? externalSelectedOffice : internalSelectedOffice;
   const onHover = externalOnHover || setInternalHoveredOffice;
@@ -90,17 +90,17 @@ export function OfficeMap({
   const hqOffice = offices.find((o) => o.isHQ);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hasInteracted, setHasInteracted] = React.useState(false);
-  
+
   // Get the office object for selected or hovered office
-  const displayOffice = selectedOffice 
+  const displayOffice = selectedOffice
     ? offices.find(o => o.id === selectedOffice)
-    : hoveredOffice 
-    ? offices.find(o => o.id === hoveredOffice)
-    : null;
+    : hoveredOffice
+      ? offices.find(o => o.id === hoveredOffice)
+      : null;
 
   // #region agent log
   useEffect(() => {
-    fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:99',message:'State update',data:{hoveredOffice,selectedOffice,displayOffice:displayOffice?.id,isMobile:typeof window!=='undefined'?window.innerWidth<1024:false,windowWidth:typeof window!=='undefined'?window.innerWidth:0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:99', message: 'State update', data: { hoveredOffice, selectedOffice, displayOffice: displayOffice?.id, isMobile: typeof window !== 'undefined' ? window.innerWidth < 1024 : false, windowWidth: typeof window !== 'undefined' ? window.innerWidth : 0 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'C' }) }).catch(() => { });
   }, [hoveredOffice, selectedOffice, displayOffice]);
   // #endregion
 
@@ -137,13 +137,13 @@ export function OfficeMap({
 
   // #region agent log
   useEffect(() => {
-    if(typeof window==='undefined'||typeof document==='undefined')return;
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
     const svgEl = document.querySelector('svg[viewBox="0 0 100 133"]');
     const containerEl = document.querySelector('.relative.w-full.h-full');
     if (svgEl && containerEl) {
       const svgRect = svgEl.getBoundingClientRect();
       const containerRect = containerEl.getBoundingClientRect();
-      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:dimensions',message:'Container and SVG dimensions',data:{svgWidth:svgRect.width,svgHeight:svgRect.height,containerWidth:containerRect.width,containerHeight:containerRect.height,svgTop:svgRect.top,svgLeft:svgRect.left,containerTop:containerRect.top,containerLeft:containerRect.left},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A,D'})}).catch(()=>{});
+      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:dimensions', message: 'Container and SVG dimensions', data: { svgWidth: svgRect.width, svgHeight: svgRect.height, containerWidth: containerRect.width, containerHeight: containerRect.height, svgTop: svgRect.top, svgLeft: svgRect.left, containerTop: containerRect.top, containerLeft: containerRect.left }, timestamp: Date.now(), sessionId: 'debug-session', hypothesisId: 'A,D' }) }).catch(() => { });
     }
   }, []);
   // #endregion
@@ -154,27 +154,27 @@ export function OfficeMap({
       <div className="relative w-full h-full flex items-center justify-center lg:justify-center">
         {/* Fixed Aspect Ratio Container - maintains map proportions, centered */}
         <div className="relative w-full max-w-full aspect-[3/4] lg:max-w-[500px] xl:max-w-[550px] overflow-hidden">
-        {/* Map Image Background - contained, not stretched */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/assets/SOUTH_MAP.png"
-            alt="South India Map"
-            fill
-            className="object-contain"
-            priority
-          />
-          {/* Dark overlay for better contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/50" />
-        </div>
+          {/* Map Image Background - contained, not stretched */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/assets/south_map.png"
+              alt="South India Map"
+              fill
+              className="object-contain"
+              priority
+            />
+            {/* Dark overlay for better contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/50" />
+          </div>
 
-        {/* Connection Lines Container - Matches map aspect ratio */}
-        <div className="absolute inset-0 z-10 pointer-events-none overflow-visible">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 100 133"
-            preserveAspectRatio="none"
-          >
+          {/* Connection Lines Container - Matches map aspect ratio */}
+          <div className="absolute inset-0 z-10 pointer-events-none overflow-visible">
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 100 133"
+              preserveAspectRatio="none"
+            >
               <defs>
                 <filter id="lineGlow" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="1.2" result="coloredBlur" />
@@ -183,7 +183,7 @@ export function OfficeMap({
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
-                
+
                 <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#C5A572" stopOpacity="0.8" />
                   <stop offset="50%" stopColor="#B7E7A1" stopOpacity="0.9" />
@@ -198,26 +198,26 @@ export function OfficeMap({
                   .map((office, index) => {
                     // ViewBox is 100x133 (3:4 aspect ratio), so Y values need 1.33x scale
                     const yScale = 1.33;
-                    
+
                     // FIXED START POINT: Slightly behind (left) and below Bangalore
                     // Bangalore is at (35, 52), so start at (33, 55)
                     const startX = 33;
                     const startY = 55 * yScale;
-                    
+
                     // End point is the exact branch office position (Y scaled)
                     const endX = office.position.x;
                     const endY = office.position.y * yScale;
-                    
+
                     // Midpoint
                     const midX = (startX + endX) / 2;
                     const midY = (startY + endY) / 2;
-                    
+
                     // Determine curve direction based on destination
                     // Curve should bow AWAY from Bangalore (outward)
                     let curveOffsetX = 0;
                     let curveOffsetY = 0;
                     const curveMagnitude = 10;
-                    
+
                     if (office.id === "hyderabad") {
                       // Hyderabad is up-right: curve bows left (west)
                       curveOffsetX = -curveMagnitude;
@@ -235,7 +235,7 @@ export function OfficeMap({
                       curveOffsetX = -curveMagnitude;
                       curveOffsetY = curveMagnitude * 0.5;
                     }
-                    
+
                     const controlX = midX + curveOffsetX;
                     const controlY = midY + curveOffsetY;
 
@@ -243,7 +243,7 @@ export function OfficeMap({
 
                     // #region agent log
                     if (typeof window !== 'undefined') {
-                      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:fixed-scaled',message:`Curve to ${office.city}`,data:{startX,startY,endX,endY,midX,midY,controlX,controlY,pathString,yScale},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix-4',hypothesisId:'aspect-fix'})}).catch(()=>{});
+                      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:fixed-scaled', message: `Curve to ${office.city}`, data: { startX, startY, endX, endY, midX, midY, controlX, controlY, pathString, yScale }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'post-fix-4', hypothesisId: 'aspect-fix' }) }).catch(() => { });
                     }
                     // #endregion
 
@@ -260,7 +260,7 @@ export function OfficeMap({
                           animate={{ pathLength: 1, opacity: 0.7 }}
                           transition={{ duration: 1.5, delay: 0.5 + index * 0.2, ease: "easeInOut" }}
                         />
-                        
+
                         {/* Glowing overlay */}
                         <motion.path
                           d={pathString}
@@ -301,11 +301,11 @@ export function OfficeMap({
                       </g>
                     );
                   })}
-          </svg>
-        </div>
+            </svg>
+          </div>
 
-        {/* Office Markers Container */}
-        <div className="absolute inset-0 z-20">
+          {/* Office Markers Container */}
+          <div className="absolute inset-0 z-20">
             {offices.map((office, index) => (
               <motion.div
                 key={office.id}
@@ -320,34 +320,33 @@ export function OfficeMap({
                 transition={{ delay: 1 + index * 0.15, type: "spring", stiffness: 200 }}
                 onMouseEnter={() => {
                   // #region agent log
-                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:312',message:'Marker mouseEnter',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:312', message: 'Marker mouseEnter', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
                   // #endregion
                   onHover(office.id);
                 }}
                 onMouseLeave={() => {
                   // #region agent log
-                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:316',message:'Marker mouseLeave',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:316', message: 'Marker mouseLeave', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
                   // #endregion
                   onHover(null);
                 }}
                 onClick={() => {
                   // #region agent log
-                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:320',message:'Marker onClick',data:{officeId:office.id,isMobile:window.innerWidth<1024,windowWidth:window.innerWidth,selectedOffice,displayOffice:displayOffice?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});}
+                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:320', message: 'Marker onClick', data: { officeId: office.id, isMobile: window.innerWidth < 1024, windowWidth: window.innerWidth, selectedOffice, displayOffice: displayOffice?.id }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'B' }) }).catch(() => { }); }
                   // #endregion
                   onSelect(office.id);
                 }}
                 onTouchStart={() => {
                   // #region agent log
-                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:328',message:'Marker onTouchStart',data:{officeId:office.id,isMobile:window.innerWidth<1024},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});}
+                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:328', message: 'Marker onTouchStart', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
                   // #endregion
                 }}
               >
                 {/* Pulse Rings */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <motion.div
-                    className={`absolute w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 ${
-                      office.isHQ ? "border-gold" : "border-accent"
-                    }`}
+                    className={`absolute w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 ${office.isHQ ? "border-gold" : "border-accent"
+                      }`}
                     animate={{
                       scale: [1, 2, 2.5],
                       opacity: [0.6, 0.3, 0],
@@ -360,9 +359,8 @@ export function OfficeMap({
                     }}
                   />
                   <motion.div
-                    className={`absolute w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 ${
-                      office.isHQ ? "border-gold" : "border-accent"
-                    }`}
+                    className={`absolute w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 ${office.isHQ ? "border-gold" : "border-accent"
+                      }`}
                     animate={{
                       scale: [1, 1.5, 2],
                       opacity: [0.8, 0.4, 0],
@@ -378,9 +376,8 @@ export function OfficeMap({
 
                 {/* Main Marker */}
                 <motion.div
-                  className={`relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full ${
-                    office.isHQ ? "bg-gold" : "bg-accent"
-                  } shadow-2xl flex items-center justify-center group-hover:scale-125 transition-transform duration-300`}
+                  className={`relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full ${office.isHQ ? "bg-gold" : "bg-accent"
+                    } shadow-2xl flex items-center justify-center group-hover:scale-125 transition-transform duration-300`}
                   style={{
                     boxShadow: office.isHQ
                       ? "0 0 20px rgba(197, 165, 114, 0.7), 0 0 40px rgba(197, 165, 114, 0.4)"
@@ -421,7 +418,7 @@ export function OfficeMap({
                 </AnimatePresence>
               </motion.div>
             ))}
-        </div>
+          </div>
         </div>
       </div>
 
@@ -466,7 +463,7 @@ export function OfficeMap({
               className="lg:hidden absolute inset-0 z-40 flex items-center justify-center p-4 pointer-events-none"
               onAnimationStart={() => {
                 // #region agent log
-                if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:436',message:'Mobile popup animation start',data:{officeId:displayOffice.id,windowWidth:window.innerWidth,zIndex:40},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});}
+                if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:436', message: 'Mobile popup animation start', data: { officeId: displayOffice.id, windowWidth: window.innerWidth, zIndex: 40 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'D' }) }).catch(() => { }); }
                 // #endregion
               }}
             >
@@ -478,14 +475,14 @@ export function OfficeMap({
                 className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                 onClick={(e) => {
                   // #region agent log
-                  if(typeof window!=='undefined'){fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OfficeMap.tsx:444',message:'Backdrop onClick',data:{target:e.target?.toString(),currentTarget:e.currentTarget?.toString(),windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});}
+                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:444', message: 'Backdrop onClick', data: { target: e.target?.toString(), currentTarget: e.currentTarget?.toString(), windowWidth: window.innerWidth }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'E' }) }).catch(() => { }); }
                   // #endregion
                   onSelect(null);
                 }}
               />
-              
+
               {/* Panel */}
-              <motion.div 
+              <motion.div
                 className="relative w-full max-w-sm bg-gradient-to-br from-background/98 via-primary-dark/90 to-background/98 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-4 sm:p-5 shadow-2xl pointer-events-auto max-h-[85vh] overflow-y-auto"
                 layout
                 onClick={(e) => e.stopPropagation()}
@@ -501,7 +498,7 @@ export function OfficeMap({
                 )}
 
                 {/* Office Info - Same content as desktop */}
-                <motion.div 
+                <motion.div
                   className="space-y-3 sm:space-y-3.5"
                   key={displayOffice.id}
                   initial={{ opacity: 0, y: 10 }}
@@ -511,7 +508,7 @@ export function OfficeMap({
                 >
                   <div>
                     <div className="flex items-start gap-2 sm:gap-2.5 mb-1.5 sm:mb-2">
-                      <motion.div 
+                      <motion.div
                         className={`p-2 sm:p-2.5 rounded-xl flex-shrink-0 ${displayOffice.isHQ ? "bg-gold/10" : "bg-accent/10"}`}
                         layout
                       >
@@ -519,7 +516,7 @@ export function OfficeMap({
                       </motion.div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1 flex-wrap">
-                          <motion.h3 
+                          <motion.h3
                             className="font-serif text-lg sm:text-xl font-medium text-white leading-tight"
                             layout
                           >
@@ -527,7 +524,7 @@ export function OfficeMap({
                           </motion.h3>
                           <AnimatePresence>
                             {displayOffice.isHQ && (
-                              <motion.span 
+                              <motion.span
                                 className="luxury-label text-gold text-xs px-2 py-1 bg-gold/10 rounded-full border border-gold/30 flex-shrink-0"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -539,7 +536,7 @@ export function OfficeMap({
                             )}
                           </AnimatePresence>
                         </div>
-                        <motion.p 
+                        <motion.p
                           className="text-xs text-text-grey"
                           layout
                         >
@@ -552,7 +549,7 @@ export function OfficeMap({
                   <div className="h-px bg-accent/20" />
 
                   <div className="space-y-2 sm:space-y-2.5">
-                    <motion.div 
+                    <motion.div
                       className="flex items-start gap-2 sm:gap-2.5"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -620,10 +617,10 @@ export function OfficeMap({
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="hidden lg:block absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-0.25rem)] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] 2xl:w-[400px] max-w-[400px] z-40 pointer-events-none opacity-85 sm:opacity-90 md:opacity-95 lg:opacity-100"
             >
-            <motion.div 
-              className="bg-gradient-to-br from-background/95 via-primary-dark/85 to-background/95 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-2.5 sm:p-3 md:p-4 lg:p-5 xl:p-6 shadow-2xl pointer-events-auto"
-              layout
-            >
+              <motion.div
+                className="bg-gradient-to-br from-background/95 via-primary-dark/85 to-background/95 backdrop-blur-xl border-2 border-accent/40 rounded-2xl p-2.5 sm:p-3 md:p-4 lg:p-5 xl:p-6 shadow-2xl pointer-events-auto"
+                layout
+              >
                 {/* Close Button - Only show when office is selected */}
                 {selectedOffice && (
                   <button
@@ -635,7 +632,7 @@ export function OfficeMap({
                 )}
 
                 {/* Office Info */}
-                <motion.div 
+                <motion.div
                   className="space-y-4 sm:space-y-4 md:space-y-5"
                   key={displayOffice.id}
                   initial={{ opacity: 0, y: 10 }}
@@ -645,7 +642,7 @@ export function OfficeMap({
                 >
                   <div>
                     <div className="flex items-start gap-3 sm:gap-3.5 mb-2">
-                      <motion.div 
+                      <motion.div
                         className={`p-2.5 sm:p-3 rounded-xl flex-shrink-0 ${displayOffice.isHQ ? "bg-gold/10" : "bg-accent/10"}`}
                         layout
                       >
@@ -653,7 +650,7 @@ export function OfficeMap({
                       </motion.div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <motion.h3 
+                          <motion.h3
                             className="font-serif text-xl sm:text-2xl lg:text-2xl xl:text-3xl font-medium text-white leading-tight"
                             layout
                           >
@@ -661,7 +658,7 @@ export function OfficeMap({
                           </motion.h3>
                           <AnimatePresence>
                             {displayOffice.isHQ && (
-                              <motion.span 
+                              <motion.span
                                 className="luxury-label text-gold text-xs px-2 py-1 bg-gold/10 rounded-full border border-gold/30 flex-shrink-0"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -673,7 +670,7 @@ export function OfficeMap({
                             )}
                           </AnimatePresence>
                         </div>
-                        <motion.p 
+                        <motion.p
                           className="text-xs sm:text-sm text-text-grey"
                           layout
                         >
@@ -686,7 +683,7 @@ export function OfficeMap({
                   <div className="h-px bg-accent/20" />
 
                   <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
-                    <motion.div 
+                    <motion.div
                       className="flex items-start gap-2 sm:gap-2.5 md:gap-3"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}

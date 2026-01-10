@@ -79,7 +79,7 @@ export function ClientLogos() {
       const trackWidth = track.scrollWidth;
       const singleSetWidth = trackWidth / 3;
       const containerWidth = container.clientWidth;
-      
+
       // Get first logo element to measure actual dimensions
       const firstLogo = track.querySelector('.flex-shrink-0') as HTMLElement;
       if (!firstLogo) {
@@ -87,26 +87,26 @@ export function ClientLogos() {
         container.scrollLeft = singleSetWidth;
         return;
       }
-      
+
       const logoWidth = firstLogo.offsetWidth;
       const gap = 48; // md:gap-12 = 48px
       const logoWithGap = logoWidth + gap;
-      
+
       // Calculate position of middle logo (index 8 for 18 logos)
       const logoCount = clients.length;
       const middleLogoIndex = Math.floor(logoCount / 2); // Index 8 for 18 logos
-      
+
       // Position of middle logo in middle set
       const middleLogoPosition = singleSetWidth + (middleLogoIndex * logoWithGap);
-      
+
       // Center it in the viewport
       const scrollPosition = middleLogoPosition - (containerWidth / 2) + (logoWidth / 2);
-      
+
       // Ensure we're in the middle set range
       const set2Start = singleSetWidth;
       const set2End = singleSetWidth * 2;
       const finalPosition = Math.max(set2Start, Math.min(set2End - containerWidth, scrollPosition));
-      
+
       container.scrollLeft = finalPosition;
     };
 
@@ -145,7 +145,7 @@ export function ClientLogos() {
       intervalId = setInterval(() => {
         const currentContainer = scrollContainerRef.current;
         const currentTrack = scrollTrackRef.current;
-        
+
         if (!currentContainer || !currentTrack || isPaused || isScrollingRef.current || prefersReducedMotion) {
           if (intervalId) {
             clearInterval(intervalId);
@@ -269,7 +269,7 @@ export function ClientLogos() {
         // User scrolling typically has larger, more variable deltas
         // Auto-scroll has small, consistent deltas (around 0.2-0.3 pixels)
         const isLikelyUserScroll = scrollDelta > 10 || avgDelta > 5 || (now - lastScrollTime < 50 && scrollDelta > 3);
-        
+
         if (isLikelyUserScroll) {
           isUserScrolling = true;
           if (!isPaused) {
@@ -367,7 +367,7 @@ export function ClientLogos() {
       // Vertical scroll - convert to horizontal
       e.preventDefault();
       const scrollAmount = e.deltaY * 0.5;
-      
+
       // If at start and trying to scroll left (deltaY < 0 means scroll up = scroll left)
       if (container.scrollLeft <= 5 && e.deltaY < 0) {
         // Jump to end of second set and continue scrolling
@@ -375,7 +375,7 @@ export function ClientLogos() {
       } else {
         container.scrollLeft += scrollAmount;
       }
-      
+
       scheduleResume();
     };
 
@@ -414,17 +414,17 @@ export function ClientLogos() {
       if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
         isDragging = true;
         isScrollingRef.current = true;
-        
+
         const trackWidth = track.scrollWidth;
         const singleSetWidth = trackWidth / 3;
         const set2End = singleSetWidth * 2;
-        
+
         // If at start (scrollLeft <= small threshold) and trying to scroll left (swiping right, diffX < 0)
         if (initialScrollLeft <= 5 && diffX < 0) {
           // Jump to end of second set
           container.scrollLeft = set2End - Math.abs(diffX);
         }
-        
+
         touchStartX = touchCurrentX;
       }
     };
@@ -489,7 +489,7 @@ export function ClientLogos() {
       )}
 
       {/* Carousel Container */}
-      <div 
+      <div
         ref={scrollContainerRef}
         className="relative overflow-x-auto overflow-y-hidden hide-scrollbar"
         role="group"
@@ -505,10 +505,10 @@ export function ClientLogos() {
         }}
       >
         {/* Carousel Track */}
-        <div 
+        <div
           ref={scrollTrackRef}
           className="flex gap-8 md:gap-12"
-          style={{ 
+          style={{
             width: "max-content",
           }}
         >
@@ -534,7 +534,6 @@ function ClientLogo({ client }: ClientLogoProps) {
         fill
         className="object-cover object-center opacity-70 group-hover:opacity-100 transition-all duration-300"
         sizes="(max-width: 768px) 143px, (max-width: 1024px) 200px, 240px"
-        unoptimized
       />
     </div>
   );
