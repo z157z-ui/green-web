@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { teamMembers } from '@/db/schema';
 import { eq, like, or, asc, desc, and } from 'drizzle-orm';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     const sortField = searchParams.get('sort') ?? 'orderPosition';
     const sortOrder = searchParams.get('order') ?? 'asc';
 
-    let query = db.select().from(teamMembers);
+    let query = db.select().from(teamMembers).$dynamic();
 
     // Build conditions array
     const conditions = [];
@@ -73,8 +73,8 @@ export async function GET(request: NextRequest) {
       sortField === 'name'
         ? teamMembers.name
         : sortField === 'createdAt'
-        ? teamMembers.createdAt
-        : teamMembers.orderPosition;
+          ? teamMembers.createdAt
+          : teamMembers.orderPosition;
 
     query =
       sortOrder === 'desc'
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Authentication check
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required', code: 'UNAUTHORIZED' },

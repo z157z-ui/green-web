@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { updateSession, decrypt, SESSION_COOKIE_NAME } from "@/lib/auth";
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -25,13 +26,37 @@ function rateLimit(ip: string): boolean {
 }
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
+  let response = NextResponse.next();
+
+  // Admin Auth Protection
+  if (request.nextUrl.pathname.startsWith("/admin") && !request.nextUrl.pathname.startsWith("/admin/login")) {
+    const cookie = request.cookies.get(SESSION_COOKIE_NAME);
+    let isAuthenticated = false;
+
+    if (cookie) {
+      try {
+        await decrypt(cookie.value);
+        isAuthenticated = true;
+      } catch (e) {
+        // Invalid token
+      }
+    }
+
+    if (!isAuthenticated) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+
+    // Refresh session if authenticated
+    const res = await updateSession(request);
+    if (res) response = res;
+  }
+
 
   // Get client IP for rate limiting (handle X-Forwarded-For properly)
   const forwardedFor = request.headers.get("x-forwarded-for");
-  const ip = request.ip || 
-             (forwardedFor ? forwardedFor.split(',')[0].trim() : null) || 
-             "unknown";
+  const ip = request.ip ||
+    (forwardedFor ? forwardedFor.split(',')[0].trim() : null) ||
+    "unknown";
 
   // Apply rate limiting
   if (!rateLimit(ip)) {
@@ -49,11 +74,11 @@ export async function middleware(request: NextRequest) {
   response.headers.set("X-XSS-Protection", "1; mode=block");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
-  
+
   // Improved Content Security Policy - Remove unsafe-eval
   const cspHeader = `
     default-src 'self';
-    script-src 'self' https://cdn.jsdelivr.net;
+    script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https:;
     font-src 'self' https://fonts.gstatic.com;
@@ -64,7 +89,7 @@ export async function middleware(request: NextRequest) {
     frame-ancestors 'self';
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, ' ').trim();
-  
+
   response.headers.set("Content-Security-Policy", cspHeader);
 
   // Secure CORS - Only allow specific origins

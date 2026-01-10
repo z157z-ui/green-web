@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { services } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
@@ -14,9 +14,9 @@ export async function GET(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Valid ID is required',
-          code: 'INVALID_ID' 
+          code: 'INVALID_ID'
         },
         { status: 400 }
       );
@@ -30,9 +30,9 @@ export async function GET(
 
     if (service.length === 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Service not found',
-          code: 'SERVICE_NOT_FOUND' 
+          code: 'SERVICE_NOT_FOUND'
         },
         { status: 404 }
       );
@@ -56,12 +56,12 @@ export async function PUT(
 ) {
   try {
     // Check authentication
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
-        { 
+        {
           error: 'Authentication required',
-          code: 'UNAUTHORIZED' 
+          code: 'UNAUTHORIZED'
         },
         { status: 401 }
       );
@@ -72,9 +72,9 @@ export async function PUT(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Valid ID is required',
-          code: 'INVALID_ID' 
+          code: 'INVALID_ID'
         },
         { status: 400 }
       );
@@ -88,9 +88,9 @@ export async function PUT(
 
     if (existingService.length === 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Service not found',
-          code: 'SERVICE_NOT_FOUND' 
+          code: 'SERVICE_NOT_FOUND'
         },
         { status: 404 }
       );
@@ -107,9 +107,9 @@ export async function PUT(
       const title = body.title.trim();
       if (!title) {
         return NextResponse.json(
-          { 
+          {
             error: 'Title cannot be empty',
-            code: 'INVALID_TITLE' 
+            code: 'INVALID_TITLE'
           },
           { status: 400 }
         );
@@ -121,9 +121,9 @@ export async function PUT(
       const description = body.description.trim();
       if (!description) {
         return NextResponse.json(
-          { 
+          {
             error: 'Description cannot be empty',
-            code: 'INVALID_DESCRIPTION' 
+            code: 'INVALID_DESCRIPTION'
           },
           { status: 400 }
         );
@@ -139,9 +139,9 @@ export async function PUT(
       const featuredImage = body.featuredImage.trim();
       if (!featuredImage) {
         return NextResponse.json(
-          { 
+          {
             error: 'Featured image cannot be empty',
-            code: 'INVALID_FEATURED_IMAGE' 
+            code: 'INVALID_FEATURED_IMAGE'
           },
           { status: 400 }
         );
@@ -153,9 +153,9 @@ export async function PUT(
       const orderPosition = parseInt(body.orderPosition);
       if (isNaN(orderPosition) || orderPosition < 0) {
         return NextResponse.json(
-          { 
+          {
             error: 'Order position must be a non-negative integer',
-            code: 'INVALID_ORDER_POSITION' 
+            code: 'INVALID_ORDER_POSITION'
           },
           { status: 400 }
         );
@@ -167,9 +167,9 @@ export async function PUT(
       const status = body.status.trim();
       if (status !== 'published' && status !== 'draft') {
         return NextResponse.json(
-          { 
+          {
             error: 'Status must be either "published" or "draft"',
-            code: 'INVALID_STATUS' 
+            code: 'INVALID_STATUS'
           },
           { status: 400 }
         );
@@ -204,12 +204,12 @@ export async function DELETE(
 ) {
   try {
     // Check authentication
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
-        { 
+        {
           error: 'Authentication required',
-          code: 'UNAUTHORIZED' 
+          code: 'UNAUTHORIZED'
         },
         { status: 401 }
       );
@@ -220,9 +220,9 @@ export async function DELETE(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Valid ID is required',
-          code: 'INVALID_ID' 
+          code: 'INVALID_ID'
         },
         { status: 400 }
       );
@@ -236,9 +236,9 @@ export async function DELETE(
 
     if (existingService.length === 0) {
       return NextResponse.json(
-        { 
+        {
           error: 'Service not found',
-          code: 'SERVICE_NOT_FOUND' 
+          code: 'SERVICE_NOT_FOUND'
         },
         { status: 404 }
       );
@@ -250,7 +250,7 @@ export async function DELETE(
       .returning();
 
     return NextResponse.json(
-      { 
+      {
         message: 'Service deleted successfully',
         service: deleted[0]
       },

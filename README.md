@@ -141,6 +141,11 @@ npm run start
 npm run lint
 ```
 
+## Troubleshooting
+
+### Build Errors related to `esbuild` or `drizzle-kit`
+If you encounter `esbuild` vulnerability warnings or build errors, an override has been configured in `package.json` to enforce `esbuild@^0.25.0`. ensure you run `npm install` to apply this resolution.
+
 ## Project Structure
 
 ```
@@ -315,8 +320,13 @@ The application uses the following main tables:
 
 - Passwords are hashed using bcrypt
 - HTML content is sanitized using DOMPurify to prevent XSS attacks
-- Authentication is handled by Better-Auth with session management
-- Protected routes require authentication
+- Admin Authentication is handled by secure JWT cookies (HttpOnly, Secure, SameSite) using `jose` library
+- Protected admin routes require valid session cookies
+- API routes are protected by session validation middleware
+- Rate limiting is implemented on sensitive routes
+- Strict Content Security Policy (CSP) and Security Headers (HSTS, X-Frame-Options, etc.) are applied via middleware
+
+> **Note**: For the initial admin setup, use the default credentials: `admin@example.com` / `password123`. **Change these immediately** in `src/app/api/auth/login/route.ts` or move to a database/env variable solution for production.
 
 ## Learn More
 

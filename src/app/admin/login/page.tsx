@@ -22,25 +22,21 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual authentication
-      // For now, this is a placeholder that allows the page to render
-      // In production, integrate with Better-Auth or your auth provider
-      
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      
-      // Placeholder: In production, call your auth API
-      // const response = await fetch('/api/auth/sign-in', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password }),
-      // });
-      
-      // For now, just redirect to admin dashboard (which doesn't exist yet)
-      // router.push('/admin/dashboard');
-      
-      // Show informational message
-      setInfo("Authentication not yet implemented. This is a placeholder page.");
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to sign in");
+      }
+
+      router.push('/admin/dashboard');
+      router.refresh(); // Refresh to update middleware state
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to sign in");
     } finally {

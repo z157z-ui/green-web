@@ -103,7 +103,7 @@ const LeaderCard = ({ member }: { member: LeaderMember }) => {
             src={member.image}
             alt={member.name}
             fill
-            className="object-contain transition-transform duration-500 group-hover:scale-105"
+            className="object-cover object-[50%_15%] transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -162,7 +162,7 @@ const CoreTeamCard = ({ member }: { member: CoreMember }) => {
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover object-[50%_10%] transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -209,7 +209,7 @@ const TeamShowcase = () => {
 
       {/* Department Sections */}
       {teamDepartments.map((dept, deptIndex) => (
-        <section 
+        <section
           key={dept.name}
           className="bg-background text-foreground py-16 md:py-20 border-t border-border"
         >
@@ -243,7 +243,7 @@ const TeamShowcase = () => {
             Technical Team Members
           </h3>
           <p className="font-body text-text-secondary max-w-lg mx-auto text-base md:text-lg">
-            Our extended technical team includes skilled craftsmen, site supervisors, 
+            Our extended technical team includes skilled craftsmen, site supervisors,
             and specialists who bring every project to life.
           </p>
         </div>

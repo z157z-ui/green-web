@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { services } from '@/db/schema';
 import { eq, like, or, asc, desc, and } from 'drizzle-orm';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     const sortField = searchParams.get('sort') ?? 'orderPosition';
     const sortOrder = searchParams.get('order') ?? 'asc';
 
-    let query = db.select().from(services);
+    let query = db.select().from(services).$dynamic();
 
     // Build where conditions
     const conditions = [];
@@ -69,10 +69,10 @@ export async function GET(request: NextRequest) {
 
     // Apply sorting
     const orderByColumn = sortField === 'orderPosition' ? services.orderPosition :
-                         sortField === 'title' ? services.title :
-                         sortField === 'createdAt' ? services.createdAt :
-                         sortField === 'updatedAt' ? services.updatedAt :
-                         services.orderPosition;
+      sortField === 'title' ? services.title :
+        sortField === 'createdAt' ? services.createdAt :
+          sortField === 'updatedAt' ? services.updatedAt :
+            services.orderPosition;
 
     query = query.orderBy(
       sortOrder === 'desc' ? desc(orderByColumn) : asc(orderByColumn)
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Authentication check
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required', code: 'UNAUTHORIZED' },

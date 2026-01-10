@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { projects } from '@/db/schema';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 // GET all projects
 export async function GET() {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
 
     if (!session) {
       return NextResponse.json(

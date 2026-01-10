@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { teamMembers } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
@@ -14,9 +14,9 @@ export async function GET(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: "Valid ID is required",
-          code: "INVALID_ID" 
+          code: "INVALID_ID"
         },
         { status: 400 }
       );
@@ -53,7 +53,7 @@ export async function PUT(
 ) {
   try {
     // Authentication check
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -66,9 +66,9 @@ export async function PUT(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: "Valid ID is required",
-          code: "INVALID_ID" 
+          code: "INVALID_ID"
         },
         { status: 400 }
       );
@@ -95,9 +95,9 @@ export async function PUT(
       const trimmedName = body.name.trim();
       if (!trimmedName) {
         return NextResponse.json(
-          { 
+          {
             error: "Name cannot be empty",
-            code: "INVALID_NAME" 
+            code: "INVALID_NAME"
           },
           { status: 400 }
         );
@@ -109,9 +109,9 @@ export async function PUT(
       const trimmedTitle = body.title.trim();
       if (!trimmedTitle) {
         return NextResponse.json(
-          { 
+          {
             error: "Title cannot be empty",
-            code: "INVALID_TITLE" 
+            code: "INVALID_TITLE"
           },
           { status: 400 }
         );
@@ -123,9 +123,9 @@ export async function PUT(
       const trimmedBio = body.bio.trim();
       if (!trimmedBio) {
         return NextResponse.json(
-          { 
+          {
             error: "Bio cannot be empty",
-            code: "INVALID_BIO" 
+            code: "INVALID_BIO"
           },
           { status: 400 }
         );
@@ -137,9 +137,9 @@ export async function PUT(
       const trimmedImage = body.image.trim();
       if (!trimmedImage) {
         return NextResponse.json(
-          { 
+          {
             error: "Image cannot be empty",
-            code: "INVALID_IMAGE" 
+            code: "INVALID_IMAGE"
           },
           { status: 400 }
         );
@@ -151,9 +151,9 @@ export async function PUT(
       const trimmedLocation = body.officeLocation.trim();
       if (!trimmedLocation) {
         return NextResponse.json(
-          { 
+          {
             error: "Office location cannot be empty",
-            code: "INVALID_OFFICE_LOCATION" 
+            code: "INVALID_OFFICE_LOCATION"
           },
           { status: 400 }
         );
@@ -167,9 +167,9 @@ export async function PUT(
         // Basic email validation
         if (!trimmedEmail.includes('@') || !trimmedEmail.includes('.')) {
           return NextResponse.json(
-            { 
+            {
               error: "Invalid email format",
-              code: "INVALID_EMAIL" 
+              code: "INVALID_EMAIL"
             },
             { status: 400 }
           );
@@ -184,9 +184,9 @@ export async function PUT(
       const orderPos = parseInt(body.orderPosition);
       if (isNaN(orderPos) || orderPos < 0) {
         return NextResponse.json(
-          { 
+          {
             error: "Order position must be a non-negative integer",
-            code: "INVALID_ORDER_POSITION" 
+            code: "INVALID_ORDER_POSITION"
           },
           { status: 400 }
         );
@@ -198,9 +198,9 @@ export async function PUT(
       const trimmedStatus = body.status.trim();
       if (trimmedStatus !== 'published' && trimmedStatus !== 'draft') {
         return NextResponse.json(
-          { 
+          {
             error: "Status must be 'published' or 'draft'",
-            code: "INVALID_STATUS" 
+            code: "INVALID_STATUS"
           },
           { status: 400 }
         );
@@ -235,7 +235,7 @@ export async function DELETE(
 ) {
   try {
     // Authentication check
-    const session = await auth.api.getSession({ headers: request.headers });
+    const session = await getSession();
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required' },
@@ -248,9 +248,9 @@ export async function DELETE(
     // Validate ID
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
-        { 
+        {
           error: "Valid ID is required",
-          code: "INVALID_ID" 
+          code: "INVALID_ID"
         },
         { status: 400 }
       );
@@ -275,7 +275,7 @@ export async function DELETE(
       .returning();
 
     return NextResponse.json(
-      { 
+      {
         message: 'Team member deleted successfully',
         teamMember: deleted[0]
       },

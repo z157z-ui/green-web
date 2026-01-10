@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { projects } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
@@ -10,7 +10,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    
+
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
         { error: 'Valid ID is required', code: 'INVALID_ID' },
@@ -48,8 +48,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth.api.getSession({ headers: request.headers });
-    
+    const session = await getSession();
+
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required', code: 'UNAUTHORIZED' },
@@ -58,7 +58,7 @@ export async function PUT(
     }
 
     const { id } = await params;
-    
+
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
         { error: 'Valid ID is required', code: 'INVALID_ID' },
@@ -202,8 +202,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth.api.getSession({ headers: request.headers });
-    
+    const session = await getSession();
+
     if (!session) {
       return NextResponse.json(
         { error: 'Authentication required', code: 'UNAUTHORIZED' },
@@ -212,7 +212,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    
+
     if (!id || isNaN(parseInt(id)) || parseInt(id) <= 0) {
       return NextResponse.json(
         { error: 'Valid ID is required', code: 'INVALID_ID' },
