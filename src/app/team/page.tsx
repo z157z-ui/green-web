@@ -32,7 +32,6 @@ export default function TeamPage() {
       </section>
 
       <TeamShowcase />
-      <Footer />
     </main>
   );
 }

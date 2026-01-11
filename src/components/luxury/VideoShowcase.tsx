@@ -136,6 +136,8 @@ export function VideoShowcase() {
                     className="w-full h-full object-cover"
                     loop
                     playsInline
+                    preload="metadata"
+                    loading="lazy"
                     onPlay={() => {
                       if (mountedRef.current) {
                         setPlayingVideo(video.id);
@@ -202,7 +204,7 @@ export function VideoShowcase() {
                             ease: "easeInOut"
                           }}
                         >
-                          <Pause className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                        <Pause className="w-8 h-8 md:w-10 md:h-10 text-white" />
                         </motion.div>
                       ) : (
                         <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />

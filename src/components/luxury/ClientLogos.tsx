@@ -39,6 +39,7 @@ export function ClientLogos() {
   const isScrollingRef = useRef(false);
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isAutoScrollingRef = useRef(false);
+  const isPausedRef = useRef(false); // Ref to track pause state for animation loop
 
   // Triple the array for seamless infinite scroll
   // [original] [duplicate1] [duplicate2]
@@ -132,6 +133,7 @@ export function ClientLogos() {
 
     let intervalId: NodeJS.Timeout | null = null;
     let startDelay: NodeJS.Timeout | null = null;
+    let animationFrameId: number | null = null;
 
     const startAutoScroll = () => {
       // Clear any existing interval first
@@ -139,47 +141,75 @@ export function ClientLogos() {
         clearInterval(intervalId);
         intervalId = null;
       }
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
 
-      if (isPaused || isScrollingRef.current) return;
-
-      intervalId = setInterval(() => {
+      const scroll = () => {
         const currentContainer = scrollContainerRef.current;
         const currentTrack = scrollTrackRef.current;
 
-        if (!currentContainer || !currentTrack || isPaused || isScrollingRef.current || prefersReducedMotion) {
-          if (intervalId) {
-            clearInterval(intervalId);
-            intervalId = null;
-          }
+        if (!currentContainer || !currentTrack || prefersReducedMotion) {
+          // Retry if elements not ready
+          animationFrameId = requestAnimationFrame(scroll);
           return;
         }
 
-        const trackWidth = currentTrack.scrollWidth;
-        if (trackWidth === 0) return;
+        // Check current pause state using ref for immediate updates
+        const shouldScroll = !isPausedRef.current && !isScrollingRef.current;
 
-        const singleSetWidth = trackWidth / 3;
-        const set1Start = 0;
-        const set2End = singleSetWidth * 2;
+        if (shouldScroll) {
+          const trackWidth = currentTrack.scrollWidth;
+          if (trackWidth > 0) {
+            const singleSetWidth = trackWidth / 3;
+            const set1Start = 0;
+            const set1End = singleSetWidth;
+            const set2Start = singleSetWidth;
+            const set2End = singleSetWidth * 2;
+            const containerWidth = currentContainer.clientWidth;
 
-        let newScrollLeft = currentContainer.scrollLeft + 1.2; // 1.2px per interval (faster scroll)
+            let newScrollLeft = currentContainer.scrollLeft + 1.2; // 1.2px per frame (smooth scroll)
 
-        if (newScrollLeft >= set2End) {
-          const overflow = newScrollLeft - set2End;
-          newScrollLeft = set1Start + overflow;
+            // Seamless infinite loop: jump happens when we're in the middle set
+            // Jump from end of set 2 to start of set 2 (which looks like set 1 to user)
+            if (newScrollLeft >= set2End) {
+              // Calculate how far past the end we are
+              const overflow = newScrollLeft - set2End;
+              // Jump to the same position in set 1 (which is visually identical to set 2 start)
+              newScrollLeft = set1Start + overflow;
+              // Use scrollTo for smoother transition
+              currentContainer.scrollTo({
+                left: newScrollLeft,
+                behavior: 'auto' // Instant jump, but user won't see it
+              });
+            } else {
+              // Normal scroll
+              currentContainer.scrollLeft = newScrollLeft;
+            }
+
+            isAutoScrollingRef.current = true;
+            
+            // Reset flag after scroll
+            setTimeout(() => {
+              isAutoScrollingRef.current = false;
+            }, 10);
+          }
         }
 
-        isAutoScrollingRef.current = true;
-        currentContainer.scrollLeft = newScrollLeft;
-        setTimeout(() => {
-          isAutoScrollingRef.current = false;
-        }, 10);
-      }, 16); // ~60fps
+        // Always continue the animation loop (even when paused, to check for resume)
+        animationFrameId = requestAnimationFrame(scroll);
+      };
+
+      // Start scrolling
+      animationFrameId = requestAnimationFrame(scroll);
     };
 
-    // Start after initialization delay
+    // Start after initialization delay to ensure DOM is ready
     startDelay = setTimeout(() => {
+      // Always start - the scroll function will check pause state
       startAutoScroll();
-    }, 1500);
+    }, 1000);
 
     return () => {
       if (startDelay) {
@@ -189,14 +219,26 @@ export function ClientLogos() {
         clearInterval(intervalId);
         intervalId = null;
       }
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
     };
   }, [isPaused, prefersReducedMotion]);
 
   // Handle pause/resume
-  const handlePause = () => setIsPaused(true);
+  const handlePause = () => {
+    isPausedRef.current = true;
+    setIsPaused(true);
+    isScrollingRef.current = false;
+    clearResumeTimeout();
+  };
   const handleResume = () => {
     if (!prefersReducedMotion) {
-      setIsPaused(false);
+      clearResumeTimeout();
+      isScrollingRef.current = false;
+      isPausedRef.current = false; // Update ref immediately
+      setIsPaused(false); // Resume immediately when mouse leaves
     }
   };
 
@@ -208,15 +250,16 @@ export function ClientLogos() {
     }
   };
 
-  // Schedule resume after inactivity
+  // Schedule resume after inactivity (reduced delay for faster resume)
   const scheduleResume = useCallback(() => {
     clearResumeTimeout();
     if (!prefersReducedMotion) {
       resumeTimeoutRef.current = setTimeout(() => {
         isScrollingRef.current = false;
+        isPausedRef.current = false;
         setIsPaused(false);
         resumeTimeoutRef.current = null;
-      }, 2000);
+      }, 500); // Reduced from 2000ms to 500ms for faster resume
     }
   }, [prefersReducedMotion]);
 
@@ -272,7 +315,8 @@ export function ClientLogos() {
 
         if (isLikelyUserScroll) {
           isUserScrolling = true;
-          if (!isPaused) {
+          if (!isPausedRef.current) {
+            isPausedRef.current = true;
             setIsPaused(true);
           }
           isScrollingRef.current = true;
@@ -288,20 +332,28 @@ export function ClientLogos() {
       const set2Start = singleSetWidth;
       const set2End = singleSetWidth * 2;
 
-      // If scrolled past end of second set, continue to first set (seamless forward - infinite loop)
+      // Seamless infinite loop: jump happens invisibly
+      // If scrolled past end of second set, jump to same position in first set
       if (currentScrollLeft >= set2End) {
         isJumping = true;
         const offset = currentScrollLeft - set2End;
-        container.scrollLeft = set1Start + offset;
+        // Use scrollTo for smoother, less noticeable transition
+        container.scrollTo({
+          left: set1Start + offset,
+          behavior: 'auto'
+        });
         requestAnimationFrame(() => {
           isJumping = false;
         });
       }
-      // If scrolled before start of first set, jump to end of second set (seamless backward - infinite loop)
+      // If scrolled before start of first set, jump to same position in second set
       else if (currentScrollLeft < set1Start) {
         isJumping = true;
         const offset = set1Start - currentScrollLeft;
-        container.scrollLeft = set2End - offset;
+        container.scrollTo({
+          left: set2End - offset,
+          behavior: 'auto'
+        });
         requestAnimationFrame(() => {
           isJumping = false;
         });
@@ -320,9 +372,10 @@ export function ClientLogos() {
           isUserScrolling = false;
           isScrollingRef.current = false;
           // Don't reset position - continue from where user left off
+          isPausedRef.current = false;
           setIsPaused(false);
           scrollTimeout = null;
-        }, 2000);
+        }, 500);
       }
     };
 
@@ -346,6 +399,7 @@ export function ClientLogos() {
     if (!container || !track) return;
 
     const handleWheel = (e: WheelEvent) => {
+      isPausedRef.current = true;
       setIsPaused(true);
       isScrollingRef.current = true;
 
@@ -357,8 +411,11 @@ export function ClientLogos() {
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         // If at start (scrollLeft <= small threshold) and trying to scroll left (deltaX > 0)
         if (container.scrollLeft <= 5 && e.deltaX > 0) {
-          // Jump to end of second set and continue scrolling left
-          container.scrollLeft = set2End - Math.abs(e.deltaX) * 0.5;
+          // Jump to end of second set and continue scrolling left (seamless)
+          container.scrollTo({
+            left: set2End - Math.abs(e.deltaX) * 0.5,
+            behavior: 'auto'
+          });
         }
         scheduleResume();
         return;
@@ -370,8 +427,11 @@ export function ClientLogos() {
 
       // If at start and trying to scroll left (deltaY < 0 means scroll up = scroll left)
       if (container.scrollLeft <= 5 && e.deltaY < 0) {
-        // Jump to end of second set and continue scrolling
-        container.scrollLeft = set2End + Math.abs(scrollAmount);
+        // Jump to end of second set and continue scrolling (seamless)
+        container.scrollTo({
+          left: set2End + Math.abs(scrollAmount),
+          behavior: 'auto'
+        });
       } else {
         container.scrollLeft += scrollAmount;
       }
@@ -421,8 +481,11 @@ export function ClientLogos() {
 
         // If at start (scrollLeft <= small threshold) and trying to scroll left (swiping right, diffX < 0)
         if (initialScrollLeft <= 5 && diffX < 0) {
-          // Jump to end of second set
-          container.scrollLeft = set2End - Math.abs(diffX);
+          // Jump to end of second set (seamless)
+          container.scrollTo({
+            left: set2End - Math.abs(diffX),
+            behavior: 'auto'
+          });
         }
 
         touchStartX = touchCurrentX;
@@ -487,6 +550,20 @@ export function ClientLogos() {
           </motion.div>
         </div>
       )}
+
+      {/* Scroll Indicator */}
+      <div className="luxury-container mt-4 mb-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-center gap-2 text-grey text-xs md:text-sm"
+        >
+          <span className="animate-pulse">←</span>
+          <span>Scroll to see more</span>
+          <span className="animate-pulse">→</span>
+        </motion.div>
+      </div>
 
       {/* Carousel Container */}
       <div

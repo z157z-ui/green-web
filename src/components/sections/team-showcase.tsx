@@ -58,9 +58,7 @@ const teamDepartments: TeamDepartment[] = [
     description: "Creative minds shaping spaces with vision and precision",
     members: [
       { name: "Naresh Joseph", role: "Principal Architect" },
-      { name: "Abhilash Nair", role: "Senior Interior Designer" },
-      { name: "Abhilash TK", role: "3D Visualizer", image: "/images/team/Abhilash TK.png" },
-      { name: "Hrithik", role: "Interior Designer" },
+      { name: "Abhilash Nair", role: "Senior Interior Designer & 3D Visualizer", image: "/images/team/Abhilash TK _3D viswalizer.png" },
     ]
   },
   {
@@ -71,7 +69,7 @@ const teamDepartments: TeamDepartment[] = [
       { name: "Adarsh", role: "Civil Engineer" },
       { name: "Chandrashekhar", role: "Structural Engineer" },
       { name: "Deepesh", role: "HVAC Engineer", image: "/images/team/Deepesh.png" },
-      { name: "Amal Vijayan", role: "Electrical Engineer", image: "/images/team/Amal Vijayan.png" },
+      { name: "Amal Vijayan", role: "Electrical Engineer", image: "/images/team/Amal Vijayan Electrical Engineer.png" },
     ]
   },
   {
@@ -88,7 +86,7 @@ const teamDepartments: TeamDepartment[] = [
     name: "Marketing & Business Development",
     description: "Building relationships and growing our presence",
     members: [
-      { name: "Aditya", role: "Media Specialist", image: "/images/team/Aditya.png" },
+      { name: "Adithya Madhavan", role: "Media Specialist", image: "/images/team/ADITHYA MADHAVAN MEDIA SPECALIST.png" },
       { name: "Amal", role: "Media Coordinator" },
     ]
   }
@@ -103,7 +101,7 @@ const LeaderCard = ({ member }: { member: LeaderMember }) => {
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover object-[50%_15%] transition-transform duration-500 group-hover:scale-105"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -162,7 +160,7 @@ const CoreTeamCard = ({ member }: { member: CoreMember }) => {
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover object-[50%_10%] transition-transform duration-500 group-hover:scale-105"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (

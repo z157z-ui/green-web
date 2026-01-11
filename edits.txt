@@ -1,0 +1,17 @@
+Do all these edits after checking if they are correct or not do the needfull:
+1. Hero caption, font to change... "We build dreams" font and colour to change to something more noticable. 
+2. Instead of Bangalore's premium.. Let's put "India's"
+3. "Innovate design Inspire" font colour to change 
+4. Logo on the bottom right of hero image to remove or rework (Doesn't look good that way)
+5.Companies we've worked with... It's scrolllable, but how do people know it's scrollable?
+6.Featured project: the view project link comes while hovering mouse is not working.. or taking me to any page (Test that)
+7.Our services in homepage: Is it suppose to be clickable? Now it's not.. make it clickable
+8.The videos in about page make sure they are optimised
+9.Team page, texts lapped over images.. to correct and two footers in team page, one to remove.
+1.abhilash nair and abhilash tk the same Abhilash nair 
+Senior interior designer & 3D viswalizer
+11.Amal- media coordinator and electrical engineer
+12.remove hrithik
+13.change name adithya to Adithya Madhavan
+
+check everything and verify

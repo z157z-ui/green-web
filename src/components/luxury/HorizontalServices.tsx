@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import {
   Home,
   Building2,
@@ -16,6 +17,7 @@ interface Service {
   icon: React.ElementType;
   title: string;
   description: string;
+  slug: string;
 }
 
 const services: Service[] = [
@@ -23,31 +25,37 @@ const services: Service[] = [
     icon: Home,
     title: "Villa Design",
     description: "Bespoke luxury villas with contemporary aesthetics",
+    slug: "villa-design",
   },
   {
     icon: Building2,
     title: "Apartment Design",
     description: "Modern urban living spaces maximizing style and function",
+    slug: "apartment-design",
   },
   {
     icon: Briefcase,
     title: "Office Design",
     description: "Productive workspaces that inspire innovation",
+    slug: "office-design",
   },
   {
     icon: Wrench,
     title: "Office Renovation",
     description: "Transform existing spaces with modern updates",
+    slug: "office-renovation",
   },
   {
     icon: Paintbrush,
     title: "Interior Renovation",
     description: "Refresh and modernize your current interiors",
+    slug: "apartment-renovation",
   },
   {
     icon: Trees,
     title: "Landscape Design",
     description: "Harmonizing outdoor spaces with architectural vision",
+    slug: "landscape-design",
   },
 ];
 
@@ -123,38 +131,40 @@ const ServiceCard = React.memo(function ServiceCard({ service, index }: ServiceC
   const Icon = service.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.05 }}
-      className={`group relative min-w-[320px] md:min-w-[380px] ${
-        index === 0 ? 'snap-start' : 'snap-center'
-      }`}
-    >
-      <div className="h-full bg-background-elevated border border-white/10 hover:border-accent/30 rounded-xl p-8 transition-all duration-500 hover:shadow-2xl">
-        {/* Icon */}
-        <div className="mb-auto">
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ duration: 0.3 }}
-            className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-accent/30 bg-accent/10"
-          >
-            <Icon className="h-7 w-7 text-accent" />
-          </motion.div>
-        </div>
+    <Link href={`/services/${service.slug}`}>
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: index * 0.05 }}
+        className={`group relative min-w-[320px] md:min-w-[380px] cursor-pointer ${
+          index === 0 ? 'snap-start' : 'snap-center'
+        }`}
+      >
+        <div className="h-full bg-background-elevated border border-white/10 hover:border-accent/30 rounded-xl p-8 transition-all duration-500 hover:shadow-2xl">
+          {/* Icon */}
+          <div className="mb-auto">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+              className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-accent/30 bg-accent/10"
+            >
+              <Icon className="h-7 w-7 text-accent" />
+            </motion.div>
+          </div>
 
-        {/* Content */}
-        <div className="mt-24">
-          <h3 className="font-serif text-2xl font-medium text-white mb-3">
-            {service.title}
-          </h3>
-          <p className="text-grey text-sm leading-relaxed">
-            {service.description}
-          </p>
+          {/* Content */}
+          <div className="mt-24">
+            <h3 className="font-serif text-2xl font-medium text-white mb-3">
+              {service.title}
+            </h3>
+            <p className="text-grey text-sm leading-relaxed">
+              {service.description}
+            </p>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 });
 

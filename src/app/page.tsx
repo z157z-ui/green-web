@@ -9,12 +9,10 @@ import {
   HorizontalServices,
   WhyChooseUs,
   ClientLogos,
+  BentoProjects,
 } from "@/components/luxury";
 
 // Dynamic imports for heavy components below the fold
-const BentoProjects = dynamic(() => import("@/components/luxury").then(mod => ({ default: mod.BentoProjects })), {
-  loading: () => <div className="min-h-[400px]" />,
-});
 
 const TestimonialsCarousel = dynamic(() => import("@/components/luxury").then(mod => ({ default: mod.TestimonialsCarousel })), {
   loading: () => <div className="min-h-[400px]" />,

@@ -232,11 +232,11 @@ export function LuxuryHero() {
               ease: [0.16, 1, 0.3, 1] 
             }}
             style={{
-              textShadow: '0 2px 30px rgba(197, 165, 114, 0.6), 0 0 50px rgba(197, 165, 114, 0.4)',
-              letterSpacing: '0.02em',
+              textShadow: '0 2px 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
+              letterSpacing: '0.05em',
             }}
           >
-            <span className="text-gold italic font-normal">
+            <span className="text-gold font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl not-italic">
               WE BUILD DREAMS
             </span>
           </motion.span>
@@ -297,11 +297,11 @@ export function LuxuryHero() {
                 textShadow: '0 1px 10px rgba(0, 0, 0, 0.5)',
               }}
             >
-              Bangalore&apos;s premier design-build firm specializing in integrated 
+              India&apos;s premier design-build firm specializing in integrated 
               interior and turnkey solutions
             </motion.p>
             <motion.p 
-              className="text-accent/95 text-[10px] sm:text-xs md:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium"
+              className="text-gold text-[10px] sm:text-xs md:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium"
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={isMobile ? { opacity: 1 } : { opacity: textFaded ? 0 : 1 }}
               transition={isMobile ? { duration: 0 } : { 
@@ -310,7 +310,7 @@ export function LuxuryHero() {
                 ease: [0.16, 1, 0.3, 1] 
               }}
               style={{
-                textShadow: '0 1px 15px rgba(183, 231, 161, 0.4)',
+                textShadow: '0 2px 20px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.4)',
                 letterSpacing: '0.15em',
               }}
             >

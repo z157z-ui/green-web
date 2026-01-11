@@ -6,23 +6,25 @@ import Link from "next/link";
 import { projects as allProjects } from "@/lib/data";
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
   category: string;
   image: string;
   size: "small" | "large";
 }
 
-// Map real projects to component interface, using first 4 projects
-const projects: Project[] = allProjects.slice(0, 4).map((project, index) => ({
-  id: index + 1,
-  title: project.title,
-  category: project.category.charAt(0).toUpperCase() + project.category.slice(1),
-  image: project.featuredImage,
-  size: index % 3 === 0 ? "large" : "small" as "small" | "large",
-}));
-
 export function BentoProjects() {
+  // Map real projects to component interface, using first 4 projects
+  const displayProjects: Project[] = allProjects && allProjects.length > 0 
+    ? allProjects.slice(0, 4).map((project, index) => ({
+        id: project.id,
+        title: project.title,
+        category: project.category.charAt(0).toUpperCase() + project.category.slice(1),
+        image: project.featuredImage,
+        size: index % 3 === 0 ? "large" : "small" as "small" | "large",
+      }))
+    : [];
+
   return (
     <section id="projects" className="section-padding-md bg-background">
       <div className="luxury-container">
@@ -44,11 +46,17 @@ export function BentoProjects() {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid auto-rows-[400px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
-        </div>
+        {displayProjects.length > 0 ? (
+          <div className="grid auto-rows-[400px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {displayProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 text-grey">
+            <p>No projects available at the moment.</p>
+          </div>
+        )}
 
         {/* View All Button */}
         <motion.div
@@ -75,17 +83,26 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ project, index }: ProjectCardProps) {
+  if (!project || !project.id || !project.image) {
+    return null;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className={`
         group relative overflow-hidden rounded-xl border border-white/10 hover:border-accent/50 transition-all duration-500
         ${project.size === "large" ? "md:col-span-2" : ""}
       `}
     >
+      <Link 
+        href={`/projects/${project.id}`} 
+        className="absolute inset-0 z-20 cursor-pointer"
+        aria-label={`View ${project.title}`}
+      />
       {/* Image */}
       <Image
         src={project.image}
