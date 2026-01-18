@@ -2,12 +2,22 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const secretKey = "secret-key-change-me-in-prod"; // TODO: Move to env var
-const key = new TextEncoder().encode(secretKey);
-
+/**
+ *  SESSION CONFIG
+ */
 export const SESSION_COOKIE_NAME = "admin_session";
 
-export async function encrypt(payload: any) {
+const secret = process.env.ADMIN_SESSION_SECRET;
+if (!secret) {
+  throw new Error("ADMIN_SESSION_SECRET is not set");
+}
+
+const key = new TextEncoder().encode(secret);
+
+/**
+ *  Create signed JWT session
+ */
+export async function encrypt(payload: Record<string, any>) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -15,58 +25,87 @@ export async function encrypt(payload: any) {
     .sign(key);
 }
 
-export async function decrypt(input: string): Promise<any> {
-  const { payload } = await jwtVerify(input, key, {
+/**
+ *  Verify and decode session
+ */
+export async function decrypt(token: string) {
+  const { payload } = await jwtVerify(token, key, {
     algorithms: ["HS256"],
   });
   return payload;
 }
 
+/**
+ *  LOGIN — creates secure session cookie
+ */
 export async function login(email: string) {
-  // Verify credentials... (handled in API route)
-  // Create the session
-  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-  const session = await encrypt({ email, expires });
+  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-  // Save the session in a cookie
-  (await cookies()).set(SESSION_COOKIE_NAME, session, {
-    expires,
+  const sessionToken = await encrypt({
+    email,
+    exp: Math.floor(expires.getTime() / 1000),
+  });
+
+  (await cookies()).set(SESSION_COOKIE_NAME, sessionToken, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    expires,
   });
 }
 
+/**
+ *  LOGOUT — destroys session
+ */
 export async function logout() {
-  // Destroy the session
-  (await cookies()).delete(SESSION_COOKIE_NAME);
+  (await cookies()).set(SESSION_COOKIE_NAME, "", {
+    path: "/",
+    expires: new Date(0),
+  });
 }
 
+/**
+ *  Get current session (server-side)
+ */
 export async function getSession() {
-  const session = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
-  if (!session) return null;
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  if (!token) return null;
+
   try {
-    return await decrypt(session);
-  } catch (error) {
+    return await decrypt(token);
+  } catch {
     return null;
   }
 }
 
-export async function updateSession(request: NextRequest) {
-  const session = request.cookies.get(SESSION_COOKIE_NAME)?.value;
-  if (!session) return;
+/**
+ *  Refresh session expiry (optional, for middleware use)
+ */
+export async function refreshSession(request: NextRequest) {
+  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+  if (!token) return null;
 
-  // Refresh the session so it doesn't expire
-  const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: SESSION_COOKIE_NAME,
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-  });
-  return res;
+  try {
+    const payload = await decrypt(token);
+
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const refreshedToken = await encrypt({
+      email: payload.email,
+      exp: Math.floor(expires.getTime() / 1000),
+    });
+
+    const res = NextResponse.next();
+    res.cookies.set(SESSION_COOKIE_NAME, refreshedToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      expires,
+    });
+
+    return res;
+  } catch {
+    return null;
+  }
 }

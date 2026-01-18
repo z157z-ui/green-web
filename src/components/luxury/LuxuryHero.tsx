@@ -101,12 +101,11 @@ export function LuxuryHero() {
       {/* Video Background */}
       <div className="absolute inset-0">
         {/* Fallback gradient while video loads */}
-        <div 
-          className={`absolute inset-0 bg-gradient-to-br from-primary-dark via-background to-black transition-opacity duration-1000 ${
-            isVideoLoaded ? 'opacity-0' : 'opacity-100'
-          }`} 
+        <div
+          className={`absolute inset-0 bg-gradient-to-br from-primary-dark via-background to-black transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'
+            }`}
         />
-        
+
         {/* Video Element */}
         <video
           ref={videoRef}
@@ -142,42 +141,43 @@ export function LuxuryHero() {
             // Video started playing successfully
             setIsVideoLoaded(true);
           }}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-            isVideoLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
           style={{ zIndex: 1 }}
         >
           <source src="/videos/hero-background.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
-        {/* Dynamic Overlay - lighter on mobile for better video visibility */}
+
+        {/* Dynamic Overlay - lighter on mobile for better visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 sm:from-black/50 md:from-black/60 via-black/30 sm:via-black/35 md:via-black/40 to-black/50 sm:to-black/60 md:to-black/70" />
-        
+
         {/* Cinematic vignette effect - lighter on mobile */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.2)_50%,rgba(0,0,0,0.4)_100%)] sm:bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
-        
+
         {/* Bottom gradient for text readability - reduced on mobile */}
         <div className="absolute bottom-0 left-0 right-0 h-1/4 sm:h-1/3 bg-gradient-to-t from-primary-dark/70 sm:from-primary-dark/80 md:from-primary-dark/90 to-transparent" />
       </div>
 
       {/* Content - pushed down from navigation, stays fixed on scroll */}
       <motion.div
-        className="relative z-20 flex h-full flex-col items-center justify-end pb-12 sm:pb-16 md:justify-center md:pt-40 lg:justify-center px-4 sm:px-6 text-center"
+        className="relative z-20 flex h-full flex-col items-center justify-center pt-16 sm:pt-20 md:pt-28 lg:pt-32 px-4 sm:px-6 text-center"
       >
         {/* Main Heading with smooth slow fade animation - aesthetic styling with glass background */}
         <motion.div
           className="relative mb-3 sm:mb-4 md:mb-6 max-w-4xl mx-auto"
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           animate={isMobile ? { opacity: 1, y: 0 } : { opacity: textFaded ? 0 : 1, y: 0 }}
-          transition={isMobile ? { duration: 0 } : { 
-            duration: textFaded ? 1.5 : 2, 
-            delay: textFaded ? 0 : 0.5, 
-            ease: [0.16, 1, 0.3, 1] 
+          transition={isMobile ? { duration: 0 } : {
+            duration: textFaded ? 1.5 : 2,
+            delay: textFaded ? 0 : 0.5,
+            ease: [0.16, 1, 0.3, 1]
           }}
+          style={{ willChange: "opacity, transform" }}
         >
           {/* Glass blur background */}
-          <div 
+          <div
             className="absolute inset-0 rounded-2xl -z-10"
             style={{
               background: 'rgba(0, 0, 0, 0.35)',
@@ -190,56 +190,59 @@ export function LuxuryHero() {
           <motion.h1
             className="relative z-10 font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-[1.15] text-white tracking-tight px-6 py-4 sm:px-8 sm:py-6 md:px-10 md:py-8"
           >
-          <motion.span 
-            className="block mb-2 sm:mb-3 md:mb-4"
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? { duration: 0 } : { 
-              duration: 2.5, 
-              delay: 0.7, 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            style={{
-              textShadow: '0 2px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3)',
-              letterSpacing: '0.02em',
-            }}
-          >
-            WE DON&apos;T JUST BUILD
-          </motion.span>
-          <motion.span 
-            className="block mt-0.5 sm:mt-1 md:mt-2"
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? { duration: 0 } : { 
-              duration: 2.5, 
-              delay: 1, 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            style={{
-              textShadow: '0 2px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3)',
-              letterSpacing: '0.02em',
-            }}
-          >
-            STRUCTURES
-          </motion.span>
-          <motion.span 
-            className="block mt-0.5 sm:mt-1 md:mt-2"
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? { duration: 0 } : { 
-              duration: 2.5, 
-              delay: 1.3, 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            style={{
-              textShadow: '0 2px 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
-              letterSpacing: '0.05em',
-            }}
-          >
-            <span className="text-gold font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl not-italic">
-              WE BUILD DREAMS
-            </span>
-          </motion.span>
+            <motion.span
+              className="block mb-2 sm:mb-3 md:mb-4"
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={isMobile ? { duration: 0 } : {
+                duration: 2.5,
+                delay: 0.7,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              style={{
+                textShadow: '0 2px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3)',
+                letterSpacing: '0.02em',
+                willChange: "opacity, transform"
+              }}
+            >
+              WE DON&apos;T JUST BUILD
+            </motion.span>
+            <motion.span
+              className="block mt-0.5 sm:mt-1 md:mt-2"
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={isMobile ? { duration: 0 } : {
+                duration: 2.5,
+                delay: 1,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              style={{
+                textShadow: '0 2px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3)',
+                letterSpacing: '0.02em',
+                willChange: "opacity, transform"
+              }}
+            >
+              STRUCTURES
+            </motion.span>
+            <motion.span
+              className="block mt-0.5 sm:mt-1 md:mt-2"
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={isMobile ? { duration: 0 } : {
+                duration: 2.5,
+                delay: 1.3,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              style={{
+                textShadow: '0 2px 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
+                letterSpacing: '0.05em',
+                willChange: "opacity, transform"
+              }}
+            >
+              <span className="text-gold font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl not-italic">
+                WE BUILD DREAMS
+              </span>
+            </motion.span>
           </motion.h1>
         </motion.div>
 
@@ -247,10 +250,10 @@ export function LuxuryHero() {
         <motion.div
           initial={isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.95 }}
           animate={isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: textFaded ? 0 : 1, y: 0, scale: 1 }}
-          transition={isMobile ? { duration: 0 } : { 
-            duration: textFaded ? 1.5 : 2, 
-            delay: textFaded ? 0 : 1.5, 
-            ease: [0.16, 1, 0.3, 1] 
+          transition={isMobile ? { duration: 0 } : {
+            duration: textFaded ? 1.5 : 2,
+            delay: textFaded ? 0 : 1.5,
+            ease: [0.16, 1, 0.3, 1]
           }}
           className="mb-3 sm:mb-4 md:mb-6"
         >
@@ -265,15 +268,15 @@ export function LuxuryHero() {
         <motion.div
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           animate={isMobile ? { opacity: 1, y: 0 } : { opacity: textFaded ? 0 : 1, y: 0 }}
-          transition={isMobile ? { duration: 0 } : { 
-            duration: textFaded ? 1.5 : 2, 
-            delay: textFaded ? 0 : 1.8, 
-            ease: [0.16, 1, 0.3, 1] 
+          transition={isMobile ? { duration: 0 } : {
+            duration: textFaded ? 1.5 : 2,
+            delay: textFaded ? 0 : 1.8,
+            ease: [0.16, 1, 0.3, 1]
           }}
           className="relative mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto"
         >
           {/* Glass blur background for subtitle */}
-          <div 
+          <div
             className="absolute inset-0 rounded-xl -z-10"
             style={{
               background: 'rgba(0, 0, 0, 0.25)',
@@ -284,30 +287,30 @@ export function LuxuryHero() {
             }}
           />
           <div className="relative z-10 px-4 py-3 sm:px-6 sm:py-4">
-            <motion.p 
+            <motion.p
               className="text-xs sm:text-sm md:text-base text-white/95 font-light max-w-xl sm:max-w-2xl mb-2 sm:mb-3 leading-relaxed"
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={isMobile ? { opacity: 1 } : { opacity: textFaded ? 0 : 1 }}
-              transition={isMobile ? { duration: 0 } : { 
-                duration: textFaded ? 1.5 : 2.5, 
-                delay: textFaded ? 0 : 2, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={isMobile ? { duration: 0 } : {
+                duration: textFaded ? 1.5 : 2.5,
+                delay: textFaded ? 0 : 2,
+                ease: [0.16, 1, 0.3, 1]
               }}
               style={{
                 textShadow: '0 1px 10px rgba(0, 0, 0, 0.5)',
               }}
             >
-              India&apos;s premier design-build firm specializing in integrated 
+              India&apos;s premier design-build firm specializing in integrated
               interior and turnkey solutions
             </motion.p>
-            <motion.p 
+            <motion.p
               className="text-gold text-[10px] sm:text-xs md:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium"
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={isMobile ? { opacity: 1 } : { opacity: textFaded ? 0 : 1 }}
-              transition={isMobile ? { duration: 0 } : { 
-                duration: textFaded ? 1.5 : 2.5, 
-                delay: textFaded ? 0 : 2.3, 
-                ease: [0.16, 1, 0.3, 1] 
+              transition={isMobile ? { duration: 0 } : {
+                duration: textFaded ? 1.5 : 2.5,
+                delay: textFaded ? 0 : 2.3,
+                ease: [0.16, 1, 0.3, 1]
               }}
               style={{
                 textShadow: '0 2px 20px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.4)',
@@ -321,14 +324,14 @@ export function LuxuryHero() {
 
         {/* CTA Buttons - always visible */}
         <motion.div
-          className="relative z-[100] flex flex-col gap-3 sm:flex-row sm:gap-4 md:gap-4 lg:gap-6 w-full sm:w-auto justify-center items-center px-2 sm:px-0 mb-16 sm:mb-20 md:mb-24 lg:mb-32"
+          className="relative z-[100] flex flex-col gap-3 sm:flex-row sm:gap-4 md:gap-4 lg:gap-6 w-full sm:w-auto justify-center items-center px-2 sm:px-0 mb-8 sm:mb-10 md:mb-12 lg:mb-16"
           style={{ position: 'relative', zIndex: 100 }}
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={isMobile ? { duration: 0 } : { 
-            duration: 2, 
-            delay: 2.5, 
-            ease: [0.16, 1, 0.3, 1] 
+          transition={isMobile ? { duration: 0 } : {
+            duration: 2,
+            delay: 2.5,
+            ease: [0.16, 1, 0.3, 1]
           }}
         >
           <Link
@@ -379,6 +382,6 @@ export function LuxuryHero() {
       {/* Decorative corner accents - smaller on mobile */}
       <div className="absolute top-4 left-4 sm:top-8 sm:left-8 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 border-l-2 border-t-2 border-accent/30 pointer-events-none" />
       <div className="absolute top-4 right-4 sm:top-8 sm:right-8 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 border-r-2 border-t-2 border-accent/30 pointer-events-none" />
-    </section>
+    </section >
   );
 }

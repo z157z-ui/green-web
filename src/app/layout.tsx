@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://greenbuildersandinteriors.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://greenbuildersandinteriors.com"),
   title: {
     template: "%s | Green Builders & Interiors",
     default: "Green Builders & Interiors - We Don't Just Build Structures, We Build Dreams",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://greenbuilders.in",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://greenbuilders.in",
     siteName: "Green Builders & Interiors",
     title: "Green Builders & Interiors - Luxury Interior Design & Construction",
     description: "Luxury interior design and construction firm based in Bengaluru, serving South India with 8+ years of expertise.",

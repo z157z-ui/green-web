@@ -99,9 +99,9 @@ export function OfficeMap({
       : null;
 
   // #region agent log
-  useEffect(() => {
-    fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:99', message: 'State update', data: { hoveredOffice, selectedOffice, displayOffice: displayOffice?.id, isMobile: typeof window !== 'undefined' ? window.innerWidth < 1024 : false, windowWidth: typeof window !== 'undefined' ? window.innerWidth : 0 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'C' }) }).catch(() => { });
-  }, [hoveredOffice, selectedOffice, displayOffice]);
+  // #region agent log
+  // Telemetry removed for performance
+  // #endregion
   // #endregion
 
   // Track when user first interacts with the map
@@ -136,16 +136,9 @@ export function OfficeMap({
   }, [hoveredOffice, selectedOffice, onSelect]);
 
   // #region agent log
-  useEffect(() => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-    const svgEl = document.querySelector('svg[viewBox="0 0 100 133"]');
-    const containerEl = document.querySelector('.relative.w-full.h-full');
-    if (svgEl && containerEl) {
-      const svgRect = svgEl.getBoundingClientRect();
-      const containerRect = containerEl.getBoundingClientRect();
-      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:dimensions', message: 'Container and SVG dimensions', data: { svgWidth: svgRect.width, svgHeight: svgRect.height, containerWidth: containerRect.width, containerHeight: containerRect.height, svgTop: svgRect.top, svgLeft: svgRect.left, containerTop: containerRect.top, containerLeft: containerRect.left }, timestamp: Date.now(), sessionId: 'debug-session', hypothesisId: 'A,D' }) }).catch(() => { });
-    }
-  }, []);
+  // #region agent log
+  // Telemetry removed for performance
+  // #endregion
   // #endregion
 
   return (
@@ -242,9 +235,9 @@ export function OfficeMap({
                     const pathString = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
 
                     // #region agent log
-                    if (typeof window !== 'undefined') {
-                      fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:fixed-scaled', message: `Curve to ${office.city}`, data: { startX, startY, endX, endY, midX, midY, controlX, controlY, pathString, yScale }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'post-fix-4', hypothesisId: 'aspect-fix' }) }).catch(() => { });
-                    }
+                    // #region agent log
+                    // Telemetry removed for performance
+                    // #endregion
                     // #endregion
 
                     return (
@@ -320,25 +313,33 @@ export function OfficeMap({
                 transition={{ delay: 1 + index * 0.15, type: "spring", stiffness: 200 }}
                 onMouseEnter={() => {
                   // #region agent log
-                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:312', message: 'Marker mouseEnter', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
+                  // #region agent log
+                  // Telemetry removed for performance
+                  // #endregion
                   // #endregion
                   onHover(office.id);
                 }}
                 onMouseLeave={() => {
                   // #region agent log
-                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:316', message: 'Marker mouseLeave', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
+                  // #region agent log
+                  // Telemetry removed for performance
+                  // #endregion
                   // #endregion
                   onHover(null);
                 }}
                 onClick={() => {
                   // #region agent log
-                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:320', message: 'Marker onClick', data: { officeId: office.id, isMobile: window.innerWidth < 1024, windowWidth: window.innerWidth, selectedOffice, displayOffice: displayOffice?.id }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'B' }) }).catch(() => { }); }
+                  // #region agent log
+                  // Telemetry removed for performance
+                  // #endregion
                   // #endregion
                   onSelect(office.id);
                 }}
                 onTouchStart={() => {
                   // #region agent log
-                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:328', message: 'Marker onTouchStart', data: { officeId: office.id, isMobile: window.innerWidth < 1024 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { }); }
+                  // #region agent log
+                  // Telemetry removed for performance
+                  // #endregion
                   // #endregion
                 }}
               >
@@ -463,7 +464,9 @@ export function OfficeMap({
               className="lg:hidden absolute inset-0 z-40 flex items-center justify-center p-4 pointer-events-none"
               onAnimationStart={() => {
                 // #region agent log
-                if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:436', message: 'Mobile popup animation start', data: { officeId: displayOffice.id, windowWidth: window.innerWidth, zIndex: 40 }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'D' }) }).catch(() => { }); }
+                // #region agent log
+                // Telemetry removed for performance
+                // #endregion
                 // #endregion
               }}
             >
@@ -475,7 +478,9 @@ export function OfficeMap({
                 className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                 onClick={(e) => {
                   // #region agent log
-                  if (typeof window !== 'undefined') { fetch('http://127.0.0.1:7242/ingest/6ea2813b-d6e8-4e0c-80e9-5d42c59d12f8', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'OfficeMap.tsx:444', message: 'Backdrop onClick', data: { target: e.target?.toString(), currentTarget: e.currentTarget?.toString(), windowWidth: window.innerWidth }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'E' }) }).catch(() => { }); }
+                  // #region agent log
+                  // Telemetry removed for performance
+                  // #endregion
                   // #endregion
                   onSelect(null);
                 }}
@@ -597,7 +602,7 @@ export function OfficeMap({
                       const address = encodeURIComponent(displayOffice.address);
                       window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
                     }}
-                    className="w-full py-2 sm:py-2.5 bg-accent text-primary-dark text-center text-xs font-semibold rounded-xl hover:bg-accent-dark transition-colors shadow-lg hover:shadow-accent/20 mt-1"
+                    className="w-full py-2 sm:py-2.5 bg-[#B7E7A1] text-primary-dark text-center text-xs font-semibold rounded-xl hover:bg-[#a6d691] transition-colors shadow-lg hover:shadow-accent/20 mt-1"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.25 }}
@@ -731,7 +736,7 @@ export function OfficeMap({
                       const address = encodeURIComponent(displayOffice.address);
                       window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
                     }}
-                    className="w-full py-2 sm:py-2.5 md:py-3 bg-accent text-primary-dark text-center text-xs sm:text-xs md:text-sm font-semibold rounded-xl hover:bg-accent-dark transition-colors shadow-lg hover:shadow-accent/20 mt-1"
+                    className="w-full py-2 sm:py-2.5 md:py-3 bg-[#B7E7A1] text-primary-dark text-center text-xs sm:text-xs md:text-sm font-semibold rounded-xl hover:bg-[#a6d691] transition-colors shadow-lg hover:shadow-accent/20 mt-1"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.25 }}
